@@ -1,5 +1,7 @@
 package byog.Core;
 import byog.TileEngine.TETile;
+import byog.TileEngine.Tileset;
+
 import java.util.Random;
 
 public class Map {
@@ -9,6 +11,9 @@ public class Map {
     public static int MAXROOMS;
     private static int SEED;
     public static Random R;
+
+    public static Hallway[] OPENHALLS = new Hallway[25];
+    public static int HALLCOUNTER = 0;
 
     public static int HEIGHT = Game.HEIGHT;
     public static int WIDTH = Game.WIDTH;
@@ -31,6 +36,18 @@ public class Map {
         Location startPoint = new Location(Map.R.nextInt(Map.HEIGHT) / 6, Map.R.nextInt(Map.WIDTH));
         Room root = new Room(startPoint);
         root.makeRoom();
+
+        fillMap();
+    }
+
+    private static void fillMap() {
+        for (int i = 0; i < WIDTH; i += 1) {
+            for (int k = 0; k < HEIGHT; k += 1) {
+                if (LAYOUT[i][k] == null) {
+                    LAYOUT[i][k] = Tileset.NOTHING;
+                }
+            }
+        }
     }
 
 }

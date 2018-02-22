@@ -6,8 +6,8 @@ import byog.TileEngine.TETile;
 public class Game {
     TERenderer ter = new TERenderer();
     /* Feel free to change the width and height. */
-    public static final int WIDTH = 80;
-    public static final int HEIGHT = 30;
+    public static int WIDTH = 80;
+    public static int HEIGHT = 30;
 
     public static TETile[][] WORLD;
 
@@ -37,15 +37,25 @@ public class Game {
         TERenderer ter = new TERenderer();
         ter.initialize(WIDTH, HEIGHT);
 
-
+        int seed = 20;
 
         WORLD = new TETile[WIDTH][HEIGHT];
-        //Map.makeMap(WORLD, seed);
+        Map.makeMap(WORLD, seed);
 
         ter.renderFrame(WORLD);
+        return WORLD;
+    }
 
+    public static void main(String[] args) {
+        TERenderer ter = new TERenderer();
+        ter.initialize(WIDTH, HEIGHT);
 
-        return null;
+        int seed = 20;
+
+        WORLD = new TETile[WIDTH][HEIGHT];
+        Map.makeMap(WORLD, seed);
+
+        ter.renderFrame(WORLD);
     }
 
 }
