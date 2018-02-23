@@ -30,14 +30,11 @@ public class Game {
      * @return the 2D TETile[][] representing the state of the world
      */
     public TETile[][] playWithInputString(String input) {
-        // TODO: Fill out this method to run the game using the input passed in,
-        // and return a 2D tile representation of the world that would have been
-        // drawn if the same inputs had been given to playWithKeyboard().
 
         TERenderer ter = new TERenderer();
         ter.initialize(WIDTH, HEIGHT);
 
-        int seed = 20;
+        int seed = Integer.parseInt(input.replaceAll("[\\D]", " "));
 
         WORLD = new TETile[WIDTH][HEIGHT];
         Map.makeMap(WORLD, seed);
@@ -47,7 +44,7 @@ public class Game {
     }
 
     public static void main(String[] args) {
-        TERenderer ter = new TERenderer();
+        /*TERenderer ter = new TERenderer();
         ter.initialize(WIDTH, HEIGHT);
 
         int seed = 20;
@@ -55,6 +52,13 @@ public class Game {
         WORLD = new TETile[WIDTH][HEIGHT];
         Map.makeMap(WORLD, seed);
 
+        ter.renderFrame(WORLD);*/
+
+        TERenderer ter = new TERenderer();
+        ter.initialize(WIDTH, HEIGHT);
+        int seed = 942582342;
+        WORLD = new TETile[WIDTH][HEIGHT];
+        Map.makeMap(WORLD, seed);
         ter.renderFrame(WORLD);
     }
 
