@@ -68,17 +68,18 @@ public class Room{
     private void digRoom() {
         boolean found = false;
         int tries = 3;
-        width = Map.R.nextInt(WIDTH / 8) + 1;
-        height = Map.R.nextInt(HEIGHT / 8) + 1;
+
+        width = Map.R.nextInt(WIDTH / 8) + 2;
+        height = Map.R.nextInt(HEIGHT / 8) + 2;
 
         while (!found) {
-            width -= Map.R.nextInt(width / 2);
-            height -= Map.R.nextInt(width /2);
 
             if (noOverlap()) {
                 found = true;
             } else {
                 tries -= 1;
+                width -= Map.R.nextInt(width / 2);
+                height -= Map.R.nextInt(width /2);
                 if (tries == 0) {
                     noRoom = true;
                     break;
@@ -120,8 +121,8 @@ public class Room{
         while (attempts > 0) {
 
             check = entrance.copy();
-            height = R.nextInt(minY * 2) + minY;
-            width = R.nextInt(minX * 2) + minX;
+            height = R.nextInt(minY * 2) + minY + 1;
+            width = R.nextInt(minX * 2) + minX + 1;
 
 
             if (directionfrom == 0) {
@@ -156,14 +157,21 @@ public class Room{
 
     /* creates a set of random openings in the walls */
     private void digOpenings() {
-        int numHoles = R.nextInt(3 - numOpenings);
-        if (ROOMCOUNT < 5 && numHoles < 1) {
-            numHoles = 1;
+        boolean need = false;
+        if (ROOMCOUNT < 5) {
+            need = true;
         }
-        for (int i = numHoles; i > 0; i -= 1) {
-            int side = R.nextInt(3);
-            if (openings[side] == null) {
-                digHole(side);
+        while (need) {
+            int numHoles = R.nextInt(3 - numOpenings);
+            if (ROOMCOUNT < 5 && numHoles < 1) {
+                numHoles = 3;
+            }
+            for (int i = numHoles; i > 0; i -= 1) {
+                int side = R.nextInt(3);
+                if (openings[side] == null && !closeToEdge(site, side)) {
+                    digHole(side);
+                    need = false;
+                }
             }
         }
     }
@@ -177,6 +185,18 @@ public class Room{
             openings[side] = new Location(site.xPos + width, site.yPos + R.nextInt(height));
         } else {
             openings[side] = new Location(site.xPos + R.nextInt(width), site.yPos);
+        }
+    }
+
+    private boolean closeToEdge(Location check, int side) {
+        if (side == 0) {
+            return check.xPos < Map.WIDTH / 6;
+        } else if (side == 1) {
+            return check.yPos > 5 * Map.HEIGHT / 6;
+        } else if (side == 2) {
+            return check.xPos > 5 * Map.WIDTH / 6;
+        } else {
+            return check.yPos < Map.WIDTH / 6;
         }
     }
 

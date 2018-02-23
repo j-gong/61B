@@ -29,11 +29,9 @@ public class Map {
         SEED = sd;
 
         R = new Random(SEED);
-        MAXROOMS = R.nextInt(7) + 10;
+        MAXROOMS = R.nextInt(7) + 7;
 
-        /* TESTING PURPOSES ONLY */ R = new Random(5);
-
-        Location startPoint = new Location(Map.R.nextInt(Map.HEIGHT) / 6, Map.R.nextInt(Map.WIDTH));
+        Location startPoint = new Location(Map.R.nextInt(Map.WIDTH) / 5 + 1, Map.R.nextInt(Map.HEIGHT) / 5 + 1);
         Room root = new Room(startPoint);
         root.makeRoom();
 

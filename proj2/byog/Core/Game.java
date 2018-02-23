@@ -44,22 +44,22 @@ public class Game {
     }
 
     public static void main(String[] args) {
-        /*TERenderer ter = new TERenderer();
+        TERenderer ter = new TERenderer();
         ter.initialize(WIDTH, HEIGHT);
 
-        int seed = 20;
+        int seed = 11234122;
 
         WORLD = new TETile[WIDTH][HEIGHT];
         Map.makeMap(WORLD, seed);
 
-        ter.renderFrame(WORLD);*/
+        ter.renderFrame(WORLD);
 
-        TERenderer ter = new TERenderer();
+        /*TERenderer ter = new TERenderer();
         ter.initialize(WIDTH, HEIGHT);
         int seed = 942582342;
         WORLD = new TETile[WIDTH][HEIGHT];
         Map.makeMap(WORLD, seed);
-        ter.renderFrame(WORLD);
+        ter.renderFrame(WORLD);*/
     }
 
 }
