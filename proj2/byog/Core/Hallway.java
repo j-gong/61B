@@ -51,10 +51,14 @@ public class Hallway {
 
             if (nextDirection < 0 || (Map.ROOMCOUNT > 5 && rand == 1)) {
                 deadEnd();
-            }
 
-            Hallway next = new Hallway(exit, direction);
-            next.makeHallway();
+            } else {
+
+                Location nextStart = turn(nextDirection);
+
+                Hallway next = new Hallway(nextStart, direction);
+                next.makeHallway();
+            }
         }
     }
 
@@ -124,7 +128,14 @@ public class Hallway {
     /* returns the direction of a new path for a new hallway, only allows 90 degree turns */
     private int availablePaths() {
         int left = direction - 1;
+            if (direction == 0) {
+                left = 3;
+            }
         int right = direction + 1;
+            if (direction == 3) {
+                right = 0;
+            }
+
         int nextDirection = left;
 
         if (direction == 0) {
@@ -170,6 +181,17 @@ public class Hallway {
         } else { start.xPos -= 1;
             Build.buildRow(start, 3, Tileset.WALL);
         }
+    }
+
+    /* moves the start of the new hallway so that the building algorithm doesn't screw up the other walls */
+    private Location turn(int direction) {
+        Location result = exit.copy();
+        if (direction % 2 == 0) {
+            result.xPos += tunnelDirect(direction);
+        } else {
+            result.yPos += tunnelDirect(direction);
+        }
+        return result;
     }
 
 }
