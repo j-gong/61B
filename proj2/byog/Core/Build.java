@@ -4,9 +4,7 @@ import byog.TileEngine.Tileset;
 
 public class Build {
 
-    //private TETile[][] Map.LAYOUT = Map.Map.LAYOUT;
-
-    public static void buildRoom(Room rm) {
+    public void buildRoom(Room rm) {
 
         buildFloors(rm);
 
@@ -15,7 +13,7 @@ public class Build {
         buildOpenings(rm.openings);
     }
 
-    public static void buildHallway(Hallway hall) {
+    public void buildHallway(Hallway hall) {
 
         Location start = hall.entrance.copy();
         TETile tile;
@@ -34,7 +32,7 @@ public class Build {
                 if (hall.direction == 0) {
                     start.xPos = hall.exit.xPos;
                 }
-                Build.buildRow(new Location(start.xPos, start.yPos + i), hall.length, tile, false);
+                buildRow(new Location(start.xPos, start.yPos + i), hall.length, tile, false);
 
             } else {
                 if(hall.direction == 1) {
@@ -45,19 +43,7 @@ public class Build {
         }
     }
 
-    /* don't know if this block is a good thing to have, should probably just reconfigure makeRow and makeColumn*/
-    /*private static void freeEnds(Hallway hall) {
-        Location end = hall.exit.copy();
-        if (hall.direction % 2 == 0 ) {
-            Map.LAYOUT[end.xPos][end.yPos + 1] = null;
-            Map.LAYOUT[end.xPos][end.yPos - 1] = null;
-        } else {
-            Map.LAYOUT[end.xPos + 1][end.yPos] = null;
-            Map.LAYOUT[end.xPos - 1][end.yPos] = null;
-        }
-    }
-*/
-    private static void buildOpenings(Location[] holes){
+    private void buildOpenings(Location[] holes){
         for (int i = 0; i < 4; i += 1) {
             if (holes[i] != null) {
                 Map.LAYOUT[holes[i].xPos][holes[i].yPos] = Tileset.FLOOR;
@@ -65,7 +51,7 @@ public class Build {
         }
     }
 
-    private static void buildFloors(Room rm) {
+    private void buildFloors(Room rm) {
         Location start = rm.site.copy();
         TETile flooring = Tileset.FLOOR;
         for (int i = 0; i < rm.height; i += 1) {
@@ -74,7 +60,7 @@ public class Build {
         }
     }
 
-    private static void buildWalls(Room rm) {
+    private void buildWalls(Room rm) {
         Location start = new Location(rm.site.xPos-1, rm.site.yPos-1);
         TETile walling = Tileset.WALL;
 
@@ -90,7 +76,7 @@ public class Build {
         buildColumn(start, rm.height, walling, false);
     }
 
-    public static void buildRow(Location start, int length, TETile tile, boolean overwrite) {
+    public void buildRow(Location start, int length, TETile tile, boolean overwrite) {
         boolean over = overwrite;
         Location place = start.copy();
         for (int i = 0; i < length; i += 1) {
@@ -101,7 +87,7 @@ public class Build {
         }
     }
 
-    public static void buildColumn(Location start, int length, TETile tile, boolean overwrite) {
+    public void buildColumn(Location start, int length, TETile tile, boolean overwrite) {
         Location place = start.copy();
         for (int i = 0; i < length; i += 1) {
             TETile check = Map.LAYOUT[place.xPos][place.yPos - i];
@@ -111,7 +97,7 @@ public class Build {
         }
     }
 
-    public static void turnCap(int oldDirection, int newDirection, Location exit) {
+    public void turnCap(int oldDirection, int newDirection, Location exit) {
         Location place = exit.copy();
         Location[] corner = new Location[2];
         int[] compass = new int[]{-1, 1, 1, -1};
@@ -137,7 +123,7 @@ public class Build {
         buildTurn(corner);
     }
 
-    private static void buildTurn(Location[] corner) {
+    private void buildTurn(Location[] corner) {
         TETile walling = Tileset.WALL;
         for (int i = 0; i < 2; i += 1) {
             TETile check = Map.LAYOUT[corner[i].xPos][corner[i].yPos];
@@ -147,7 +133,7 @@ public class Build {
         }
     }
 
-    public static void dead(Location stop){
+    public void dead(Location stop){
         for (int x = -1; x < 2; x += 1) {
             for (int y = -1; y < 2; y += 1) {
                 TETile spot = Map.LAYOUT[stop.xPos + x][stop.yPos + y];

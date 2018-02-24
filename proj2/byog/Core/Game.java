@@ -36,22 +36,26 @@ public class Game {
         int seed =(int) Long.parseLong(input.replaceAll("[\\D]", ""));
 
         WORLD = new TETile[WIDTH][HEIGHT];
-        Map.makeMap(WORLD, seed);
+        Map map = new Map();
+        WORLD = map.makeMap(WORLD, seed);
 
         return WORLD;
     }
 
     public static void main(String[] args) {
-        /*TERenderer ter = new TERenderer();
+        TERenderer ter = new TERenderer();
         ter.initialize(WIDTH, HEIGHT);
 
         Random rand = new Random();
-        long seed = (int) 5197880843569031643;
+        // only digs a few rooms
+        int seed = 113009;
 
         WORLD = new TETile[WIDTH][HEIGHT];
-        Map.makeMap(WORLD, seed);
 
-        ter.renderFrame(WORLD);*/
+        Map map = new Map();
+        WORLD = map.makeMap(WORLD, seed);
+
+        ter.renderFrame(WORLD);
 
 
         /*TERenderer ter = new TERenderer();

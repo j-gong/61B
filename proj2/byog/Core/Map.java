@@ -2,11 +2,12 @@ package byog.Core;
 import byog.TileEngine.TETile;
 import byog.TileEngine.Tileset;
 
+import javax.swing.*;
 import java.util.Random;
 
 public class Map {
 
-    public static TETile[][] layout;
+    public static TETile[][] LAYOUT;
     public static int ROOMCOUNT;
     public static int MAXROOMS;
     private static int SEED;
@@ -21,11 +22,11 @@ public class Map {
     /* TESTING PURPOSES ONLY*/
     public void Map(){
         R = new Random(5);
-        layout = new TETile[10][10];
+        LAYOUT = new TETile[10][10];
     }
 
-    public static void makeMap(TETile[][] inputMap, int sd) {
-        layout = inputMap;
+    public TETile[][] makeMap(TETile[][] inputMap, int sd) {
+        LAYOUT = inputMap;
         SEED = sd;
 
         R = new Random(SEED);
@@ -36,13 +37,14 @@ public class Map {
         root.makeRoom();
 
         fillMap();
+        return LAYOUT;
     }
 
-    private static void fillMap() {
+    private void fillMap() {
         for (int i = 0; i < WIDTH; i += 1) {
             for (int k = 0; k < HEIGHT; k += 1) {
-                if (layout[i][k] == null) {
-                    layout[i][k] = Tileset.NOTHING;
+                if (LAYOUT[i][k] == null) {
+                    LAYOUT[i][k] = Tileset.NOTHING;
                 }
             }
         }

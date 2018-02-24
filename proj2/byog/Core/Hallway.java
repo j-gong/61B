@@ -2,10 +2,6 @@ package byog.Core;
 
 import byog.TileEngine.TETile;
 import byog.TileEngine.Tileset;
-import org.junit.Test;
-
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 public class Hallway {
 
@@ -15,9 +11,9 @@ public class Hallway {
     public int direction; // 0 = west, 1 = north, 2 = east, 3 = south
     public int length;
 
-    //private static TETile[][] Map.LAYOUT = Map.Map.LAYOUT;
+    private boolean needRooms;
 
-    public Hallway(){};
+    private Build builder = new Build();
 
     public Hallway(Location enter, int toward) {
         direction = toward;
@@ -28,60 +24,58 @@ public class Hallway {
 
         digHallway();
 
-        Build.buildHallway(this);
+        if (exit == null) {
+            return;
+        }
+
+        builder.buildHallway(this);
 
         int rand = Map.R.nextInt(6); // number between 0 - 5
 
-        if (rand > 2 || Map.ROOMCOUNT < 5) {
+        if (rand > 2) {rand = 0;}
+        if (Map.ROOMCOUNT < 5) {rand = 0; needRooms = true;}
 
-            if (Map.ROOMCOUNT <= Map.MAXROOMS && !onEdge(exit)) {
+        int nextDirect = availablePaths();
+        if (nextDirect < 0) {rand = 2;}
+        if (Map.ROOMCOUNT > Map.MAXROOMS) {rand = 2;}
 
-                Room add = new Room(exit, direction);
 
-                if (add.site == null) {
-                    if (Map.ROOMCOUNT < 3) {
-                        Hallway newHall = new Hallway(exit,3 - direction);
-                        newHall.makeHallway();
-                    } else {
-                        Build.dead(exit);
-                    }
-                }
-                Build.dead(exit);
-            }
-            Build.dead(exit);
-
-        } else {
-
-            int nextDirection = availablePaths();
-
-            if (nextDirection < 0 || (Map.ROOMCOUNT > 5 && rand <= 2)) {
-                Build.dead(exit);
-
-            } else {
-
-                Location nextStart = turn(nextDirection);
-
-                Hallway next = new Hallway(nextStart, nextDirection);
-                next.makeHallway();
-            }
+        switch (rand) {
+            case 0: Room addroom = new Room(exit, direction);
+                    deadRoom(addroom);
+            case 1: Hallway newhall = new Hallway(exit, nextDirect);
+                    newhall.makeHallway();
+                    //base case for null hallway
+            case 2: builder.dead(exit);
         }
+
+
+
+        //    we need:
+            //make a room
+                //if room doesnt fit deadEnd it
+            //add hallway
+                //if hallway doesnt fit deadEnd it
+            //deadEnd
     }
 
     /* sets the valid length and exit location of a hallway */
     private void digHallway() {
         int maxLength = validLength(direction, entrance);
+        int tries = 0;
 
         if (maxLength < 1) {
             length = -maxLength;
 
         } else {
             while (length == 0) {
+                tries += 1;
                 int trylength = Map.R.nextInt(maxLength);
                 if (trylength > 2) {
                     length = trylength;
-                } else if (Map.ROOMCOUNT > 5 || maxLength < 3) {
-                    deadEnd();
-                    break;
+                } else if (Map.ROOMCOUNT > 5 || maxLength <= 3 || tries > 3) {
+                    builder.dead(entrance);
+                    return;
                 }
             }
         }
@@ -176,22 +170,28 @@ public class Hallway {
         return (place.xPos < 1 || place.xPos > Map.WIDTH - 2) || (place.yPos < 1 || place.yPos > Map.HEIGHT - 2);
     }
 
-    private void deadEnd() {
-        Build.dead(entrance);
-    }
-
     /* moves the start of the new hallway so that the building algorithm doesn't screw up the other walls */
     private Location turn(int nextdirect) {
         Location result = exit.copy();
         if (direction % 2 == 0) {
             result.xPos += tunnelDirect(direction);
-            Build.turnCap(direction, nextdirect, result);
+            builder.turnCap(direction, nextdirect, result);
         } else {
             result.yPos += tunnelDirect(direction);
-            Build.turnCap(direction, nextdirect, result);
+            builder.turnCap(direction, nextdirect, result);
         }
         Map.LAYOUT[result.xPos][result.yPos] = Tileset.FLOOR;
         return result;
     }
 
+    private void deadRoom(Room rm) {
+        if (rm.site == null) {
+            if (needRooms == true){
+                Hallway newhall = new Hallway(exit, direction);
+                newhall.makeHallway();
+            } else {
+                builder.dead(exit);
+            }
+        }
+    }
 }

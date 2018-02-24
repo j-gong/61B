@@ -14,6 +14,8 @@ public class Room{
     public int height;
     public boolean noRoom;
 
+    private Build builder = new Build();
+
     //private static TETile[][] Map.LAYOUT = Map.Map.LAYOUT;
 
     public Room(Location startPoint) { //constructs the first room
@@ -57,7 +59,7 @@ public class Room{
 
         digOpenings(); // creates a list of openings
 
-        Build.buildRoom(this); //lays down room's floor and wall tiles
+        builder.buildRoom(this); //lays down room's floor and wall tiles
 
         for (int i = 0; i < 4; i += 1) { //make a new hallway for each hole
             if (openings[i] != null) {
@@ -143,7 +145,7 @@ public class Room{
         }
         if (found == false) {
             check = null;
-            Build.dead(entrance);
+            builder.dead(entrance);
         }
         site = check;
     }
@@ -151,16 +153,16 @@ public class Room{
     /* creates a set of random openings in the walls */
     private void digOpenings() {
         boolean need = false;
-        if (ROOMCOUNT < 5) {
+        if (ROOMCOUNT < 7) {
             need = true;
         }
         while (need) {
             int numHoles = R.nextInt(3 - numOpenings);
-            if (ROOMCOUNT < 5 && numHoles < 1) {
+            if (ROOMCOUNT < 7 && numHoles < 1) {
                 numHoles = 3;
             }
             for (int i = numHoles; i > 0; i -= 1) {
-                int side = R.nextInt(3);
+                int side = R.nextInt(4);
                 if (openings[side] == null && !closeToEdge(site, side)) {
                     digHole(side);
                     need = false;
