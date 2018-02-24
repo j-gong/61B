@@ -32,10 +32,8 @@ public class Game {
      */
     public TETile[][] playWithInputString(String input) {
 
-        //TERenderer ter = new TERenderer();
-        //ter.initialize(WIDTH, HEIGHT);
 
-        int seed = Integer.parseInt(input.replaceAll("[\\D]", ""));
+        int seed =(int) Long.parseLong(input.replaceAll("[\\D]", ""));
 
         WORLD = new TETile[WIDTH][HEIGHT];
         Map.makeMap(WORLD, seed);
@@ -44,16 +42,16 @@ public class Game {
     }
 
     public static void main(String[] args) {
-        TERenderer ter = new TERenderer();
+        /*TERenderer ter = new TERenderer();
         ter.initialize(WIDTH, HEIGHT);
 
         Random rand = new Random();
-        int seed = 126;
+        int seed = 5197880843569031643;
 
         WORLD = new TETile[WIDTH][HEIGHT];
         Map.makeMap(WORLD, seed);
 
-        ter.renderFrame(WORLD);
+        ter.renderFrame(WORLD);*/
 
 
         /*TERenderer ter = new TERenderer();
@@ -62,6 +60,8 @@ public class Game {
         WORLD = new TETile[WIDTH][HEIGHT];
         Map.makeMap(WORLD, seed);
         ter.renderFrame(WORLD);*/
+        String cool = "4awefj3242u3kljlk23j423";//Integer.parseInt(cool.replaceAll("[\\D]", ""));
+        System.out.println(Long.parseLong(cool.replaceAll("[\\D]", "")));
     }
 
 }
