@@ -14,7 +14,7 @@ public class Room{
     public int height;
     public boolean noRoom;
 
-    private TETile[][] LAYOUT = Map.LAYOUT
+    private static TETile[][] LAYOUT = Map.LAYOUT;
 
     public Room(Location startPoint) { //constructs the first room
         site = startPoint;
@@ -33,7 +33,7 @@ public class Room{
             side = directionfrom - 2;
         }
         openings[side] = entrance;
-        place(entrance, directionfrom); //picks the room's site based on which side the initial opening is
+        place(entrance, side); //picks the room's site based on which side the initial opening is
 
         if (site == null) {
             return;
@@ -59,7 +59,7 @@ public class Room{
 
         Build.buildRoom(this); //lays down room's floor and wall tiles
 
-       for (int i = 0; i < 4; i += 1) { //make a new hallway for each hole
+        for (int i = 0; i < 4; i += 1) { //make a new hallway for each hole
             if (openings[i] != null) {
                 Hallway hall = new Hallway(openings[i], i);
                 hall.makeHallway();
@@ -70,32 +70,21 @@ public class Room{
 
     /* Searches for a valid place for the new Room and sets the width and height*/
     private void digRoom() {
-        boolean found = false;
-        int tries = 3;
 
         width = Map.R.nextInt(WIDTH / 8) + 2;
         height = Map.R.nextInt(HEIGHT / 8) + 2;
 
-        while (!found) {
-
-            if (noOverlap()) {
-                found = true;
-            } else {
-                tries -= 1;
-                width -= Map.R.nextInt(width / 2);
-                height -= Map.R.nextInt(width /2);
-                if (tries == 0) {
-                    noRoom = true;
-                    break;
-                }
-            }
+        if (!validSpace(site)) {
+            site.xPos += 2;
+            site.yPos += 2;
+            digRoom();
         }
+
     }
 
     /* looks to see if a location is a valid space*/
     private boolean validSpace(Location check) {
-        if ((check.xPos > 0 && check.xPos + width < WIDTH) && (check.yPos > 0 && check.yPos + height < HEIGHT)) {
-            site = check;
+        if ((check.xPos > 1 && check.xPos + width < WIDTH - 1) && (check.yPos > 1 && check.yPos + height < HEIGHT - 1)) {
             return noOverlap();
         }
         return false;
@@ -119,27 +108,27 @@ public class Room{
         boolean found = false;
         Location check = null;
 
-        int minX = R.nextInt(Map.WIDTH / 6) + 1;
-        int minY = R.nextInt(Map.WIDTH / 6) + 1;
+        int minX = R.nextInt(8) + 1;
+        int minY = R.nextInt(8) + 1;
 
         while (attempts > 0) {
 
             check = entrance.copy();
-            height = R.nextInt(minY * 2) + minY + 1;
-            width = R.nextInt(minX * 2) + minX + 1;
+            height = R.nextInt(minY) + minY + 1;
+            width = R.nextInt(minX) + minX + 1;
 
 
             if (directionfrom == 0) {
                 check.yPos -= minY;
                 check.xPos += 1; //site needs to be inside the walls
             } else if (directionfrom == 1) {
-                check.yPos -= minY - 1;
+                check.yPos -= (minY - 1);
                 check.xPos -= minX;
             } else if (directionfrom == 2) {
                 check.yPos -= minY;
-                check.xPos -= minX - 1;
+                check.xPos -= (minX - 1);
             } else {
-                check.xPos -= minX;
+                check.xPos -= (minX - 1);
                 check.yPos += 1;
             }
 

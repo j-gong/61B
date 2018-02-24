@@ -31,7 +31,7 @@ public class Map {
         R = new Random(SEED);
         MAXROOMS = R.nextInt(7) + 7;
 
-        Location startPoint = new Location(Map.R.nextInt(Map.WIDTH) / 5 + 1, Map.R.nextInt(Map.HEIGHT) / 5 + 1);
+        Location startPoint = new Location(Map.R.nextInt(Map.WIDTH / 5) + 1, Map.R.nextInt(Map.HEIGHT / 5) + 1);
         Room root = new Room(startPoint);
         root.makeRoom();
 

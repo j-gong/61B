@@ -4,7 +4,7 @@ import byog.TileEngine.Tileset;
 
 public class Build {
 
-    private TETile[][] LAYOUT = Map.LAYOUT;
+    private static TETile[][] LAYOUT = Map.LAYOUT;
 
     public static void buildRoom(Room rm) {
 
@@ -142,6 +142,17 @@ public class Build {
             TETile check = LAYOUT[corner[i].xPos][corner[i].yPos];
             if (check == null) {
                 LAYOUT[corner[i].xPos][corner[i].yPos] = walling;
+            }
+        }
+    }
+
+    public static void dead(Location stop){
+        for (int x = 0; x < 2; x += 1) {
+            for (int y = 0; y < 2; y += 1) {
+                TETile spot = LAYOUT[stop.xPos + x][stop.yPos + y];
+                if (spot == null) {
+                    spot = Tileset.WALL;
+                }
             }
         }
     }

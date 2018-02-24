@@ -15,7 +15,7 @@ public class Hallway {
     public int direction; // 0 = west, 1 = north, 2 = east, 3 = south
     public int length;
 
-    private TETile[][] LAYOUT = Map.LAYOUT;
+    private static TETile[][] LAYOUT = Map.LAYOUT;
 
     public Hallway(){};
 
@@ -30,9 +30,9 @@ public class Hallway {
 
         Build.buildHallway(this);
 
-        int rand = Map.R.nextInt(4);
+        int rand = Map.R.nextInt(6);
 
-        if (rand > 1) {
+        if (rand > 2 || Map.ROOMCOUNT < 4) {
 
             if (Map.ROOMCOUNT <= Map.MAXROOMS && !onEdge(exit)) {
 
@@ -68,12 +68,20 @@ public class Hallway {
     private void digHallway() {
         int maxLength = validLength(direction, entrance);
 
-        while(length != 0) {
-            int trylength = Map.R.nextInt(maxLength);
-            if (trylength < 3) {
-                LAYOUT[entrance.xPos][entrance.yPos] = Tileset.WALL;
-            } else if (maxLength != -1) {
-                length = trylength;
+        if (maxLength < 1) {
+            length = -maxLength;
+        } else if (maxLength == 0) {
+            length = 1;
+            deadEnd();
+        } else {
+            while (length == 0) {
+                int trylength = Map.R.nextInt(maxLength);
+                if (trylength > 2) {
+                    length = trylength;
+                } else if (Map.ROOMCOUNT > 5 || maxLength < 3) {
+                    deadEnd();
+                    break;
+                }
             }
         }
 
@@ -168,16 +176,7 @@ public class Hallway {
     }
 
     private void deadEnd() {
-
-        Location start = exit.copy();
-
-        if (direction % 2 == 0) {
-            start.yPos += 1;
-            Build.buildColumn(start, 3, Tileset.WALL, true);
-
-        } else { start.xPos -= 1;
-            Build.buildRow(start, 3, Tileset.WALL, true);
-        }
+        Build.dead(entrance);
     }
 
     /* moves the start of the new hallway so that the building algorithm doesn't screw up the other walls */

@@ -54,6 +54,7 @@ public class Game {
 
         ter.renderFrame(WORLD);
 
+
         /*TERenderer ter = new TERenderer();
         ter.initialize(WIDTH, HEIGHT);
         int seed = 942582342;
