@@ -147,8 +147,8 @@ public class Build {
     }
 
     public static void dead(Location stop){
-        for (int x = 0; x < 2; x += 1) {
-            for (int y = 0; y < 2; y += 1) {
+        for (int x = -1; x < 2; x += 1) {
+            for (int y = -1; y < 2; y += 1) {
                 TETile spot = LAYOUT[stop.xPos + x][stop.yPos + y];
                 if (spot == null) {
                     spot = Tileset.WALL;

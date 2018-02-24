@@ -47,7 +47,8 @@ public class Game {
         TERenderer ter = new TERenderer();
         ter.initialize(WIDTH, HEIGHT);
 
-        int seed = 11234122;
+        //int seed = 13976;
+        int seed = 126;
 
         WORLD = new TETile[WIDTH][HEIGHT];
         Map.makeMap(WORLD, seed);
