@@ -34,7 +34,7 @@ public class Game {
         TERenderer ter = new TERenderer();
         ter.initialize(WIDTH, HEIGHT);
 
-        int seed = Integer.parseInt(input.replaceAll("[\\D]", " "));
+        int seed = Integer.parseInt(input.replaceAll("[\\D]", ""));
 
         WORLD = new TETile[WIDTH][HEIGHT];
         Map.makeMap(WORLD, seed);

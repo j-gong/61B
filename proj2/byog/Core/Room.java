@@ -1,5 +1,7 @@
 package byog.Core;
 
+import byog.TileEngine.TETile;
+
 import static byog.Core.Map.*;
 
 public class Room{
@@ -11,6 +13,8 @@ public class Room{
     public int width;
     public int height;
     public boolean noRoom;
+
+    private TETile[][] LAYOUT = Map.LAYOUT
 
     public Room(Location startPoint) { //constructs the first room
         site = startPoint;

@@ -4,6 +4,8 @@ import byog.TileEngine.Tileset;
 
 public class Build {
 
+    private TETile[][] LAYOUT = Map.LAYOUT;
+
     public static void buildRoom(Room rm) {
 
         buildFloors(rm);
@@ -46,18 +48,18 @@ public class Build {
     /*private static void freeEnds(Hallway hall) {
         Location end = hall.exit.copy();
         if (hall.direction % 2 == 0 ) {
-            Map.LAYOUT[end.xPos][end.yPos + 1] = null;
-            Map.LAYOUT[end.xPos][end.yPos - 1] = null;
+            LAYOUT[end.xPos][end.yPos + 1] = null;
+            LAYOUT[end.xPos][end.yPos - 1] = null;
         } else {
-            Map.LAYOUT[end.xPos + 1][end.yPos] = null;
-            Map.LAYOUT[end.xPos - 1][end.yPos] = null;
+            LAYOUT[end.xPos + 1][end.yPos] = null;
+            LAYOUT[end.xPos - 1][end.yPos] = null;
         }
     }
 */
     private static void buildOpenings(Location[] holes){
         for (int i = 0; i < 4; i += 1) {
             if (holes[i] != null) {
-                Map.LAYOUT[holes[i].xPos][holes[i].yPos] = Tileset.FLOOR;
+                LAYOUT[holes[i].xPos][holes[i].yPos] = Tileset.FLOOR;
             }
         }
     }
@@ -91,9 +93,9 @@ public class Build {
         boolean over = overwrite;
         Location place = start.copy();
         for (int i = 0; i < length; i += 1) {
-            TETile check = Map.LAYOUT[place.xPos + i][place.yPos];
+            TETile check = LAYOUT[place.xPos + i][place.yPos];
             if (check == null || over) {
-                Map.LAYOUT[place.xPos + i][place.yPos] = tile;
+                LAYOUT[place.xPos + i][place.yPos] = tile;
             }
         }
     }
@@ -101,9 +103,9 @@ public class Build {
     public static void buildColumn(Location start, int length, TETile tile, boolean overwrite) {
         Location place = start.copy();
         for (int i = 0; i < length; i += 1) {
-            TETile check = Map.LAYOUT[place.xPos][place.yPos - i];
+            TETile check = LAYOUT[place.xPos][place.yPos - i];
             if (check == null || overwrite) {
-                Map.LAYOUT[place.xPos][place.yPos - i] = tile;
+                LAYOUT[place.xPos][place.yPos - i] = tile;
             }
         }
     }
@@ -137,9 +139,9 @@ public class Build {
     private static void buildTurn(Location[] corner) {
         TETile walling = Tileset.WALL;
         for (int i = 0; i < 2; i += 1) {
-            TETile check = Map.LAYOUT[corner[i].xPos][corner[i].yPos];
+            TETile check = LAYOUT[corner[i].xPos][corner[i].yPos];
             if (check == null) {
-                Map.LAYOUT[corner[i].xPos][corner[i].yPos] = walling;
+                LAYOUT[corner[i].xPos][corner[i].yPos] = walling;
             }
         }
     }

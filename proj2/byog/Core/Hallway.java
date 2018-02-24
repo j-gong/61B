@@ -30,7 +30,7 @@ public class Hallway {
 
         Build.buildHallway(this);
 
-        int rand = Map.R.nextInt(3);
+        int rand = Map.R.nextInt(4);
 
         if (rand > 1) {
 
@@ -68,11 +68,13 @@ public class Hallway {
     private void digHallway() {
         int maxLength = validLength(direction, entrance);
 
-        if (maxLength == 0) {
-            exit = entrance.copy();
-            deadEnd();
-        } else if (maxLength != -1) {
-            length = Map.R.nextInt(maxLength) + 1;
+        while(length != 0) {
+            int trylength = Map.R.nextInt(maxLength);
+            if (trylength < 3) {
+                LAYOUT[entrance.xPos][entrance.yPos] = Tileset.WALL;
+            } else if (maxLength != -1) {
+                length = trylength;
+            }
         }
 
         exit = entrance.copy();
@@ -183,10 +185,10 @@ public class Hallway {
         Location result = exit.copy();
         if (direction % 2 == 0) {
             result.xPos += tunnelDirect(direction);
-            Build.turnCap(direction, nextdirect, exit);
+            Build.turnCap(direction, nextdirect, result);
         } else {
             result.yPos += tunnelDirect(direction);
-            Build.turnCap(direction, nextdirect, exit);
+            Build.turnCap(direction, nextdirect, result);
         }
         Map.LAYOUT[result.xPos][result.yPos] = Tileset.FLOOR;
         return result;
