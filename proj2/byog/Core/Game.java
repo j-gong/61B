@@ -49,6 +49,7 @@ public class Game {
 
         //int seed = 13976;
         int seed = 126;
+        //int seed = 8095986;
 
         WORLD = new TETile[WIDTH][HEIGHT];
         Map.makeMap(WORLD, seed);

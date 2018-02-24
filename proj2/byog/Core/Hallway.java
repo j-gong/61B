@@ -30,29 +30,32 @@ public class Hallway {
 
         Build.buildHallway(this);
 
-        int rand = Map.R.nextInt(6);
+        int rand = Map.R.nextInt(6); // number between 0 - 5
 
-        if (rand > 2 || Map.ROOMCOUNT < 4) {
+        if (rand > 2 || Map.ROOMCOUNT < 3) {
 
             if (Map.ROOMCOUNT <= Map.MAXROOMS && !onEdge(exit)) {
 
                 Room add = new Room(exit, direction);
 
                 if (add.site == null) {
-                    if (Map.ROOMCOUNT < 5) {
+                    if (Map.ROOMCOUNT < 3) {
                         Hallway newHall = new Hallway(exit,3 - direction);
                         newHall.makeHallway();
+                    } else {
+                        Build.dead(exit);
                     }
-                    deadEnd();
                 }
+                Build.dead(exit);
             }
+            Build.dead(exit);
 
         } else {
 
             int nextDirection = availablePaths();
 
-            if (nextDirection < 0 || (Map.ROOMCOUNT > 5 && rand == 1)) {
-                deadEnd();
+            if (nextDirection < 0 || (Map.ROOMCOUNT > 0 && rand <= 2)) {
+                Build.dead(exit);
 
             } else {
 
@@ -70,9 +73,7 @@ public class Hallway {
 
         if (maxLength < 1) {
             length = -maxLength;
-        } else if (maxLength == 0) {
-            length = 1;
-            deadEnd();
+
         } else {
             while (length == 0) {
                 int trylength = Map.R.nextInt(maxLength);

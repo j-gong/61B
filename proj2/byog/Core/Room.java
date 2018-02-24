@@ -143,6 +143,7 @@ public class Room{
         }
         if (found == false) {
             check = null;
+            Build.dead(entrance);
         }
         site = check;
     }

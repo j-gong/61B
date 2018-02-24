@@ -28,6 +28,7 @@ public class Build {
                 tile = Tileset.WALL;
             }
 
+
             if (hall.direction % 2 == 0) {
 
                 if (hall.direction == 0) {
@@ -150,7 +151,7 @@ public class Build {
         for (int x = -1; x < 2; x += 1) {
             for (int y = -1; y < 2; y += 1) {
                 TETile spot = LAYOUT[stop.xPos + x][stop.yPos + y];
-                if (spot == null) {
+                if (spot == Tileset.NOTHING) {
                     spot = Tileset.WALL;
                 }
             }
