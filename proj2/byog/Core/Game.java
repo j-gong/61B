@@ -38,7 +38,7 @@ public class Game {
         int seed = Integer.parseInt(input.replaceAll("[\\D]", ""));
 
         WORLD = new TETile[WIDTH][HEIGHT];
-        //Map.makeMap(WORLD, seed);
+        Map.makeMap(WORLD, seed);
 
         //ter.renderFrame(WORLD);
         return WORLD;
