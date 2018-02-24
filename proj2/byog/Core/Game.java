@@ -2,6 +2,7 @@ package byog.Core;
 
 import byog.TileEngine.TERenderer;
 import byog.TileEngine.TETile;
+import java.util.Random;
 
 public class Game {
     TERenderer ter = new TERenderer();
@@ -39,7 +40,7 @@ public class Game {
         WORLD = new TETile[WIDTH][HEIGHT];
         Map.makeMap(WORLD, seed);
 
-        ter.renderFrame(WORLD);
+        //ter.renderFrame(WORLD);
         return WORLD;
     }
 
@@ -47,9 +48,8 @@ public class Game {
         TERenderer ter = new TERenderer();
         ter.initialize(WIDTH, HEIGHT);
 
-        //int seed = 13976;
+        Random rand = new Random();
         int seed = 126;
-        //int seed = 8095986;
 
         WORLD = new TETile[WIDTH][HEIGHT];
         Map.makeMap(WORLD, seed);

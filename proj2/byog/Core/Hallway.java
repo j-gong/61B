@@ -32,7 +32,7 @@ public class Hallway {
 
         int rand = Map.R.nextInt(6); // number between 0 - 5
 
-        if (rand > 2 || Map.ROOMCOUNT < 3) {
+        if (rand > 2 || Map.ROOMCOUNT < 5) {
 
             if (Map.ROOMCOUNT <= Map.MAXROOMS && !onEdge(exit)) {
 
@@ -54,7 +54,7 @@ public class Hallway {
 
             int nextDirection = availablePaths();
 
-            if (nextDirection < 0 || (Map.ROOMCOUNT > 0 && rand <= 2)) {
+            if (nextDirection < 0 || (Map.ROOMCOUNT > 5 && rand <= 2)) {
                 Build.dead(exit);
 
             } else {
