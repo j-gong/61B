@@ -117,16 +117,15 @@ public class Room{
             height = R.nextInt(minY) + minY + 1;
             width = R.nextInt(minX) + minX + 1;
 
-
             if (directionfrom == 0) {
-                check.yPos -= minY;
+                check.yPos -= (minY - 1);
                 check.xPos += 1; //site needs to be inside the walls
             } else if (directionfrom == 1) {
-                check.yPos -= (minY - 1);
-                check.xPos -= minX;
-            } else if (directionfrom == 2) {
-                check.yPos -= minY;
+                check.yPos -= height;
                 check.xPos -= (minX - 1);
+            } else if (directionfrom == 2) {
+                check.yPos -= (minY - 1);
+                check.xPos -= width;
             } else {
                 check.xPos -= (minX - 1);
                 check.yPos += 1;
