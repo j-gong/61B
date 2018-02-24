@@ -31,7 +31,7 @@ public class Build {
             if (hall.direction % 2 == 0) {
 
                 if (hall.direction == 0) {
-                    start.xPos -= hall.exit.xPos;
+                    start.xPos = hall.exit.xPos;
                 }
                 Build.buildRow(new Location(start.xPos, start.yPos + i), hall.length, tile, false);
 
