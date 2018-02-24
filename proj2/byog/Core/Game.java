@@ -32,7 +32,7 @@ public class Game {
      */
     public TETile[][] playWithInputString(String input) {
 
-        TERenderer ter = new TERenderer();
+        //TERenderer ter = new TERenderer();
         ter.initialize(WIDTH, HEIGHT);
 
         int seed = Integer.parseInt(input.replaceAll("[\\D]", ""));
