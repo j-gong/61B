@@ -46,7 +46,7 @@ public class Game {
         ter.initialize(WIDTH, HEIGHT);
 
         Random rand = new Random();
-        int seed = 5197880843569031643;
+        long seed = (int) 5197880843569031643;
 
         WORLD = new TETile[WIDTH][HEIGHT];
         Map.makeMap(WORLD, seed);
@@ -60,8 +60,8 @@ public class Game {
         WORLD = new TETile[WIDTH][HEIGHT];
         Map.makeMap(WORLD, seed);
         ter.renderFrame(WORLD);*/
-        String cool = "4awefj3242u3kljlk23j423";//Integer.parseInt(cool.replaceAll("[\\D]", ""));
-        System.out.println(Long.parseLong(cool.replaceAll("[\\D]", "")));
+        /*String cool = "4awefj3242u3kljlk23j423";//Integer.parseInt(cool.replaceAll("[\\D]", ""));
+        System.out.println(Long.parseLong(cool.replaceAll("[\\D]", "")));*/
     }
 
 }

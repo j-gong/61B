@@ -14,7 +14,7 @@ public class Room{
     public int height;
     public boolean noRoom;
 
-    private static TETile[][] LAYOUT = Map.LAYOUT;
+    //private static TETile[][] Map.LAYOUT = Map.Map.LAYOUT;
 
     public Room(Location startPoint) { //constructs the first room
         site = startPoint;

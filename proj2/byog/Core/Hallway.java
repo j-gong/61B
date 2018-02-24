@@ -15,7 +15,7 @@ public class Hallway {
     public int direction; // 0 = west, 1 = north, 2 = east, 3 = south
     public int length;
 
-    private static TETile[][] LAYOUT = Map.LAYOUT;
+    //private static TETile[][] Map.LAYOUT = Map.Map.LAYOUT;
 
     public Hallway(){};
 
@@ -117,7 +117,7 @@ public class Hallway {
                 place.yPos += tunneldirection;
             }
 
-            TETile check = LAYOUT[place.xPos][place.yPos];
+            TETile check = Map.LAYOUT[place.xPos][place.yPos];
 
             //see what block the placeholder is at now
             if (check != null) {
