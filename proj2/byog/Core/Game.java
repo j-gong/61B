@@ -7,8 +7,8 @@ import java.util.Random;
 public class Game {
     TERenderer ter = new TERenderer();
     /* Feel free to change the width and height. */
-    public static int WIDTH = 80;
-    public static int HEIGHT = 30;
+    public int WIDTH = 80;
+    public int HEIGHT = 30;
 
     public static TETile[][] WORLD;
 
