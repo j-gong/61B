@@ -33,14 +33,13 @@ public class Game {
     public TETile[][] playWithInputString(String input) {
 
         //TERenderer ter = new TERenderer();
-        ter.initialize(WIDTH, HEIGHT);
+        //ter.initialize(WIDTH, HEIGHT);
 
         int seed = Integer.parseInt(input.replaceAll("[\\D]", ""));
 
         WORLD = new TETile[WIDTH][HEIGHT];
         Map.makeMap(WORLD, seed);
 
-        //ter.renderFrame(WORLD);
         return WORLD;
     }
 
