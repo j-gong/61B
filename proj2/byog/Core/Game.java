@@ -63,8 +63,22 @@ public class Game {
 
     }
 
+    @Test
+    public void getxgety() {
+        TETile[][] area = new TETile[4][7];
+        Location place =  new Location(4, 7);
+        TETile[][] motherfucker = new TETile[place.getxPos()][place.getyPos()];
+        assertArrayEquals(area, motherfucker);
+
+        TETile[][] volume = new TETile[7][3];
+        Location location =  new Location(4, 7);
+        TETile[][] fatherfucker = new TETile[location.getxPos()][location.getyPos()];
+        assertNotEquals(volume, fatherfucker);
+
+    }
+
     public static void main(String[] args) {
-        TERenderer ter = new TERenderer();
+        /*TERenderer ter = new TERenderer();
         ter.initialize(WIDTH, HEIGHT);
 
         Random rand = new Random();
@@ -72,7 +86,7 @@ public class Game {
 
         //Room comes back and bites into the old room -> what stoppers do we have for room?
         //int seed = 513245;
-        int seed = 2384573;
+        int seed = 24573;
 
 
 
@@ -81,7 +95,10 @@ public class Game {
         Map map = new Map(WORLD, seed, HEIGHT, WIDTH);
         WORLD = map.makeMap();
 
-        ter.renderFrame(WORLD);
+        ter.renderFrame(WORLD);*/
+
+
+
 
 
         /*TERenderer ter = new TERenderer();

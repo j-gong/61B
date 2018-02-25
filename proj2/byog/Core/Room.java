@@ -54,7 +54,7 @@ public class Room {
     /* holds procedures for making a room*/
     public void makeRoom() {
 
-        key.incrementRoomCount(1);
+        key.incrementRoomCount();
 
         digOpenings(5); // creates a list of openings
 

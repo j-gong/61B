@@ -79,7 +79,7 @@ public class Build {
         start.changePos(start, 0, -1);
         buildColumn(start, rm.getHeight(), walling, false); //build left side wall
 
-        start.changePos(start, 1, 0);
+        start.changePos(start, rm.getWidth() + 1, 0);
         buildColumn(start, rm.getHeight(), walling, false);
     }
 

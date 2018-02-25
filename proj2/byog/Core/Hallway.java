@@ -109,7 +109,7 @@ public class Hallway {
         if (direction % 2 == 0) {
             exit.incrementXPos(tunneldirection * (length - 1));
         } else {
-            exit.incrementYPos(tunneldirection * (length -1));
+            exit.incrementYPos(tunneldirection * (length - 1));
         }
     }
 

@@ -63,7 +63,7 @@ public class Map {
         return LAYOUT;
     }
 
-    public void incrementRoomCount(int x) {
+    public void incrementRoomCount() {
         ROOMCOUNT += 1;
     }
 
