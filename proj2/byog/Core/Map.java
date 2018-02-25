@@ -1,7 +1,6 @@
 package byog.Core;
 import byog.TileEngine.TETile;
 import byog.TileEngine.Tileset;
-import javafx.scene.control.cell.TextFieldTreeTableCell;
 
 import java.util.Random;
 
