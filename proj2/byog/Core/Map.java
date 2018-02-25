@@ -17,15 +17,14 @@ public class Map {
     public /*static*/ int HEIGHT = Game.HEIGHT;
     public /*static*/ int WIDTH = Game.WIDTH;
 
-    /* TESTING PURPOSES ONLY*/
-    public void Map(){
-        R = new Random(5);
-        LAYOUT = new TETile[10][10];
+
+    public Map(TETile[][] passed, int sd){
+        LAYOUT = passed;
+        SEED = sd;
     }
 
-    public TETile[][] makeMap(TETile[][] inputMap, int sd) {
-        LAYOUT = inputMap;
-        SEED = sd;
+    public TETile[][] makeMap() {
+
 
         R = new Random(SEED);
         MAXROOMS = R.nextInt(10) + 10;

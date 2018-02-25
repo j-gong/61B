@@ -39,8 +39,8 @@ public class Game {
         int seed =(int) Long.parseLong(input.replaceAll("[\\D]", ""));
 
         WORLD = new TETile[WIDTH][HEIGHT];
-        Map map = new Map();
-        WORLD = map.makeMap(WORLD, seed);
+        Map map = new Map(WORLD, seed);
+        WORLD = map.makeMap();
 
         return WORLD;
     }
@@ -53,8 +53,8 @@ public class Game {
         /*assertArrayEquals(A, B); */
 
 
-        /*TETile[][]  */ A = playWithInputString("n5197880s");
-        /* TETile[][] */ B = playWithInputString("n5197880s");
+        /*TETile[][]  */ //A = playWithInputString("n5197880s");
+        /* TETile[][] */// B = playWithInputString("n5197880s");
 
 
         assertArrayEquals(A, B);
@@ -78,8 +78,8 @@ public class Game {
 
         WORLD = new TETile[WIDTH][HEIGHT];
 
-        Map map = new Map();
-        WORLD = map.makeMap(WORLD, seed);
+        Map map = new Map(WORLD, seed);
+        WORLD = map.makeMap();
 
         ter.renderFrame(WORLD);
 

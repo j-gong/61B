@@ -1,4 +1,4 @@
-package byog.Core;
+/*package byog.Core;
 
 import byog.TileEngine.TETile;
 import org.junit.Test;
@@ -15,3 +15,4 @@ public class TestRoom {
     }
 
 }
+*/

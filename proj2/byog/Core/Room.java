@@ -15,14 +15,16 @@ public class Room{
     public int width;
     public int height;
 
-    private Build builder = new Build(key);
+    private Build builder;
 
     //private static TETile[][] Map.LAYOUT = Map.Map.LAYOUT;
 
     public Room(Location startPoint, Map passed) { //constructs the first room
         key = passed;
         site = startPoint;
+        builder = new Build(key);
         digRoom();
+
 
     }
 
@@ -31,6 +33,7 @@ public class Room{
         // direction 0 = left, 1 = top, 2 = right, 3 = bottom
         key = passed;
         numOpenings += 1;
+        builder = new Build(key);
 
         int side;
         if (directionfrom < 2) {

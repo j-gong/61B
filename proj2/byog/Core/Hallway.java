@@ -15,12 +15,13 @@ public class Hallway {
 
     private boolean connected;
 
-    private Build builder = new Build(key);
+    private Build builder;
 
     public Hallway(Location enter, int toward, Map passed) {
         direction = toward;
         entrance = enter;
         key = passed;
+        builder = new Build(key);
     }
 
     public void makeHallway() {
