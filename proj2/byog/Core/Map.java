@@ -2,22 +2,20 @@ package byog.Core;
 import byog.TileEngine.TETile;
 import byog.TileEngine.Tileset;
 
-import javax.swing.*;
 import java.util.Random;
 
 public class Map {
 
-    public static TETile[][] LAYOUT;
-    public static int ROOMCOUNT;
-    public static int MAXROOMS;
-    private static int SEED;
-    public static Random R;
+    public /*static*/ TETile[][] LAYOUT;
+    public /*static*/ int ROOMCOUNT = 0;
+    public /*static*/ int MAXROOMS;
+    public /*static*/ int MINROOMS = 10;
 
-    public static Hallway[] OPENHALLS = new Hallway[25];
-    public static int HALLCOUNTER = 0;
+    private int SEED;
+    public /*static*/ Random R;
 
-    public static int HEIGHT = Game.HEIGHT;
-    public static int WIDTH = Game.WIDTH;
+    public /*static*/ int HEIGHT = Game.HEIGHT;
+    public /*static*/ int WIDTH = Game.WIDTH;
 
     /* TESTING PURPOSES ONLY*/
     public void Map(){
@@ -30,10 +28,10 @@ public class Map {
         SEED = sd;
 
         R = new Random(SEED);
-        MAXROOMS = R.nextInt(7) + 7;
+        MAXROOMS = R.nextInt(10) + 10;
 
-        Location startPoint = new Location(Map.R.nextInt(Map.WIDTH / 5) + 1, Map.R.nextInt(Map.HEIGHT / 5) + 1);
-        Room root = new Room(startPoint);
+        Location startPoint = new Location(R.nextInt(/*Map.*/WIDTH / 5) + 1, R.nextInt(/*Map.*/HEIGHT / 5) + 1);
+        Room root = new Room(startPoint, this);
         root.makeRoom();
 
         fillMap();

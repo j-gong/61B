@@ -2,6 +2,9 @@ package byog.Core;
 
 import byog.TileEngine.TERenderer;
 import byog.TileEngine.TETile;
+import org.junit.Test;
+import static org.junit.Assert.*;
+
 import java.util.Random;
 
 public class Game {
@@ -42,13 +45,36 @@ public class Game {
         return WORLD;
     }
 
+    @Test
+    public void testGeneration() {
+        TETile[][] A = playWithInputString("n5197880843569031643s");
+        TETile[][] B = playWithInputString("n5197880843569031643s");
+
+        /*assertArrayEquals(A, B); */
+
+
+        /*TETile[][]  */ A = playWithInputString("n5197880s");
+        /* TETile[][] */ B = playWithInputString("n5197880s");
+
+
+        assertArrayEquals(A, B);
+
+
+
+    }
+
     public static void main(String[] args) {
         TERenderer ter = new TERenderer();
         ter.initialize(WIDTH, HEIGHT);
 
         Random rand = new Random();
-        // only digs a few rooms
-        int seed = 113009;
+
+
+        //Room comes back and bites into the old room -> what stoppers do we have for room?
+        //int seed = 513245;
+        int seed = 2384573;
+
+
 
         WORLD = new TETile[WIDTH][HEIGHT];
 

@@ -8,24 +8,28 @@ public class Room{
 
     public Location site;
     public Location[] openings = new Location[4];
-    public int numOpenings = 0;
+    private int numOpenings = 0;
+
+    private Map key;
 
     public int width;
     public int height;
-    public boolean noRoom;
 
-    private Build builder = new Build();
+    private Build builder = new Build(key);
 
     //private static TETile[][] Map.LAYOUT = Map.Map.LAYOUT;
 
-    public Room(Location startPoint) { //constructs the first room
+    public Room(Location startPoint, Map passed) { //constructs the first room
+        key = passed;
         site = startPoint;
         digRoom();
+
     }
 
     /* Room constructor set from a hallway's exit location */
-    public Room(Location entrance, int directionfrom) { //constructs the second room
+    public Room(Location entrance, int directionfrom, Map passed) { //constructs the second room
         // direction 0 = left, 1 = top, 2 = right, 3 = bottom
+        key = passed;
         numOpenings += 1;
 
         int side;
@@ -55,15 +59,15 @@ public class Room{
     /* holds procedures for making a room*/
     public void makeRoom() {
 
-        Map.ROOMCOUNT += 1;
+        key.ROOMCOUNT += 1;
 
-        digOpenings(); // creates a list of openings
+        digOpenings(5); // creates a list of openings
 
         builder.buildRoom(this); //lays down room's floor and wall tiles
 
         for (int i = 0; i < 4; i += 1) { //make a new hallway for each hole
             if (openings[i] != null) {
-                Hallway hall = new Hallway(openings[i], i);
+                Hallway hall = new Hallway(openings[i], i, key);
                 hall.makeHallway();
             }
         }
@@ -73,8 +77,8 @@ public class Room{
     /* Searches for a valid place for the new Room and sets the width and height*/
     private void digRoom() {
 
-        width = Map.R.nextInt(WIDTH / 8) + 2;
-        height = Map.R.nextInt(HEIGHT / 8) + 2;
+        width = key.R.nextInt(key.WIDTH / 6) + 2;
+        height = key.R.nextInt(key.HEIGHT / 6) + 2;
 
         if (!validSpace(site)) {
             site.xPos += 2;
@@ -86,7 +90,7 @@ public class Room{
 
     /* looks to see if a location is a valid space*/
     private boolean validSpace(Location check) {
-        if ((check.xPos > 1 && check.xPos + width < WIDTH - 1) && (check.yPos > 1 && check.yPos + height < HEIGHT - 1)) {
+        if ((check.xPos > 1 && check.xPos + width < key.WIDTH - 1) && (check.yPos > 1 && check.yPos + height < key.HEIGHT - 1)) {
             return noOverlap();
         }
         return false;
@@ -96,7 +100,7 @@ public class Room{
     private boolean noOverlap() {
         for (int x = 0; x < width; x += 1) {
             for (int y = 0; y < height; y += 1) {
-                if (Map.LAYOUT[x][y] != null) {
+                if (key.LAYOUT[x][y] != null) {
                     return false;
                 }
             }
@@ -110,14 +114,14 @@ public class Room{
         boolean found = false;
         Location check = null;
 
-        int minX = R.nextInt(8) + 1;
-        int minY = R.nextInt(8) + 1;
+        int minX = key.R.nextInt(8) + 1;
+        int minY = key.R.nextInt(8) + 1;
 
         while (attempts > 0) {
 
             check = entrance.copy();
-            height = R.nextInt(minY) + minY + 1;
-            width = R.nextInt(minX) + minX + 1;
+            height = key.R.nextInt(minY) + minY + 1;
+            width = key.R.nextInt(minX) + minX + 1;
 
             if (directionfrom == 0) {
                 check.yPos -= (minY - 1);
@@ -151,47 +155,52 @@ public class Room{
     }
 
     /* creates a set of random openings in the walls */
-    private void digOpenings() {
-        boolean need = false;
-        if (ROOMCOUNT < 7) {
-            need = true;
-        }
-        while (need) {
-            int numHoles = R.nextInt(3 - numOpenings);
-            if (ROOMCOUNT < 7 && numHoles < 1) {
-                numHoles = 3;
-            }
-            for (int i = numHoles; i > 0; i -= 1) {
-                int side = R.nextInt(4);
-                if (openings[side] == null && !closeToEdge(site, side)) {
-                    digHole(side);
-                    need = false;
-                }
+    private void digOpenings(int tries) {
+
+        boolean need = key.ROOMCOUNT < 7;
+        int numHoles = key.R.nextInt(3 - numOpenings);
+
+        if (need && numHoles < 1) { numHoles = 3; }
+        for (int i = numHoles; i > 0; i -= 1) {
+            int side = key.R.nextInt(4);
+            if (openings[side] == null && !closeToEdge(site, side)) {
+                digHole(side);
             }
         }
+
+        if (openings[3] == null && !closeToEdge(site, 3)) {
+            digHole(3);
+        }
+
+        need = (key.ROOMCOUNT < key.MINROOMS && numOpenings < 3);
+        if (need && tries > 0) {
+            digOpenings(tries - 1);
+        }
+
     }
 
     private void digHole(int side) {
         if (side == 0){
-            openings[side] = new Location(site.xPos - 1, site.yPos + R.nextInt(height));
+            openings[side] = new Location(site.xPos - 1, site.yPos + key.R.nextInt(height));
         } else if (side == 1){
-            openings[side] = new Location(site.xPos + R.nextInt(width), site.yPos + height);
+            openings[side] = new Location(site.xPos + key.R.nextInt(width), site.yPos + height);
         } else if (side == 2) {
-            openings[side] = new Location(site.xPos + width, site.yPos + R.nextInt(height));
+            openings[side] = new Location(site.xPos + width, site.yPos + key.R.nextInt(height));
         } else {
-            openings[side] = new Location(site.xPos + R.nextInt(width), site.yPos);
+            openings[side] = new Location(site.xPos + key.R.nextInt(width), site.yPos);
         }
+        numOpenings += 1;
     }
 
     private boolean closeToEdge(Location check, int side) {
         if (side == 0) {
-            return check.xPos < Map.WIDTH / 6;
+            return check.xPos < key.WIDTH / 6;
         } else if (side == 1) {
-            return check.yPos > 5 * Map.HEIGHT / 6;
+            return check.yPos > 5 * key.HEIGHT / 6;
         } else if (side == 2) {
-            return check.xPos > 5 * Map.WIDTH / 6;
+            return check.xPos > 5 * key.WIDTH / 6;
         } else {
-            return check.yPos < Map.WIDTH / 6;
+            return check.yPos < key.WIDTH / 6;
         }
     }
 
