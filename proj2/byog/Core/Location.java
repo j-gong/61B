@@ -25,8 +25,7 @@ public class Location {
     public void changePos(Location start, int changeX, int changeY) {
         if (changeX == 0) {
             start.yPos += changeY;
-        }
-        else {
+        } else {
             start.xPos += changeX;
         }
     }

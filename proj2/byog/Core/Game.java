@@ -5,7 +5,6 @@ import byog.TileEngine.TETile;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-import java.util.Random;
 
 public class Game {
     TERenderer ter = new TERenderer();

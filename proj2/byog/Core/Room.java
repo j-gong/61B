@@ -94,10 +94,10 @@ public class Room {
 
     /* checks to see if any of the room's spaces are going to overlap with tiles already set down*/
     private boolean noOverlap() {
-        TETile[][] Layout = key.getLAYOUT();
+        TETile[][] layout = key.getLAYOUT();
         for (int x = 0; x < width; x += 1) {
             for (int y = 0; y < height; y += 1) {
-                if (Layout[x][y] != null) {
+                if (layout[x][y] != null) {
                     return false;
                 }
             }
@@ -180,13 +180,17 @@ public class Room {
     private void digHole(int side) {
 
         if (side == 0) {
-            openings[side] = new Location(site.getxPos() - 1, site.getyPos() + key.getR().nextInt(height));
+            openings[side] = new Location(site.getxPos() - 1,
+                    site.getyPos() + key.getR().nextInt(height));
         } else if (side == 1) {
-            openings[side] = new Location(site.getxPos() + key.getR().nextInt(width), site.getyPos() + height);
+            openings[side] = new Location(site.getxPos() + key.getR().nextInt(width),
+                    site.getyPos() + height);
         } else if (side == 2) {
-            openings[side] = new Location(site.getxPos() + width, site.getyPos() + key.getR().nextInt(height));
+            openings[side] = new Location(site.getxPos() + width,
+                    site.getyPos() + key.getR().nextInt(height));
         } else {
-            openings[side] = new Location(site.getxPos() + key.getR().nextInt(width), site.getyPos());
+            openings[side] = new Location(site.getxPos() + key.getR().nextInt(width),
+                    site.getyPos());
         }
         numOpenings += 1;
     }

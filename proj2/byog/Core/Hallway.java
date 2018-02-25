@@ -120,7 +120,7 @@ public class Hallway {
 
         int tunneldirection = tunnelDirect(direct);
         int openSpaces = 0;
-        TETile[][] Layout = key.getLAYOUT();
+        TETile[][] layout = key.getLAYOUT();
 
         //check to see if there's a tile at the next spot
         Location place = beginning.copy();
@@ -134,7 +134,7 @@ public class Hallway {
                 place.incrementYPos(tunneldirection);
             }
 
-            TETile check = Layout[place.getxPos()][place.getyPos()];
+            TETile check = layout[place.getxPos()][place.getyPos()];
 
             //see what block the placeholder is at now
             if (check != null) {
