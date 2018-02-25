@@ -39,7 +39,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Build.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Build.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/byog/Core/Build.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="468">
@@ -78,8 +78,8 @@
       <file leaf-file-name="Hallway.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/byog/Core/Hallway.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="59">
-              <caret line="133" column="53" lean-forward="true" selection-start-line="133" selection-start-column="53" selection-end-line="133" selection-end-column="53" />
+            <state relative-caret-position="326">
+              <caret line="210" column="14" lean-forward="false" selection-start-line="210" selection-start-column="8" selection-end-line="210" selection-end-column="14" />
               <folding>
                 <element signature="e#6390#6391#0" expanded="true" />
                 <element signature="e#6421#6422#0" expanded="true" />
@@ -126,12 +126,22 @@
       <file leaf-file-name="TETile.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/byog/TileEngine/TETile.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
-              <caret line="5" column="17" lean-forward="false" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
+            <state relative-caret-position="108">
+              <caret line="4" column="0" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
               <folding>
-                <element signature="e#4618#4619#0" expanded="true" />
-                <element signature="e#4652#4653#0" expanded="true" />
+                <element signature="e#4622#4623#0" expanded="true" />
+                <element signature="e#4656#4657#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Tileset.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/byog/TileEngine/Tileset.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="432">
+              <caret line="16" column="3" lean-forward="true" selection-start-line="16" selection-start-column="3" selection-end-line="16" selection-end-column="3" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -217,9 +227,11 @@
         <option value="$PROJECT_DIR$/byog/Core/Map.java" />
         <option value="$PROJECT_DIR$/byog/Core/Game.java" />
         <option value="$PROJECT_DIR$/byog/Core/Location.java" />
-        <option value="$PROJECT_DIR$/byog/Core/Hallway.java" />
         <option value="$PROJECT_DIR$/byog/Core/Room.java" />
         <option value="$PROJECT_DIR$/byog/Core/Build.java" />
+        <option value="$PROJECT_DIR$/byog/Core/Hallway.java" />
+        <option value="$PROJECT_DIR$/byog/TileEngine/TETile.java" />
+        <option value="$PROJECT_DIR$/byog/TileEngine/Tileset.java" />
       </list>
     </option>
   </component>
@@ -841,7 +853,7 @@
         <state relative-caret-position="2862">
           <caret line="113" column="0" lean-forward="false" selection-start-line="113" selection-start-column="0" selection-end-line="113" selection-end-column="0" />
           <folding>
-            <element signature="e#4652#4653#0" expanded="true" />
+            <element signature="e#4656#4657#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -931,7 +943,7 @@
         <state relative-caret-position="1695">
           <caret line="113" column="0" lean-forward="false" selection-start-line="113" selection-start-column="0" selection-end-line="113" selection-end-column="0" />
           <folding>
-            <element signature="e#4652#4653#0" expanded="true" />
+            <element signature="e#4656#4657#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1042,7 +1054,7 @@
         <state relative-caret-position="1695">
           <caret line="113" column="0" lean-forward="false" selection-start-line="113" selection-start-column="0" selection-end-line="113" selection-end-column="0" />
           <folding>
-            <element signature="e#4652#4653#0" expanded="true" />
+            <element signature="e#4656#4657#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1153,7 +1165,7 @@
         <state relative-caret-position="1695">
           <caret line="113" column="0" lean-forward="false" selection-start-line="113" selection-start-column="0" selection-end-line="113" selection-end-column="0" />
           <folding>
-            <element signature="e#4652#4653#0" expanded="true" />
+            <element signature="e#4656#4657#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1264,14 +1276,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/byog/TileEngine/Tileset.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="145">
-          <caret line="16" column="3" lean-forward="true" selection-start-line="16" selection-start-column="3" selection-end-line="16" selection-end-column="3" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/byog/Core/Main.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="379">
@@ -1336,34 +1340,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/byog/TileEngine/TETile.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="5" column="17" lean-forward="false" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
-          <folding>
-            <element signature="e#4618#4619#0" expanded="true" />
-            <element signature="e#4652#4653#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/byog/Core/Hallway.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="59">
-          <caret line="133" column="53" lean-forward="true" selection-start-line="133" selection-start-column="53" selection-end-line="133" selection-end-column="53" />
-          <folding>
-            <element signature="e#6390#6391#0" expanded="true" />
-            <element signature="e#6421#6422#0" expanded="true" />
-            <element signature="e#6454#6455#0" expanded="true" />
-            <element signature="e#6486#6487#0" expanded="true" />
-            <element signature="e#6516#6517#0" expanded="true" />
-            <element signature="e#6545#6546#0" expanded="true" />
-            <element signature="e#6578#6579#0" expanded="true" />
-            <element signature="e#6605#6606#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/byog/Core/Room.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="432">
@@ -1389,6 +1365,42 @@
             <element signature="e#156#157#0" expanded="true" />
             <element signature="e#184#185#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/byog/Core/Hallway.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="326">
+          <caret line="210" column="14" lean-forward="false" selection-start-line="210" selection-start-column="8" selection-end-line="210" selection-end-column="14" />
+          <folding>
+            <element signature="e#6390#6391#0" expanded="true" />
+            <element signature="e#6421#6422#0" expanded="true" />
+            <element signature="e#6454#6455#0" expanded="true" />
+            <element signature="e#6486#6487#0" expanded="true" />
+            <element signature="e#6516#6517#0" expanded="true" />
+            <element signature="e#6545#6546#0" expanded="true" />
+            <element signature="e#6578#6579#0" expanded="true" />
+            <element signature="e#6605#6606#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/byog/TileEngine/TETile.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="108">
+          <caret line="4" column="0" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+          <folding>
+            <element signature="e#4622#4623#0" expanded="true" />
+            <element signature="e#4656#4657#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/byog/TileEngine/Tileset.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="432">
+          <caret line="16" column="3" lean-forward="true" selection-start-line="16" selection-start-column="3" selection-end-line="16" selection-end-column="3" />
+          <folding />
         </state>
       </provider>
     </entry>

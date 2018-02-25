@@ -3,7 +3,7 @@ package byog.TileEngine;
 import byog.Core.RandomUtils;
 import edu.princeton.cs.introcs.StdDraw;
 
-import java.awt.*;
+import java.awt.Color;
 import java.util.Arrays;
 import java.util.Random;
 
