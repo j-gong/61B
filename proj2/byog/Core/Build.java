@@ -16,12 +16,12 @@ public class Build {
 
         buildWalls(rm);
 
-        buildOpenings(rm.openings);
+        buildOpenings(rm.getOpenings());
     }
 
     public void buildHallway(Hallway hall) {
 
-        Location start = hall.entrance.copy();
+        Location start = hall.getEntrance().copy();
         TETile tile;
 
         for (int i = -1; i < 2; i += 1) {
@@ -33,84 +33,75 @@ public class Build {
             }
 
 
-            if (hall.direction % 2 == 0) {
+            if (hall.getDirection() % 2 == 0) {
 
-                if (hall.direction == 0) {
-                    start.xPos = hall.exit.xPos;
+                if (hall.getDirection() == 0) {
+                    start.setXPos(start, hall.getExit().getxPos());
                 }
-                buildRow(new Location(start.xPos, start.yPos + i), hall.length, tile, false);
+                buildRow(new Location(start.getxPos(), start.getyPos() + i), hall.getLength(), tile, false);
 
             } else {
-                if(hall.direction == 1) {
-                    start.yPos = hall.exit.yPos;
+                if (hall.getDirection() == 1) {
+                    start.setYPos(start, hall.getExit().getyPos());
                 }
-                buildColumn(new Location(start.xPos + i, start.yPos), hall.length, tile, false);
+                buildColumn(new Location(start.getxPos() + i, start.getyPos()), hall.getLength(), tile, false);
             }
         }
     }
 
-    /* don't know if this block is a good thing to have, should probably just reconfigure makeRow and makeColumn*/
-    /*private static void freeEnds(Hallway hall) {
-        Location end = hall.exit.copy();
-        if (hall.direction % 2 == 0 ) {
-            Map.LAYOUT[end.xPos][end.yPos + 1] = null;
-            Map.LAYOUT[end.xPos][end.yPos - 1] = null;
-        } else {
-            Map.LAYOUT[end.xPos + 1][end.yPos] = null;
-            Map.LAYOUT[end.xPos - 1][end.yPos] = null;
-        }
-    }
-*/
-    private void buildOpenings(Location[] holes){
+    private void buildOpenings(Location[] holes) {
+        TETile[][] Layout = key.getLAYOUT();
         for (int i = 0; i < 4; i += 1) {
             if (holes[i] != null) {
-                key.LAYOUT[holes[i].xPos][holes[i].yPos] = Tileset.FLOOR;
+                Layout[holes[i].getxPos()][holes[i].getyPos()] = Tileset.FLOOR;
             }
         }
     }
 
     private void buildFloors(Room rm) {
-        Location start = rm.site.copy();
+        Location start = rm.getSite().copy();
         TETile flooring = Tileset.FLOOR;
-        for (int i = 0; i < rm.height; i += 1) {
-            buildRow(start, rm.width, flooring, true);
-            start.yPos += 1;
+        for (int i = 0; i < rm.getHeight(); i += 1) {
+            buildRow(start, rm.getWidth(), flooring, true);
+            start.changePos(start, 0, 1);
         }
     }
 
     private void buildWalls(Room rm) {
-        Location start = new Location(rm.site.xPos-1, rm.site.yPos-1);
+        Location start = new Location(rm.getSite().getxPos() - 1, rm.getSite().getyPos() - 1);
         TETile walling = Tileset.WALL;
 
-        buildRow(start, rm.width + 2, walling, false); //build bottom wall
+        buildRow(start, rm.getWidth() + 2, walling, false); //build bottom wall
 
-        start.yPos += rm.height + 1;
-        buildRow(start, rm.width + 2, walling, false); //build top wall
+        start.changePos(start, 0, rm.getHeight() + 1);
+        buildRow(start, rm.getWidth() + 2, walling, false); //build top wall
 
-        start.yPos -= 1;
-        buildColumn(start, rm.height, walling, false); //build left side wall
+        start.changePos(start, 0, -1);
+        buildColumn(start, rm.getHeight(), walling, false); //build left side wall
 
-        start.xPos += rm.width + 1;
-        buildColumn(start, rm.height, walling, false);
+        start.changePos(start, 1, 0);
+        buildColumn(start, rm.getHeight(), walling, false);
     }
 
     public void buildRow(Location start, int length, TETile tile, boolean overwrite) {
         boolean over = overwrite;
         Location place = start.copy();
+        TETile[][] Layout = key.getLAYOUT();
         for (int i = 0; i < length; i += 1) {
-            TETile check = key.LAYOUT[place.xPos + i][place.yPos];
+            TETile check = Layout[place.getxPos() + i][place.getyPos()];
             if (check == null || over) {
-                key.LAYOUT[place.xPos + i][place.yPos] = tile;
+                Layout[place.getxPos() + i][place.getyPos()] = tile;
             }
         }
     }
 
     public void buildColumn(Location start, int length, TETile tile, boolean overwrite) {
         Location place = start.copy();
+        TETile[][] Layout = key.getLAYOUT();
         for (int i = 0; i < length; i += 1) {
-            TETile check = key.LAYOUT[place.xPos][place.yPos - i];
+            TETile check = Layout[place.getxPos()][place.getyPos() - i];
             if (check == null || overwrite) {
-                key.LAYOUT[place.xPos][place.yPos - i] = tile;
+                Layout[place.getxPos()][place.getyPos() - i] = tile;
             }
         }
     }
@@ -129,13 +120,15 @@ public class Build {
 
         if (oldDirection % 2 == 0) {
 
-            corner[0] = new Location(place.xPos, place.yPos + compass[opposite]);
-            corner[1] = new Location(place.xPos + compass[oldDirection], place.yPos + compass[opposite]);
+            corner[0] = new Location(place.getxPos(), place.getyPos() + compass[opposite]);
+            corner[1] = new Location(place.getxPos() +
+                    compass[oldDirection], place.getyPos() + compass[opposite]);
 
         }  else {
 
-            corner[0] = new Location(place.xPos + compass[opposite], place.yPos);
-            corner[1] = new Location(place.xPos + compass[opposite], place.yPos + compass[oldDirection]);
+            corner[0] = new Location(place.getxPos() + compass[opposite], place.getyPos());
+            corner[1] = new Location(place.getxPos() +
+                    compass[opposite], place.getyPos() + compass[oldDirection]);
 
         }
         buildTurn(corner);
@@ -143,20 +136,22 @@ public class Build {
 
     private void buildTurn(Location[] corner) {
         TETile walling = Tileset.WALL;
+        TETile[][] Layout = key.getLAYOUT();
         for (int i = 0; i < 2; i += 1) {
-            TETile check = key.LAYOUT[corner[i].xPos][corner[i].yPos];
+            TETile check = Layout[corner[i].getxPos()][corner[i].getyPos()];
             if (check == null) {
-                key.LAYOUT[corner[i].xPos][corner[i].yPos] = walling;
+                Layout[corner[i].getxPos()][corner[i].getyPos()] = walling;
             }
         }
     }
 
-    public void dead(Location stop){
+    public void dead(Location stop) {
+        TETile[][] Layout = key.getLAYOUT();
         for (int x = -1; x < 2; x += 1) {
             for (int y = -1; y < 2; y += 1) {
-                TETile spot = key.LAYOUT[stop.xPos + x][stop.yPos + y];
+                TETile spot = Layout[stop.getxPos() + x][stop.getyPos() + y];
                 if (spot == null) {
-                    key.LAYOUT[stop.xPos + x][stop.yPos + y] = Tileset.WALL;
+                    Layout[stop.getxPos() + x][stop.getyPos() + y] = Tileset.WALL;
                 }
             }
         }

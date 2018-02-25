@@ -10,10 +10,10 @@ import java.util.Random;
 public class Game {
     TERenderer ter = new TERenderer();
     /* Feel free to change the width and height. */
-    public static int WIDTH = 80;
-    public static int HEIGHT = 30;
+    private static int WIDTH = 80;
+    private static int HEIGHT = 30;
 
-    public static TETile[][] WORLD;
+    private static TETile[][] WORLD;
 
     /**
      * Method used for playing a fresh game. The game should start from the main menu.
@@ -36,10 +36,10 @@ public class Game {
     public TETile[][] playWithInputString(String input) {
 
 
-        int seed =(int) Long.parseLong(input.replaceAll("[\\D]", ""));
+        int seed = (int) Long.parseLong(input.replaceAll("[\\D]", ""));
 
         WORLD = new TETile[WIDTH][HEIGHT];
-        Map map = new Map(WORLD, seed);
+        Map map = new Map(WORLD, seed, HEIGHT, WIDTH);
         WORLD = map.makeMap();
 
         return WORLD;
@@ -78,7 +78,7 @@ public class Game {
 
         WORLD = new TETile[WIDTH][HEIGHT];
 
-        Map map = new Map(WORLD, seed);
+        Map map = new Map(WORLD, seed, HEIGHT, WIDTH);
         WORLD = map.makeMap();
 
         ter.renderFrame(WORLD);

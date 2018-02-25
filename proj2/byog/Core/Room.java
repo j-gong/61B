@@ -1,20 +1,14 @@
 package byog.Core;
-
 import byog.TileEngine.TETile;
 
-import static byog.Core.Map.*;
+public class Room {
 
-public class Room{
-
-    public Location site;
-    public Location[] openings = new Location[4];
+    private Location site;
+    private Location[] openings = new Location[4];
     private int numOpenings = 0;
-
     private Map key;
-
-    public int width;
-    public int height;
-
+    private int width;
+    private int height;
     private Build builder;
 
     //private static TETile[][] Map.LAYOUT = Map.Map.LAYOUT;
@@ -24,8 +18,6 @@ public class Room{
         site = startPoint;
         builder = new Build(key);
         digRoom();
-
-
     }
 
     /* Room constructor set from a hallway's exit location */
@@ -52,7 +44,7 @@ public class Room{
     }
 
     /* TESTING PURPOSES ONLY */
-    public Room(Location st, int w, int h, Location[] holes){
+    public Room(Location st, int w, int h, Location[] holes) {
         site = st;
         width = w;
         height = h;
@@ -62,7 +54,7 @@ public class Room{
     /* holds procedures for making a room*/
     public void makeRoom() {
 
-        key.ROOMCOUNT += 1;
+        key.incrementRoomCount(1);
 
         digOpenings(5); // creates a list of openings
 
@@ -80,12 +72,12 @@ public class Room{
     /* Searches for a valid place for the new Room and sets the width and height*/
     private void digRoom() {
 
-        width = key.R.nextInt(key.WIDTH / 6) + 2;
-        height = key.R.nextInt(key.HEIGHT / 6) + 2;
+        width = key.getR().nextInt(key.getWIDTH() / 6) + 2;
+        height = key.getR().nextInt(key.getHEIGHT() / 6) + 2;
 
         if (!validSpace(site)) {
-            site.xPos += 2;
-            site.yPos += 2;
+            site.incrementXPos(2);
+            site.incrementYPos(2);
             digRoom();
         }
 
@@ -93,7 +85,8 @@ public class Room{
 
     /* looks to see if a location is a valid space*/
     private boolean validSpace(Location check) {
-        if ((check.xPos > 1 && check.xPos + width < key.WIDTH - 1) && (check.yPos > 1 && check.yPos + height < key.HEIGHT - 1)) {
+        if ((check.getxPos() > 1 && check.getxPos() + width < key.getWIDTH() - 1)
+                && (check.getyPos() > 1 && check.getyPos() + height < key.getHEIGHT() - 1)) {
             return noOverlap();
         }
         return false;
@@ -101,9 +94,10 @@ public class Room{
 
     /* checks to see if any of the room's spaces are going to overlap with tiles already set down*/
     private boolean noOverlap() {
+        TETile[][] Layout = key.getLAYOUT();
         for (int x = 0; x < width; x += 1) {
             for (int y = 0; y < height; y += 1) {
-                if (key.LAYOUT[x][y] != null) {
+                if (Layout[x][y] != null) {
                     return false;
                 }
             }
@@ -117,27 +111,27 @@ public class Room{
         boolean found = false;
         Location check = null;
 
-        int minX = key.R.nextInt(8) + 1;
-        int minY = key.R.nextInt(8) + 1;
+        int minX = key.getR().nextInt(8) + 1;
+        int minY = key.getR().nextInt(8) + 1;
 
         while (attempts > 0) {
 
             check = entrance.copy();
-            height = key.R.nextInt(minY) + minY + 1;
-            width = key.R.nextInt(minX) + minX + 1;
+            height = key.getR().nextInt(minY) + minY + 1;
+            width = key.getR().nextInt(minX) + minX + 1;
 
             if (directionfrom == 0) {
-                check.yPos -= (minY - 1);
-                check.xPos += 1; //site needs to be inside the walls
+                check.incrementYPos(-(minY - 1));
+                check.incrementXPos(1); //site needs to be inside the walls
             } else if (directionfrom == 1) {
-                check.yPos -= height;
-                check.xPos -= (minX - 1);
+                check.incrementYPos(-height);
+                check.incrementXPos(-(minX - 1));
             } else if (directionfrom == 2) {
-                check.yPos -= (minY - 1);
-                check.xPos -= width;
+                check.incrementYPos(-(minY - 1));
+                check.incrementXPos(-width);
             } else {
-                check.xPos -= (minX - 1);
-                check.yPos += 1;
+                check.incrementYPos(1);
+                check.incrementXPos(-(minX - 1));
             }
 
             if (validSpace(check)) {
@@ -150,7 +144,7 @@ public class Room{
             }
 
         }
-        if (found == false) {
+        if (!found) {
             check = null;
             builder.dead(entrance);
         }
@@ -160,12 +154,13 @@ public class Room{
     /* creates a set of random openings in the walls */
     private void digOpenings(int tries) {
 
-        boolean need = key.ROOMCOUNT < 7;
-        int numHoles = key.R.nextInt(3 - numOpenings);
-
-        if (need && numHoles < 1) { numHoles = 3; }
+        boolean need = key.getRoomNum() < 7;
+        int numHoles = key.getR().nextInt(3 - numOpenings);
+        if (need && numHoles < 1) {
+            numHoles = 3;
+        }
         for (int i = numHoles; i > 0; i -= 1) {
-            int side = key.R.nextInt(4);
+            int side = key.getR().nextInt(4);
             if (openings[side] == null && !closeToEdge(site, side)) {
                 digHole(side);
             }
@@ -175,7 +170,7 @@ public class Room{
             digHole(3);
         }
 
-        need = (key.ROOMCOUNT < key.MINROOMS && numOpenings < 3);
+        need = (key.getRoomNum() < key.getMin() && numOpenings < 3);
         if (need && tries > 0) {
             digOpenings(tries - 1);
         }
@@ -183,28 +178,50 @@ public class Room{
     }
 
     private void digHole(int side) {
-        if (side == 0){
-            openings[side] = new Location(site.xPos - 1, site.yPos + key.R.nextInt(height));
-        } else if (side == 1){
-            openings[side] = new Location(site.xPos + key.R.nextInt(width), site.yPos + height);
+        if (side == 0) {
+            site.incrementXPos(-1);
+            site.incrementYPos(key.getR().nextInt(height));
+            openings[side] = new Location(site.getxPos(), site.getyPos());
+        } else if (side == 1) {
+            site.incrementXPos(key.getR().nextInt(width));
+            site.incrementYPos(height);
+            openings[side] = new Location(site.getxPos(), site.getyPos());
         } else if (side == 2) {
-            openings[side] = new Location(site.xPos + width, site.yPos + key.R.nextInt(height));
+            site.incrementXPos(width);
+            site.incrementYPos(key.getR().nextInt(height));
+            openings[side] = new Location(site.getxPos(), site.getyPos());
         } else {
-            openings[side] = new Location(site.xPos + key.R.nextInt(width), site.yPos);
+            site.incrementXPos(key.getR().nextInt(width));
+            openings[side] = new Location(site.getxPos(), site.getyPos());
         }
         numOpenings += 1;
     }
 
     private boolean closeToEdge(Location check, int side) {
         if (side == 0) {
-            return check.xPos < key.WIDTH / 6;
+            return check.getxPos() < key.getWIDTH() / 6;
         } else if (side == 1) {
-            return check.yPos > 5 * key.HEIGHT / 6;
+            return check.getyPos() > 5 * key.getHEIGHT() / 6;
         } else if (side == 2) {
-            return check.xPos > 5 * key.WIDTH / 6;
+            return check.getxPos() > 5 * key.getWIDTH() / 6;
         } else {
-            return check.yPos < key.WIDTH / 6;
+            return check.getyPos() < key.getWIDTH() / 6;
         }
     }
 
+    public Location[] getOpenings() {
+        return openings;
+    }
+
+    public Location getSite() {
+        return site;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
 }
