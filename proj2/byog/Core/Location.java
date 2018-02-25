@@ -40,16 +40,10 @@ public class Location {
     }
 
     public void incrementXPos(int x) {
-        if (x < 0) {
-            xPos -= x;
-        }
         xPos += x;
     }
 
     public void incrementYPos(int y) {
-        if (y < 0) {
-            yPos -= y;
-        }
         yPos += y;
     }
 }

@@ -178,21 +178,15 @@ public class Room {
     }
 
     private void digHole(int side) {
+
         if (side == 0) {
-            site.incrementXPos(-1);
-            site.incrementYPos(key.getR().nextInt(height));
-            openings[side] = new Location(site.getxPos(), site.getyPos());
+            openings[side] = new Location(site.getxPos() - 1, site.getyPos() + key.getR().nextInt(height));
         } else if (side == 1) {
-            site.incrementXPos(key.getR().nextInt(width));
-            site.incrementYPos(height);
-            openings[side] = new Location(site.getxPos(), site.getyPos());
+            openings[side] = new Location(site.getxPos() + key.getR().nextInt(width), site.getyPos() + height);
         } else if (side == 2) {
-            site.incrementXPos(width);
-            site.incrementYPos(key.getR().nextInt(height));
-            openings[side] = new Location(site.getxPos(), site.getyPos());
+            openings[side] = new Location(site.getxPos() + width, site.getyPos() + key.getR().nextInt(height));
         } else {
-            site.incrementXPos(key.getR().nextInt(width));
-            openings[side] = new Location(site.getxPos(), site.getyPos());
+            openings[side] = new Location(site.getxPos() + key.getR().nextInt(width), site.getyPos());
         }
         numOpenings += 1;
     }

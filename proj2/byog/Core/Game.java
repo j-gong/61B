@@ -77,29 +77,31 @@ public class Game {
 
     }
 
+    @Test
+    public void increment() {
+        Location place = new Location(4, 6);
+        place.incrementXPos(1);
+        place.incrementYPos(1);
+        Location place1 = new Location(5, 7);
+        assertEquals(place.getxPos(), place1.getxPos());
+
+        Location place2 = new Location(6, 8);
+        place2.incrementYPos(-1);
+        place2.incrementXPos(-1);
+        assertEquals(place2.getxPos(), place1.getxPos());
+    }
+
     public static void main(String[] args) {
-        /*TERenderer ter = new TERenderer();
+        TERenderer ter = new TERenderer();
         ter.initialize(WIDTH, HEIGHT);
-
-        Random rand = new Random();
-
-
         //Room comes back and bites into the old room -> what stoppers do we have for room?
         //int seed = 513245;
         int seed = 24573;
-
-
-
         WORLD = new TETile[WIDTH][HEIGHT];
-
         Map map = new Map(WORLD, seed, HEIGHT, WIDTH);
         WORLD = map.makeMap();
 
-        ter.renderFrame(WORLD);*/
-
-
-
-
+        ter.renderFrame(WORLD);
 
         /*TERenderer ter = new TERenderer();
         ter.initialize(WIDTH, HEIGHT);
