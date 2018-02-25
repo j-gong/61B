@@ -199,7 +199,7 @@ public class Hallway {
 
     /* moves the start of the new hallway so building algorithm doesn't screw up the other walls */
     private Location turn(int nextdirect) {
-        TETile[][] Layout = key.getLAYOUT();
+        TETile[][] layout = key.getLAYOUT();
         Location result = exit.copy();
         if (direction % 2 == 0) {
             result.incrementXPos(tunnelDirect(direction));
@@ -208,7 +208,7 @@ public class Hallway {
             result.incrementYPos(tunnelDirect(direction));
             builder.turnCap(direction, nextdirect, result);
         }
-        Layout[result.getxPos()][result.getyPos()] = Tileset.FLOOR;
+        layout[result.getxPos()][result.getyPos()] = Tileset.FLOOR;
         return result;
     }
 
