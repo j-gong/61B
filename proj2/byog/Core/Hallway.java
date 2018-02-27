@@ -18,12 +18,13 @@ public class Hallway {
     private Build builder;
 
     public Hallway(Location enter, int toward, Map passed) {
-        key = passed;
-        builder = new Build(key);
         direction = toward;
         entrance = enter;
+        key = passed;
+        builder = new Build(key);
     }
 
+    /* makes a hallway from the constructed direction and entrance*/
     public void makeHallway() {
 
         digHallway();
@@ -50,7 +51,6 @@ public class Hallway {
         if (nextDirect < 0) {
             rand = 2;
         }
-
         if (key.ROOMCOUNT > key.MAXROOMS) {
             rand = 2;
         }
@@ -67,6 +67,7 @@ public class Hallway {
                 break;
             default: builder.dead(exit);
         }
+
     }
 
     /* sets the valid length and exit location of a hallway */
@@ -97,9 +98,9 @@ public class Hallway {
         int tunneldirection = compass[direction];
 
         if (direction % 2 == 0) {
-            exit.xPos += tunneldirection * (length - 1);
+            exit.xPos += (tunneldirection * (length - 1));
         } else {
-            exit.yPos += tunneldirection * (length - 1);
+            exit.yPos += (tunneldirection * (length - 1));
         }
     }
 
@@ -110,6 +111,7 @@ public class Hallway {
 
         int tunneldirection = tunnelDirect(direct);
         int openSpaces = 0;
+        TETile[][] layout = key.LAYOUT;
 
         //check to see if there's a tile at the next spot
         Location place = beginning.copy();
@@ -118,12 +120,12 @@ public class Hallway {
 
             //advance the placeholder
             if (direct % 2 == 0) {
-                place.xPos += tunneldirection;
+                place.xPos += (tunneldirection);
             } else {
-                place.yPos += tunneldirection;
+                place.yPos += (tunneldirection);
             }
 
-            TETile check = key.LAYOUT[place.xPos][place.yPos];
+            TETile check = layout[place.xPos][place.yPos];
 
             //see what block the placeholder is at now
             if (check != null) {
@@ -138,15 +140,14 @@ public class Hallway {
         return openSpaces;
     }
 
-    /* returns an integer based on horizontal or vertical side that
-    lets us add that value to get the next position in the path*/
+    /* returns an integer based on horizontal or vertical side
+    that lets us add that value to get the next position in the path*/
     private int tunnelDirect(int direct) {
         int[] compass = new int[]{-1, 1, 1, -1};
         return compass[direct];
     }
 
-    /* returns the direction of a new path for a new hallway,
-    only allows 90 degree turns */
+    /* returns the direction of a new path for a new hallway, only allows 90 degree turns */
     private int availablePaths() {
         int left = direction - 1;
         if (direction == 0) {
@@ -161,9 +162,9 @@ public class Hallway {
 
         Location place = exit.copy();
         if (direction % 2 == 0) {
-            place.xPos += tunnelDirect(direction);
+            place.xPos += (tunnelDirect(direction));
         } else {
-            place.yPos += tunnelDirect(direction);
+            place.yPos += (tunnelDirect(direction));
         }
 
         boolean leftBad = validLength(left, place) < 5;
@@ -187,21 +188,22 @@ public class Hallway {
                 || (place.yPos < 1 || place.yPos > key.HEIGHT - 2);
     }
 
-    /* moves the start of the new hallway so that the building algorithm doesn't screw up
-    the other walls */
+    /* moves the start of the new hallway so building algorithm doesn't screw up the other walls */
     private Location turn(int nextdirect) {
+        TETile[][] layout = key.LAYOUT;
         Location result = exit.copy();
         if (direction % 2 == 0) {
-            result.xPos += tunnelDirect(direction);
+            result.xPos += (tunnelDirect(direction));
             builder.turnCap(direction, nextdirect, result);
         } else {
-            result.yPos += tunnelDirect(direction);
+            result.yPos += (tunnelDirect(direction));
             builder.turnCap(direction, nextdirect, result);
         }
-        key.LAYOUT[result.xPos][result.yPos] = Tileset.FLOOR;
+        layout[result.xPos][result.yPos] = Tileset.FLOOR;
         return result;
     }
 
+    /* if the map needs more rooms, try to make a hallway. Else, trigger a deadEnd*/
     private void deadRoom(Room rm) {
         if (rm.site == null) {
             if (key.ROOMCOUNT < key.MINROOMS) {
@@ -212,4 +214,5 @@ public class Hallway {
             }
         }
     }
+
 }

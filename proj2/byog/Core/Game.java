@@ -5,15 +5,14 @@ import byog.TileEngine.TETile;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-import java.util.Random;
 
 public class Game {
     TERenderer ter = new TERenderer();
     /* Feel free to change the width and height. */
-    static int WIDTH = 80;
-    static int HEIGHT = 30;
+    private static int WIDTH = 80;
+    private static int HEIGHT = 30;
 
-    static TETile[][] WORLD;
+    private static TETile[][] WORLD;
 
     /**
      * Method used for playing a fresh game. The game should start from the main menu.
@@ -39,50 +38,36 @@ public class Game {
         int seed = (int) Long.parseLong(input.replaceAll("[\\D]", ""));
 
         WORLD = new TETile[WIDTH][HEIGHT];
-        Map map = new Map();
-        WORLD = map.makeMap(WORLD, seed);
+        Map map = new Map(WORLD, seed, HEIGHT, WIDTH);
+        WORLD = map.makeMap();
 
         return WORLD;
     }
 
-    @Test
-    public void testGeneration() {
-        TETile[][] A = playWithInputString("n5197880843569031643s");
-        TETile[][] B = playWithInputString("n5197880843569031643s");
-
-        /*assertArrayEquals(A, B); */
-
-
-        /*TETile[][]  */ A = playWithInputString("n5197880s");
-        /* TETile[][] */ B = playWithInputString("n5197880s");
-
-
-        assertArrayEquals(A, B);
 
 
 
-    }
 
     public static void main(String[] args) {
         TERenderer ter = new TERenderer();
         ter.initialize(WIDTH, HEIGHT);
-
-        Random rand = new Random();
-
-
         //Room comes back and bites into the old room -> what stoppers do we have for room?
         //int seed = 513245;
-        int seed = 2384573;
-
-
-
+        int seed = 24573;
         WORLD = new TETile[WIDTH][HEIGHT];
-
-        Map map = new Map();
-        WORLD = map.makeMap(WORLD, seed);
+        Map map = new Map(WORLD, seed, HEIGHT, WIDTH);
+        WORLD = map.makeMap();
 
         ter.renderFrame(WORLD);
 
+        /*TERenderer ter = new TERenderer();
+        ter.initialize(WIDTH, HEIGHT);
+        int seed = 942582342;
+        WORLD = new TETile[WIDTH][HEIGHT];
+        Map.makeMap(WORLD, seed);
+        ter.renderFrame(WORLD);*/
+        /*String cool = "4awefj3242u3kljlk23j423";//Integer.parseInt(cool.replaceAll("[\\D]", ""));
+        System.out.println(Long.parseLong(cool.replaceAll("[\\D]", "")));*/
     }
 
 }
