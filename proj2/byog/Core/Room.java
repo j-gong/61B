@@ -1,26 +1,24 @@
 package byog.Core;
 
-import byog.TileEngine.TETile;
 
-import static byog.Core.Map.*;
+public class Room {
 
-public class Room{
-
-    public Location site;
-    public Location[] openings = new Location[4];
-    private int numOpenings = 0;
+    Location site;
+    Location[] openings = new Location[4];
+    int numOpenings = 0;
 
     private Map key;
 
-    public int width;
-    public int height;
+    int width;
+    int height;
 
-    private Build builder = new Build(key);
+    private Build builder;
 
     //private static TETile[][] Map.LAYOUT = Map.Map.LAYOUT;
 
     public Room(Location startPoint, Map passed) { //constructs the first room
         key = passed;
+        builder = new Build(key);
         site = startPoint;
         digRoom();
 
@@ -30,6 +28,7 @@ public class Room{
     public Room(Location entrance, int directionfrom, Map passed) { //constructs the second room
         // direction 0 = left, 1 = top, 2 = right, 3 = bottom
         key = passed;
+        builder = new Build(key);
         numOpenings += 1;
 
         int side;
@@ -49,7 +48,7 @@ public class Room{
     }
 
     /* TESTING PURPOSES ONLY */
-    public Room(Location st, int w, int h, Location[] holes){
+    public Room(Location st, int w, int h, Location[] holes) {
         site = st;
         width = w;
         height = h;
@@ -90,7 +89,8 @@ public class Room{
 
     /* looks to see if a location is a valid space*/
     private boolean validSpace(Location check) {
-        if ((check.xPos > 1 && check.xPos + width < key.WIDTH - 1) && (check.yPos > 1 && check.yPos + height < key.HEIGHT - 1)) {
+        if ((check.xPos > 1 && check.xPos + width < key.WIDTH - 1)
+                && (check.yPos > 1 && check.yPos + height < key.HEIGHT - 1)) {
             return noOverlap();
         }
         return false;
@@ -147,7 +147,7 @@ public class Room{
             }
 
         }
-        if (found == false) {
+        if (found) {
             check = null;
             builder.dead(entrance);
         }
@@ -160,7 +160,9 @@ public class Room{
         boolean need = key.ROOMCOUNT < 7;
         int numHoles = key.R.nextInt(3 - numOpenings);
 
-        if (need && numHoles < 1) { numHoles = 3; }
+        if (need && numHoles < 1) {
+            numHoles = 3;
+        }
         for (int i = numHoles; i > 0; i -= 1) {
             int side = key.R.nextInt(4);
             if (openings[side] == null && !closeToEdge(site, side)) {

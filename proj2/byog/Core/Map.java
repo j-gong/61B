@@ -6,22 +6,17 @@ import java.util.Random;
 
 public class Map {
 
-    public /*static*/ TETile[][] LAYOUT;
-    public /*static*/ int ROOMCOUNT = 0;
-    public /*static*/ int MAXROOMS;
-    public /*static*/ int MINROOMS = 10;
+    TETile[][] LAYOUT;
+    int ROOMCOUNT = 0;
+    int MAXROOMS;
+    int MINROOMS = 10;
 
-    private int SEED;
-    public /*static*/ Random R;
+    int SEED;
+    Random R;
 
-    public /*static*/ int HEIGHT = Game.HEIGHT;
-    public /*static*/ int WIDTH = Game.WIDTH;
+    int HEIGHT = Game.HEIGHT;
+    int WIDTH = Game.WIDTH;
 
-    /* TESTING PURPOSES ONLY*/
-    public void Map(){
-        R = new Random(5);
-        LAYOUT = new TETile[10][10];
-    }
 
     public TETile[][] makeMap(TETile[][] inputMap, int sd) {
         LAYOUT = inputMap;
@@ -30,7 +25,8 @@ public class Map {
         R = new Random(SEED);
         MAXROOMS = R.nextInt(10) + 10;
 
-        Location startPoint = new Location(R.nextInt(/*Map.*/WIDTH / 5) + 1, R.nextInt(/*Map.*/HEIGHT / 5) + 1);
+        Location startPoint = new Location(R.nextInt(WIDTH / 5) + 1,
+                R.nextInt(HEIGHT / 5) + 1);
         Room root = new Room(startPoint, this);
         root.makeRoom();
 

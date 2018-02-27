@@ -7,20 +7,21 @@ public class Hallway {
 
     private Map key;
 
-    public Location entrance;
-    public Location exit;
+    Location entrance;
+    Location exit;
 
-    public int direction; // 0 = west, 1 = north, 2 = east, 3 = south
-    public int length;
+    int direction; // 0 = west, 1 = north, 2 = east, 3 = south
+    int length;
 
     private boolean connected;
 
-    private Build builder = new Build(key);
+    private Build builder;
 
     public Hallway(Location enter, int toward, Map passed) {
+        key = passed;
+        builder = new Build(key);
         direction = toward;
         entrance = enter;
-        key = passed;
     }
 
     public void makeHallway() {
@@ -38,12 +39,21 @@ public class Hallway {
         }
 
         int rand = key.R.nextInt(6); // number between 0 - 5
-        if (rand > 2) {rand = 0;}
+        if (rand > 2) {
+            rand = 0;
+        }
 
-        if (key.ROOMCOUNT < key.MINROOMS) { rand = key.R.nextInt(2); }
+        if (key.ROOMCOUNT < key.MINROOMS) {
+            rand = key.R.nextInt(2);
+        }
         int nextDirect = availablePaths();
-        if (nextDirect < 0) {rand = 2;}
-        if (key.ROOMCOUNT > key.MAXROOMS) {rand = 2;}
+        if (nextDirect < 0) {
+            rand = 2;
+        }
+
+        if (key.ROOMCOUNT > key.MAXROOMS) {
+            rand = 2;
+        }
 
         switch (rand) {
             case 0: Room addroom = new Room(exit, direction, key);
@@ -55,16 +65,8 @@ public class Hallway {
                 break;
             case 2: builder.dead(exit);
                 break;
+            default: builder.dead(exit);
         }
-
-
-
-        //    we need:
-        //make a room
-        //if room doesnt fit deadEnd it
-        //add hallway
-        //if hallway doesnt fit deadEnd it
-        //deadEnd
     }
 
     /* sets the valid length and exit location of a hallway */
@@ -101,7 +103,8 @@ public class Hallway {
         }
     }
 
-    /* returns the length of a possible hallway up to 8 spots, returns -1 if the algorithm runs into another floor space*/
+    /* returns the length of a possible hallway up to 8 spots,
+    returns -1 if the algorithm runs into another floor space*/
     public int validLength(int direct, Location beginning) {
 
 
@@ -135,13 +138,15 @@ public class Hallway {
         return openSpaces;
     }
 
-    /* returns an integer based on horizontal or vertical side that lets us add that value to get the next position in the path*/
+    /* returns an integer based on horizontal or vertical side that
+    lets us add that value to get the next position in the path*/
     private int tunnelDirect(int direct) {
         int[] compass = new int[]{-1, 1, 1, -1};
         return compass[direct];
     }
 
-    /* returns the direction of a new path for a new hallway, only allows 90 degree turns */
+    /* returns the direction of a new path for a new hallway,
+    only allows 90 degree turns */
     private int availablePaths() {
         int left = direction - 1;
         if (direction == 0) {
@@ -166,9 +171,11 @@ public class Hallway {
 
         if (leftBad && rightBad) {
             return -1;
-        } else if (leftBad) { return right;
-        } else if (rightBad) { return left;
-        } else if (1 == key.R.nextInt(2)){
+        } else if (leftBad) {
+            return right;
+        } else if (rightBad) {
+            return left;
+        } else if (1 == key.R.nextInt(2)) {
             nextDirection = right;
         }
         return nextDirection;
@@ -176,10 +183,12 @@ public class Hallway {
 
     /* reports true if a location is on the edge of the key*/
     public boolean onEdge(Location place) {
-        return (place.xPos < 1 || place.xPos > key.WIDTH - 2) || (place.yPos < 1 || place.yPos > key.HEIGHT - 2);
+        return (place.xPos < 1 || place.xPos > key.WIDTH - 2)
+                || (place.yPos < 1 || place.yPos > key.HEIGHT - 2);
     }
 
-    /* moves the start of the new hallway so that the building algorithm doesn't screw up the other walls */
+    /* moves the start of the new hallway so that the building algorithm doesn't screw up
+    the other walls */
     private Location turn(int nextdirect) {
         Location result = exit.copy();
         if (direction % 2 == 0) {
@@ -195,7 +204,7 @@ public class Hallway {
 
     private void deadRoom(Room rm) {
         if (rm.site == null) {
-            if (key.ROOMCOUNT < key.MINROOMS){
+            if (key.ROOMCOUNT < key.MINROOMS) {
                 Hallway newhall = new Hallway(exit, direction, key);
                 newhall.makeHallway();
             } else {

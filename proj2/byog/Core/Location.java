@@ -1,8 +1,8 @@
 package byog.Core;
 
 public class Location {
-    public int xPos;
-    public int yPos;
+    int xPos;
+    int yPos;
 
     public Location(int x, int y) {
         xPos = x;

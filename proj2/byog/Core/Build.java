@@ -4,7 +4,7 @@ import byog.TileEngine.Tileset;
 
 public class Build {
 
-    private Map key;
+    Map key;
 
     public Build(Map passed) {
         key = passed;
@@ -41,7 +41,7 @@ public class Build {
                 buildRow(new Location(start.xPos, start.yPos + i), hall.length, tile, false);
 
             } else {
-                if(hall.direction == 1) {
+                if (hall.direction == 1) {
                     start.yPos = hall.exit.yPos;
                 }
                 buildColumn(new Location(start.xPos + i, start.yPos), hall.length, tile, false);
@@ -49,19 +49,7 @@ public class Build {
         }
     }
 
-    /* don't know if this block is a good thing to have, should probably just reconfigure makeRow and makeColumn*/
-    /*private static void freeEnds(Hallway hall) {
-        Location end = hall.exit.copy();
-        if (hall.direction % 2 == 0 ) {
-            Map.LAYOUT[end.xPos][end.yPos + 1] = null;
-            Map.LAYOUT[end.xPos][end.yPos - 1] = null;
-        } else {
-            Map.LAYOUT[end.xPos + 1][end.yPos] = null;
-            Map.LAYOUT[end.xPos - 1][end.yPos] = null;
-        }
-    }
-*/
-    private void buildOpenings(Location[] holes){
+    private void buildOpenings(Location[] holes) {
         for (int i = 0; i < 4; i += 1) {
             if (holes[i] != null) {
                 key.LAYOUT[holes[i].xPos][holes[i].yPos] = Tileset.FLOOR;
@@ -79,7 +67,7 @@ public class Build {
     }
 
     private void buildWalls(Room rm) {
-        Location start = new Location(rm.site.xPos-1, rm.site.yPos-1);
+        Location start = new Location(rm.site.xPos - 1, rm.site.yPos - 1);
         TETile walling = Tileset.WALL;
 
         buildRow(start, rm.width + 2, walling, false); //build bottom wall
@@ -130,12 +118,14 @@ public class Build {
         if (oldDirection % 2 == 0) {
 
             corner[0] = new Location(place.xPos, place.yPos + compass[opposite]);
-            corner[1] = new Location(place.xPos + compass[oldDirection], place.yPos + compass[opposite]);
+            corner[1] = new Location(place.xPos + compass[oldDirection],
+                    place.yPos + compass[opposite]);
 
-        }  else {
+        } else {
 
             corner[0] = new Location(place.xPos + compass[opposite], place.yPos);
-            corner[1] = new Location(place.xPos + compass[opposite], place.yPos + compass[oldDirection]);
+            corner[1] = new Location(place.xPos + compass[opposite],
+                    place.yPos + compass[oldDirection]);
 
         }
         buildTurn(corner);
@@ -151,7 +141,7 @@ public class Build {
         }
     }
 
-    public void dead(Location stop){
+    public void dead(Location stop) {
         for (int x = -1; x < 2; x += 1) {
             for (int y = -1; y < 2; y += 1) {
                 TETile spot = key.LAYOUT[stop.xPos + x][stop.yPos + y];
@@ -161,5 +151,4 @@ public class Build {
             }
         }
     }
-
 }
