@@ -44,30 +44,4 @@ public class Game {
         return WORLD;
     }
 
-
-
-
-
-    public static void main(String[] args) {
-        TERenderer ter = new TERenderer();
-        ter.initialize(WIDTH, HEIGHT);
-        //Room comes back and bites into the old room -> what stoppers do we have for room?
-        //int seed = 513245;
-        int seed = 24573;
-        WORLD = new TETile[WIDTH][HEIGHT];
-        Map map = new Map(WORLD, seed, HEIGHT, WIDTH);
-        WORLD = map.makeMap();
-
-        ter.renderFrame(WORLD);
-
-        /*TERenderer ter = new TERenderer();
-        ter.initialize(WIDTH, HEIGHT);
-        int seed = 942582342;
-        WORLD = new TETile[WIDTH][HEIGHT];
-        Map.makeMap(WORLD, seed);
-        ter.renderFrame(WORLD);*/
-        /*String cool = "4awefj3242u3kljlk23j423";//Integer.parseInt(cool.replaceAll("[\\D]", ""));
-        System.out.println(Long.parseLong(cool.replaceAll("[\\D]", "")));*/
-    }
-
 }
