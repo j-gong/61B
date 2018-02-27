@@ -2,8 +2,6 @@ package byog.Core;
 
 import byog.TileEngine.TERenderer;
 import byog.TileEngine.TETile;
-import org.junit.Test;
-import static org.junit.Assert.*;
 
 
 public class Game {
