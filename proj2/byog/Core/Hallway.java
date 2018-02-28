@@ -7,11 +7,11 @@ public class Hallway {
 
     private Map key;
 
-    private Location entrance;
-    private Location exit;
+    Location entrance;
+    Location exit;
 
-    private int direction; // 0 = west, 1 = north, 2 = east, 3 = south
-    private int length;
+    int direction; // 0 = west, 1 = north, 2 = east, 3 = south
+    int length;
 
     private boolean connected;
 
@@ -24,6 +24,7 @@ public class Hallway {
         builder = new Build(key);
     }
 
+    /* makes a hallway from the constructed direction and entrance*/
     public void makeHallway() {
 
         digHallway();
@@ -38,19 +39,19 @@ public class Hallway {
             return;
         }
 
-        int rand = key.getR().nextInt(6); // number between 0 - 5
+        int rand = key.R.nextInt(6); // number between 0 - 5
         if (rand > 2) {
             rand = 0;
         }
 
-        if (key.getRoomNum() < key.getMin()) {
-            rand = key.getR().nextInt(2);
+        if (key.ROOMCOUNT < key.MINROOMS) {
+            rand = key.R.nextInt(2);
         }
         int nextDirect = availablePaths();
         if (nextDirect < 0) {
             rand = 2;
         }
-        if (key.getRoomNum() > key.getMax()) {
+        if (key.ROOMCOUNT > key.MAXROOMS) {
             rand = 2;
         }
 
@@ -67,16 +68,6 @@ public class Hallway {
             default: builder.dead(exit);
         }
 
-
-
-
-
-        //    we need:
-        //make a room
-        //if room doesnt fit deadEnd it
-        //add hallway
-        //if hallway doesnt fit deadEnd it
-        //deadEnd
     }
 
     /* sets the valid length and exit location of a hallway */
@@ -91,10 +82,10 @@ public class Hallway {
         } else {
             while (length == 0) {
                 tries += 1;
-                int trylength = key.getR().nextInt(maxLength);
+                int trylength = key.R.nextInt(maxLength);
                 if (trylength > 3) {
                     length = trylength;
-                } else if (key.getRoomNum() > key.getMin() || maxLength <= 3 || tries > 5) {
+                } else if (key.ROOMCOUNT > key.MINROOMS || maxLength <= 3 || tries > 5) {
                     builder.dead(entrance);
                     return;
                 }
@@ -107,9 +98,9 @@ public class Hallway {
         int tunneldirection = compass[direction];
 
         if (direction % 2 == 0) {
-            exit.incrementXPos(tunneldirection * (length - 1));
+            exit.xPos += (tunneldirection * (length - 1));
         } else {
-            exit.incrementYPos(tunneldirection * (length - 1));
+            exit.yPos += (tunneldirection * (length - 1));
         }
     }
 
@@ -120,7 +111,7 @@ public class Hallway {
 
         int tunneldirection = tunnelDirect(direct);
         int openSpaces = 0;
-        TETile[][] layout = key.getLAYOUT();
+        TETile[][] layout = key.LAYOUT;
 
         //check to see if there's a tile at the next spot
         Location place = beginning.copy();
@@ -129,12 +120,12 @@ public class Hallway {
 
             //advance the placeholder
             if (direct % 2 == 0) {
-                place.incrementXPos(tunneldirection);
+                place.xPos += (tunneldirection);
             } else {
-                place.incrementYPos(tunneldirection);
+                place.yPos += (tunneldirection);
             }
 
-            TETile check = layout[place.getxPos()][place.getyPos()];
+            TETile check = layout[place.xPos][place.yPos];
 
             //see what block the placeholder is at now
             if (check != null) {
@@ -171,9 +162,9 @@ public class Hallway {
 
         Location place = exit.copy();
         if (direction % 2 == 0) {
-            place.incrementXPos(tunnelDirect(direction));
+            place.xPos += (tunnelDirect(direction));
         } else {
-            place.incrementYPos(tunnelDirect(direction));
+            place.yPos += (tunnelDirect(direction));
         }
 
         boolean leftBad = validLength(left, place) < 5;
@@ -185,7 +176,7 @@ public class Hallway {
             return right;
         } else if (rightBad) {
             return left;
-        } else if (1 == key.getR().nextInt(2)) {
+        } else if (1 == key.R.nextInt(2)) {
             nextDirection = right;
         }
         return nextDirection;
@@ -193,28 +184,29 @@ public class Hallway {
 
     /* reports true if a location is on the edge of the key*/
     public boolean onEdge(Location place) {
-        return (place.getxPos() < 1 || place.getxPos() > key.getWIDTH() - 2)
-                || (place.getyPos() < 1 || place.getyPos() > key.getHEIGHT() - 2);
+        return (place.xPos < 1 || place.xPos > key.WIDTH - 2)
+                || (place.yPos < 1 || place.yPos > key.HEIGHT - 2);
     }
 
     /* moves the start of the new hallway so building algorithm doesn't screw up the other walls */
     private Location turn(int nextdirect) {
-        TETile[][] layout = key.getLAYOUT();
+        TETile[][] layout = key.LAYOUT;
         Location result = exit.copy();
         if (direction % 2 == 0) {
-            result.incrementXPos(tunnelDirect(direction));
+            result.xPos += (tunnelDirect(direction));
             builder.turnCap(direction, nextdirect, result);
         } else {
-            result.incrementYPos(tunnelDirect(direction));
+            result.yPos += (tunnelDirect(direction));
             builder.turnCap(direction, nextdirect, result);
         }
-        layout[result.getxPos()][result.getyPos()] = Tileset.FLOOR;
+        layout[result.xPos][result.yPos] = Tileset.FLOOR;
         return result;
     }
 
+    /* if the map needs more rooms, try to make a hallway. Else, trigger a deadEnd*/
     private void deadRoom(Room rm) {
-        if (rm.getSite() == null) {
-            if (key.getRoomNum() < key.getMin()) {
+        if (rm.site == null) {
+            if (key.ROOMCOUNT < key.MINROOMS) {
                 Hallway newhall = new Hallway(exit, direction, key);
                 newhall.makeHallway();
             } else {
@@ -223,20 +215,4 @@ public class Hallway {
         }
     }
 
-    public Location getEntrance() {
-        return entrance;
-    }
-
-    public int getDirection() {
-        return direction;
-    }
-
-    public int getLength() {
-        return length;
-    }
-
-    public Location getExit() {
-        return exit;
-    }
 }
-

@@ -3,12 +3,14 @@ import byog.TileEngine.TETile;
 
 public class Room {
 
-    private Location site;
-    private Location[] openings = new Location[4];
-    private int numOpenings = 0;
+    Location site;
+    Location[] openings = new Location[4];
+    int numOpenings = 0;
+
+    int width;
+    int height;
+
     private Map key;
-    private int width;
-    private int height;
     private Build builder;
 
     //private static TETile[][] Map.LAYOUT = Map.Map.LAYOUT;
@@ -54,7 +56,7 @@ public class Room {
     /* holds procedures for making a room*/
     public void makeRoom() {
 
-        key.incrementRoomCount();
+        key.ROOMCOUNT += 1;
 
         digOpenings(5); // creates a list of openings
 
@@ -72,12 +74,12 @@ public class Room {
     /* Searches for a valid place for the new Room and sets the width and height*/
     private void digRoom() {
 
-        width = key.getR().nextInt(key.getWIDTH() / 6) + 2;
-        height = key.getR().nextInt(key.getHEIGHT() / 6) + 2;
+        width = key.R.nextInt(key.WIDTH / 6) + 2;
+        height = key.R.nextInt(key.HEIGHT / 6) + 2;
 
         if (!validSpace(site)) {
-            site.incrementXPos(2);
-            site.incrementYPos(2);
+            site.xPos += 2;
+            site.yPos += 2;
             digRoom();
         }
 
@@ -85,8 +87,8 @@ public class Room {
 
     /* looks to see if a location is a valid space*/
     private boolean validSpace(Location check) {
-        if ((check.getxPos() > 1 && check.getxPos() + width < key.getWIDTH() - 1)
-                && (check.getyPos() > 1 && check.getyPos() + height < key.getHEIGHT() - 1)) {
+        if ((check.xPos > 1 && check.xPos + width < key.WIDTH - 1)
+                && (check.yPos > 1 && check.yPos + height < key.HEIGHT - 1)) {
             return noOverlap();
         }
         return false;
@@ -94,7 +96,7 @@ public class Room {
 
     /* checks to see if any of the room's spaces are going to overlap with tiles already set down*/
     private boolean noOverlap() {
-        TETile[][] layout = key.getLAYOUT();
+        TETile[][] layout = key.LAYOUT;
         for (int x = 0; x < width; x += 1) {
             for (int y = 0; y < height; y += 1) {
                 if (layout[x][y] != null) {
@@ -111,27 +113,27 @@ public class Room {
         boolean found = false;
         Location check = null;
 
-        int minX = key.getR().nextInt(8) + 1;
-        int minY = key.getR().nextInt(8) + 1;
+        int minX = key.R.nextInt(8) + 1;
+        int minY = key.R.nextInt(8) + 1;
 
         while (attempts > 0) {
 
             check = entrance.copy();
-            height = key.getR().nextInt(minY) + minY + 1;
-            width = key.getR().nextInt(minX) + minX + 1;
+            height = key.R.nextInt(minY) + minY + 1;
+            width = key.R.nextInt(minX) + minX + 1;
 
             if (directionfrom == 0) {
-                check.incrementYPos(-(minY - 1));
-                check.incrementXPos(1); //site needs to be inside the walls
+                check.yPos -= (minY - 1);
+                check.xPos = 1; //site needs to be inside the walls
             } else if (directionfrom == 1) {
-                check.incrementYPos(-height);
-                check.incrementXPos(-(minX - 1));
+                check.yPos -= height;
+                check.xPos -= (minX - 1);
             } else if (directionfrom == 2) {
-                check.incrementYPos(-(minY - 1));
-                check.incrementXPos(-width);
+                check.yPos -= minY - 1;
+                check.xPos -= width;
             } else {
-                check.incrementYPos(1);
-                check.incrementXPos(-(minX - 1));
+                check.yPos += 1;
+                check.xPos -= (minX - 1);
             }
 
             if (validSpace(check)) {
@@ -154,13 +156,13 @@ public class Room {
     /* creates a set of random openings in the walls */
     private void digOpenings(int tries) {
 
-        boolean need = key.getRoomNum() < 7;
-        int numHoles = key.getR().nextInt(3 - numOpenings);
+        boolean need = key.ROOMCOUNT < 7;
+        int numHoles = key.R.nextInt(3 - numOpenings);
         if (need && numHoles < 1) {
             numHoles = 3;
         }
         for (int i = numHoles; i > 0; i -= 1) {
-            int side = key.getR().nextInt(4);
+            int side = key.R.nextInt(4);
             if (openings[side] == null && !closeToEdge(site, side)) {
                 digHole(side);
             }
@@ -170,56 +172,43 @@ public class Room {
             digHole(3);
         }
 
-        need = (key.getRoomNum() < key.getMin() && numOpenings < 3);
+        need = (key.ROOMCOUNT < key.MINROOMS && numOpenings < 3);
         if (need && tries > 0) {
             digOpenings(tries - 1);
         }
 
     }
 
+    /* creates valid location for rooms' openings */
     private void digHole(int side) {
 
         if (side == 0) {
-            openings[side] = new Location(site.getxPos() - 1,
-                    site.getyPos() + key.getR().nextInt(height));
+            openings[side] = new Location(site.xPos - 1,
+                    site.yPos + key.R.nextInt(height));
         } else if (side == 1) {
-            openings[side] = new Location(site.getxPos() + key.getR().nextInt(width),
-                    site.getyPos() + height);
+            openings[side] = new Location(site.xPos + key.R.nextInt(width),
+                    site.yPos + height);
         } else if (side == 2) {
-            openings[side] = new Location(site.getxPos() + width,
-                    site.getyPos() + key.getR().nextInt(height));
+            openings[side] = new Location(site.xPos + width,
+                    site.yPos + key.R.nextInt(height));
         } else {
-            openings[side] = new Location(site.getxPos() + key.getR().nextInt(width),
-                    site.getyPos());
+            openings[side] = new Location(site.xPos + key.R.nextInt(width),
+                    site.yPos);
         }
         numOpenings += 1;
     }
 
+    /* returns boolean based on if a potential opening is too close to the edge */
     private boolean closeToEdge(Location check, int side) {
         if (side == 0) {
-            return check.getxPos() < key.getWIDTH() / 6;
+            return check.xPos < key.WIDTH / 6;
         } else if (side == 1) {
-            return check.getyPos() > 5 * key.getHEIGHT() / 6;
+            return check.yPos > 5 * key.HEIGHT / 6;
         } else if (side == 2) {
-            return check.getxPos() > 5 * key.getWIDTH() / 6;
+            return check.xPos > 5 * key.WIDTH / 6;
         } else {
-            return check.getyPos() < key.getWIDTH() / 6;
+            return check.yPos < key.WIDTH / 6;
         }
     }
 
-    public Location[] getOpenings() {
-        return openings;
-    }
-
-    public Location getSite() {
-        return site;
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
-    public int getHeight() {
-        return height;
-    }
 }

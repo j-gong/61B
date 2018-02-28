@@ -28,18 +28,6 @@ public class MemoryGame {
         Random r = new Random(seed);
         MemoryGame game = new MemoryGame(40, 40, r);
         game.startGame();
-
-        /*String letters = "Boop";
-        for (int i = 0; i < letters.length(); i += 1) {
-            StdDraw.clear();
-            String a_letter = Character.toString(letters.charAt(i));
-            StdDraw.text(0.5, 0.5, a_letter);
-            StdDraw.show();
-            StdDraw.pause(1000);
-            StdDraw.clear();
-            StdDraw.pause(500);
-        }*/
-
     }
 
     public MemoryGame(int width, int height, Random r) {
