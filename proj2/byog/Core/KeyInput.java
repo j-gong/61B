@@ -2,6 +2,9 @@ package byog.Core;
 
 import java.awt.*;
 import java.util.ArrayDeque;
+
+import byog.TileEngine.TERenderer;
+import byog.TileEngine.TETile;
 import edu.princeton.cs.introcs.StdDraw;
 
 //@Source. Code to take key inputs from youtube video
@@ -18,58 +21,81 @@ public class KeyInput {
 
     //Reads what key is pressed
     public String readKey(int n) {
-        StringBuilder sb = new StringBuilder(n);
-        char d;
-        //length should always be 1, but keeping for potential future options
-        int newLength = n;
-        while (newLength > 0) {
+        String input = "";
+        keyPressed(input);
+        while (input.length() < n) {
+            if (!StdDraw.hasNextKeyTyped()) {
+                continue;
+            }
             if (StdDraw.hasNextKeyTyped()) {
-                d = StdDraw.nextKeyTyped();
-                history.addLast(d);
-                sb.append(d);
-                StdDraw.text(16, 16, sb.toString());
-                newLength -= 1;
+                char key = StdDraw.nextKeyTyped();
+                input += String.valueOf(key);
+                history.addLast(key);
             }
         }
-        return sb.toString();
+        return input;
     }
 
     //takes what readKey does and processes it
-    public void keyPressed (int input){
-        String key = readKey(input);
+    public void keyPressed (String input){
 
-        if (key.equals("w") || key.equals("W")) {
+        if (input.equals("w") || input.equals("W")) {
             p.setY(p.getY() + 1);
-        } else if (key.equals("a") || key.equals("A")) {
+        } else if (input.equals("a") || input.equals("A")) {
             p.setX(p.getX() - 1);
-        } else if (key.equals("s") || key.equals("S")) {
+        } else if (input.equals("s") || input.equals("S")) {
             p.setY(p.getY() - 1);
-        } else if (key.equals("d") || key.equals("D")) {
+        } else if (input.equals("d") || input.equals("D")) {
             p.setX(p.getX() + 1);
+        }
+        else if (input.equals("q") || input.equals("Q")) {
+            //quit the game
         }
     }
 
-    //reads whether user starts new game, load, or quit
-    public void mainMenuKey (int input) {
-        String key = readKey(input);
+    public String readMainMenuKey(int n) {
+        String input = "";
+        mainMenuKey(input);
+        while (input.length() < n) {
+            if (!StdDraw.hasNextKeyTyped()) {
+                continue;
+            }
+            if (StdDraw.hasNextKeyTyped()) {
+                char key = StdDraw.nextKeyTyped();
+                input += String.valueOf(key);
+                history.addLast(key);
+            }
+        }
+        return input;
+    }
 
-        if (key.equals("n") || key.equals("N")) {
+    //reads whether user starts new game, load, or quit
+    public void mainMenuKey (String input) {
+
+        if (input.equals("n") || input.equals("N")) {
             StdDraw.clear();
             Font font = new Font("Monaco", Font.BOLD, 64);
             StdDraw.setPenColor(Color.WHITE);
             StdDraw.setFont(font);
             StdDraw.text(screen.getWidth()/2, screen.getHeight()/2 + screen.getHeight()/5, "New Game");
             StdDraw.text(screen.getWidth()/2, screen.getHeight()/2, "Please enter a seed. Press s to start.");
+            StdDraw.show();
+            if (input.equals("s") || input.equals("S")) {
+                game.playWithInputString(input);
+            }
             //whatever code to start new game is
             //user prompted to enter random seed
             //when done entering seed, press S to load
         }
-        else if (key.equals("s") || key.equals("S")) {
+        else if (input.equals("l") || input.equals("L")) {
+            //probs a version of playwithinput string, but updated a little
+            //needs to be able to take in the world portion, and be able to do all the steps
+
             //loads the game
             //must take the world back to exactly the same stage it was before
             //need to track steps. will have to run the seed with the exact same steps
         }
-        else if (key.equals("q") || key.equals("Q")) {
+        else if (input.equals("q") || input.equals("Q")) {
             //quits the game
             //Must immediately quit and save
         }

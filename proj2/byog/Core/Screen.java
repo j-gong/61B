@@ -8,8 +8,9 @@ import java.util.Random;
 public class Screen {
     private int width;
     private int height;
+    private Random rand;
 
-    public Screen(int width, int height) {
+    public Screen(int width, int height, long seed) {
         this.width = width;
         this.height = height;
         StdDraw.setCanvasSize(this.width * 16, this.height * 16);
@@ -19,6 +20,8 @@ public class Screen {
         StdDraw.setYscale(0, this.height);
         StdDraw.clear(Color.BLACK);
         StdDraw.enableDoubleBuffering();
+
+        rand = new Random(seed);
     }
 
     public void MainMenu() {
@@ -36,9 +39,12 @@ public class Screen {
     }
 
     public static void main(String[] args) {
-        Screen test = new Screen(64, 64);
+        //long seed = Long.parseLong(args[0]);
+        Screen test = new Screen(64, 64, 123);
+
         test.MainMenu();
     }
+
 
     public int getWidth() {
         return width;

@@ -9,13 +9,19 @@ public class Game {
     private static int WIDTH = 80;
     private static int HEIGHT = 30;
     private static TETile[][] WORLD;
+    private static KeyInput keyinput;
+    private static Screen screen;
 
 
     /**
      * Method used for playing a fresh game. The game should start from the main menu.
      */
     public void playWithKeyboard() {
-
+        /*
+        keyinput = new KeyInput(this);
+        long seed = Long.parseLong(123457);
+        screen = new Screen(WIDTH, HEIGHT, seed);
+        */
     }
 
     /**
