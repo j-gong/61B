@@ -5,6 +5,7 @@ import java.util.ArrayDeque;
 
 import byog.TileEngine.TERenderer;
 import byog.TileEngine.TETile;
+import byog.TileEngine.Tileset;
 import edu.princeton.cs.introcs.StdDraw;
 
 //@Source. Code to take key inputs from youtube video
@@ -14,6 +15,7 @@ public class KeyInput {
     private Player p;
     private Game game;
     private ArrayDeque<Character> history = new ArrayDeque<>();
+    private Map key;
 
     public KeyInput(Game game) {
         this.game = game;
@@ -38,15 +40,23 @@ public class KeyInput {
 
     //takes what readKey does and processes it
     public void keyPressed (String input){
-
+        TETile[][] layout = key.LAYOUT;
         if (input.equals("w") || input.equals("W")) {
-            p.setY(p.getY() + 1);
+            if (!layout[p.getX()][p.getY() + 1].equals(Tileset.WALL)) {
+                p.setY(p.getY() + 1);
+            }
         } else if (input.equals("a") || input.equals("A")) {
-            p.setX(p.getX() - 1);
+            if (!layout[p.getY() - 1][p.getY()].equals(Tileset.WALL)) {
+                p.setX(p.getX() - 1);
+            }
         } else if (input.equals("s") || input.equals("S")) {
-            p.setY(p.getY() - 1);
+            if (!layout[p.getX()][p.getY() - 1].equals(Tileset.WALL)) {
+                p.setY(p.getY() - 1);
+            }
         } else if (input.equals("d") || input.equals("D")) {
-            p.setX(p.getX() + 1);
+            if (!layout[p.getX() + 1][p.getY()].equals(Tileset.WALL)) {
+                p.setX(p.getX() + 1);
+            }
         }
         else if (input.equals("q") || input.equals("Q")) {
             //quit the game

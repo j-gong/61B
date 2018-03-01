@@ -1,16 +1,19 @@
 package byog.Core;
 
+import byog.TileEngine.Tileset;
+
 public class Player {
     private int x;
     private int y;
     private Game game;
     private String imgFileName;
+    private Tileset PLAYER;
 
-    public Player(int x, int y, Game game, String avatar) {
+    public Player(int x, int y, Game game, Tileset PLAYER) {
         this.x = x;
         this.y = y;
         this.game = game;
-        this.imgFileName = avatar;
+        this.PLAYER = PLAYER;
     }
 
     public int getX() {

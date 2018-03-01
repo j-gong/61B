@@ -45,6 +45,14 @@ public class Game {
         return WORLD;
     }
 
-
+    public static void main(String[] args) {
+        TERenderer ter = new TERenderer();
+        ter.initialize(WIDTH, HEIGHT);
+        int seed = 24573;
+        WORLD = new TETile[WIDTH][HEIGHT];
+        Map map = new Map(WORLD, seed, HEIGHT, WIDTH);
+        WORLD = map.makeMap();
+        ter.renderFrame(WORLD);
+    }
 
 }
