@@ -3,6 +3,8 @@ package byog.Core;
 import byog.TileEngine.TERenderer;
 import byog.TileEngine.TETile;
 import byog.lab5.HexWorld;
+import java.awt.Toolkit;
+import java.awt.Dimension;
 
 public class Game {
     TERenderer ter = new TERenderer();
@@ -10,7 +12,7 @@ public class Game {
     private static int WIDTH = 80;
     private static int HEIGHT = 30;
     private static TETile[][] WORLD;
-    private static KeyInput keyinput;
+    private static KeyInput keys;
     private static Screen screen;
 
 
@@ -18,11 +20,12 @@ public class Game {
      * Method used for playing a fresh game. The game should start from the main menu.
      */
     public void playWithKeyboard() {
-        /*
-        keyinput = new KeyInput(this);
-        long seed = Long.parseLong(123457);
-        screen = new Screen(WIDTH, HEIGHT, seed);
-        */
+
+        //how do I get the map?
+        KeyInput keys = new KeyInput(this, Map);
+        Screen screen = new Screen(WIDTH, HEIGHT, Map);
+        keys.readKey();
+
     }
 
     /**
@@ -46,7 +49,7 @@ public class Game {
         return WORLD;
     }
 
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         TERenderer ter = new TERenderer();
         //want to initialize with 0 offset width and 10/20? offset on height
         ter.initialize(WIDTH, HEIGHT);
@@ -55,5 +58,13 @@ public class Game {
         Map map = new Map(WORLD, seed, HEIGHT, WIDTH);
         WORLD = map.makeMap();
         ter.renderFrame(WORLD);
+    }*/
+
+    public static void main(String[] args) {
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        double width = screenSize.getWidth();
+        double height = screenSize.getHeight();
+        System.out.println(width); //1280
+        System.out.println(height); //720
     }
 }

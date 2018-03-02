@@ -15,7 +15,8 @@ public class Screen {
     private boolean gameover = false;
     private Map key;
 
-    public Screen(int width, int height, long seed, Map passed) {
+    //Screen might need to take in a seed?
+    public Screen(int width, int height, Map passed) {
         this.width = width;
         this.height = height;
         StdDraw.setCanvasSize(this.width * 16, this.height * 16);
@@ -26,7 +27,6 @@ public class Screen {
         StdDraw.clear(Color.BLACK);
         StdDraw.enableDoubleBuffering();
 
-        rand = new Random(seed);
         key = passed;
     }
 

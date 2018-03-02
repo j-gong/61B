@@ -21,12 +21,13 @@ public class KeyInput implements Serializable{
     private Screen screen;
     private Player p;
     private Game game;
-    private ArrayDeque<String> history = new ArrayDeque<>();
+    private ArrayDeque<String> history = new ArrayDeque<>(); //when a game is loaded, history needs to include all
     private Map key;
+    TERenderer ter = new TERenderer();
 
-    public KeyInput(Game game, Map passed) {
+    public KeyInput(Game game, Map map) {
         this.game = game;
-        key = passed;
+        key = map;
     }
 
     //Reads what key is pressed
@@ -49,6 +50,11 @@ public class KeyInput implements Serializable{
     //takes what readKey does and processes it
     public void keyPressed (String input){
         TETile[][] layout = key.LAYOUT;
+        screen = new Screen(screen.getWidth(), screen.getHeight(), key);
+        if (history.isEmpty()) {
+            screen.MainMenu();
+            //might need to std.clear right after this
+        }
         if (input.equals("w") || input.equals("W")) {
             if (!layout[p.getX()][p.getY() + 1].equals(Tileset.WALL)) {
                 p.setY(p.getY() + 1);
@@ -73,7 +79,7 @@ public class KeyInput implements Serializable{
             //quit the game
         }
 
-        //main menu keys
+        //main menu keys. q is above
         else if (input.equals("n") || input.equals("N")) {
             StdDraw.clear();
             Font font = new Font("Monaco", Font.BOLD, 64);
@@ -89,19 +95,16 @@ public class KeyInput implements Serializable{
                     history.removeLast();
                 }
                 else {
-                    //one of these two functions
-                    Game g = loadworld();
-                    //has to be one or the other
-                    game.playWithInputString(input);
+                    TETile[][] gamee = game.playWithInputString(input);
+                    ter.renderFrame(gamee);
+                    screen.drawHUD();
                 }
             }
         }
         else if (input.equals("l") || input.equals("L")) {
-            loadworld();
+            Game g = loadworld();
             //supposedly this is all it needs
-
-            //probs a version of playwithinput string, but updated a little
-            //needs to be able to take in the world portion, and be able to do all the steps
+            //I want to be able to save the game g tho. perhaps this.game is all I need?
         }
     }
 
