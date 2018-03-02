@@ -12,10 +12,10 @@ public class Screen {
     private int height;
     private Random rand;
     private Game game;
-    private boolean gameover;
+    private boolean gameover = false;
     private Map key;
 
-    public Screen(int width, int height, long seed) {
+    public Screen(int width, int height, long seed, Map passed) {
         this.width = width;
         this.height = height;
         StdDraw.setCanvasSize(this.width * 16, this.height * 16);
@@ -27,6 +27,7 @@ public class Screen {
         StdDraw.enableDoubleBuffering();
 
         rand = new Random(seed);
+        key = passed;
     }
 
     public void MainMenu() {
@@ -44,13 +45,18 @@ public class Screen {
 
     //will run this method while !gameover
     public void drawHUD(){
-        StdDraw.rectangle(width/2, height * 0.88, width/2, height * 0.1);
-        Font font = new Font("Monaco", Font.BOLD, 16);
-        StdDraw.setPenColor(Color.WHITE);
-        StdDraw.setFont(font);
-        StdDraw.text(width/5, height * 0.95, "" + mousepoint());
-        StdDraw.show();
-
+        if (!gameover) {
+            Font smallFont = new Font("Monaco", Font.BOLD, 20);
+            StdDraw.setFont(smallFont);
+            StdDraw.line(0, height - 2, width, height - 2);
+            //show below depends on whether the next while loops stays
+            //StdDraw.show();
+        }
+        //might need to move this while loop somewhere else
+        while (!gameover) {
+            StdDraw.text(width / 5, height * 0.8, "" + mousepoint());
+            StdDraw.show();
+        }
     }
 
     public String mousepoint() {
@@ -69,22 +75,13 @@ public class Screen {
                 return "Dats you";
             }
             else if (layout[x][y].equals(Tileset.FLOOR)) {
-                return "The floor needs sweeping";
+                return "Floor";
             }
             else if (layout[x][y].equals(Tileset.NOTHING)) {
-                return "The cold dark void stares back at you";
+                return "This should be blank, but filler for now";
             }
         }
         return "This is just a filler";
-    }
-
-    public static void main(String[] args) {
-        Game game = new Game();
-        game.playWithInputString("24573");
-        Screen test = new Screen(64, 64, 123);
-        test.MainMenu();
-        test.drawHUD();
-
     }
 
     public int getWidth() {
@@ -93,5 +90,13 @@ public class Screen {
 
     public int getHeight() {
         return height;
+    }
+
+    public boolean getGameover() {
+        return gameover;
+    }
+
+    public void setGameover(boolean tf) {
+        this.gameover = tf;
     }
 }

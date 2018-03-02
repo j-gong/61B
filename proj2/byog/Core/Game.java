@@ -2,6 +2,7 @@ package byog.Core;
 
 import byog.TileEngine.TERenderer;
 import byog.TileEngine.TETile;
+import byog.lab5.HexWorld;
 
 public class Game {
     TERenderer ter = new TERenderer();
@@ -47,6 +48,7 @@ public class Game {
 
     public static void main(String[] args) {
         TERenderer ter = new TERenderer();
+        //want to initialize with 0 offset width and 10/20? offset on height
         ter.initialize(WIDTH, HEIGHT);
         int seed = 24573;
         WORLD = new TETile[WIDTH][HEIGHT];
@@ -54,5 +56,4 @@ public class Game {
         WORLD = map.makeMap();
         ter.renderFrame(WORLD);
     }
-
 }
