@@ -21,10 +21,16 @@ public class Game {
      */
     public void playWithKeyboard() {
 
-        //how do I get the map?
-        KeyInput keys = new KeyInput(this, Map);
-        Screen screen = new Screen(WIDTH, HEIGHT, Map);
-        keys.readKey();
+        KeyInput key1 = new KeyInput(this);
+
+        ter.initialize(WIDTH, HEIGHT, 0, -2);
+        int seed = Integer.parseInt(key1.readSeed());
+        WORLD = new TETile[WIDTH][HEIGHT];
+        Map map = new Map(WORLD, seed, HEIGHT, WIDTH);
+        WORLD = map.makeMap();
+
+        KeyInput key2 = new KeyInput(this, map);
+        key2.readKey();
 
     }
 
@@ -42,6 +48,7 @@ public class Game {
      */
     public TETile[][] playWithInputString(String input) {
 
+        //ter.initialize(WIDTH, HEIGHT, 0, -2);
         int seed = (int) Long.parseLong(input.replaceAll("[\\D]", ""));
         WORLD = new TETile[WIDTH][HEIGHT];
         Map map = new Map(WORLD, seed, HEIGHT, WIDTH);
@@ -49,22 +56,23 @@ public class Game {
         return WORLD;
     }
 
-    /*public static void main(String[] args) {
-        TERenderer ter = new TERenderer();
-        //want to initialize with 0 offset width and 10/20? offset on height
-        ter.initialize(WIDTH, HEIGHT);
+    public static void main(String[] args) {
+        /*TERenderer ter = new TERenderer();
+        //want to initialize with 0 offset width and -2? offset on height
+        ter.initialize(WIDTH, HEIGHT, 0, -2);
         int seed = 24573;
         WORLD = new TETile[WIDTH][HEIGHT];
         Map map = new Map(WORLD, seed, HEIGHT, WIDTH);
         WORLD = map.makeMap();
-        ter.renderFrame(WORLD);
-    }*/
+        ter.renderFrame(WORLD);*/
 
-    public static void main(String[] args) {
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        /*Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         double width = screenSize.getWidth();
         double height = screenSize.getHeight();
         System.out.println(width); //1280
-        System.out.println(height); //720
+        System.out.println(height); //720 */
+
+        Game game = new Game();
+        game.playWithKeyboard();
     }
 }

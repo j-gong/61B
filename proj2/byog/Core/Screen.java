@@ -16,7 +16,7 @@ public class Screen {
     private Map key;
 
     //Screen might need to take in a seed?
-    public Screen(int width, int height, Map passed) {
+    public Screen(int width, int height) {
         this.width = width;
         this.height = height;
         StdDraw.setCanvasSize(this.width * 16, this.height * 16);
@@ -27,7 +27,7 @@ public class Screen {
         StdDraw.clear(Color.BLACK);
         StdDraw.enableDoubleBuffering();
 
-        key = passed;
+       // key = passed;
     }
 
     public void MainMenu() {

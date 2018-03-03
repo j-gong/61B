@@ -23,15 +23,22 @@ public class KeyInput implements Serializable{
     private Game game;
     private ArrayDeque<String> history = new ArrayDeque<>(); //when a game is loaded, history needs to include all
     private Map key;
+
     TERenderer ter = new TERenderer();
 
-    public KeyInput(Game game, Map map) {
+    public KeyInput(Game game) {
         this.game = game;
-        key = map;
+        //key = passed;
+    }
+
+    public KeyInput(Game game, Map passed) {
+        this.game = game;
+        key = passed;
     }
 
     //Reads what key is pressed
     public String readKey() {
+        screen.drawHUD();
         String input = "";
         keyPressed(input);
         while (!screen.getGameover()) {
@@ -47,14 +54,55 @@ public class KeyInput implements Serializable{
         return input;
     }
 
-    //takes what readKey does and processes it
-    public void keyPressed (String input){
-        TETile[][] layout = key.LAYOUT;
-        screen = new Screen(screen.getWidth(), screen.getHeight(), key);
+    public String readSeed() {
+        String input = "";
+        keyPressedSeed(input);
+        while (!history.peekLast().equals(("s")) || history.size() == 0) {
+            if (!StdDraw.hasNextKeyTyped()) {
+                continue;
+            }
+            if (StdDraw.hasNextKeyTyped()) {
+                char key = StdDraw.nextKeyTyped();
+                input += String.valueOf(key);
+                history.addLast(String.valueOf(key));
+            }
+        }
+        return input;
+    }
+
+    public void keyPressedSeed(String input) {
+        /*screen = new Screen(screen.getWidth(), screen.getHeight());
         if (history.isEmpty()) {
             screen.MainMenu();
             //might need to std.clear right after this
+        }*/
+        if (input.equals("n") || input.equals("N")) {
+            StdDraw.clear();
+            Font font = new Font("Monaco", Font.BOLD, 64);
+            StdDraw.setPenColor(Color.WHITE);
+            StdDraw.setFont(font);
+            StdDraw.text(screen.getWidth() / 2, screen.getHeight() / 2 + screen.getHeight() / 5, "New Game");
+            StdDraw.text(screen.getWidth() / 2, screen.getHeight() / 2, "Please enter a seed. Press s to start.");
+            StdDraw.show();
+            if (input.equals("s") || input.equals("S")) {
+                if (history.getFirst().equals("n") || history.getFirst().equals("N")) {
+                    StdDraw.text(screen.getWidth() / 2, screen.getHeight() / 2, "Please enter a seed");
+                    StdDraw.show();
+                    history.removeLast();
+                } else {
+                    TETile[][] gamee = game.playWithInputString(input);
+                    ter.renderFrame(gamee);
+                    readKey();
+
+                }
+            }
         }
+    }
+
+    //takes what readKey does and processes it
+    public void keyPressed(String input){
+        TETile[][] layout = key.LAYOUT;
+
         if (input.equals("w") || input.equals("W")) {
             if (!layout[p.getX()][p.getY() + 1].equals(Tileset.WALL)) {
                 p.setY(p.getY() + 1);
@@ -80,7 +128,7 @@ public class KeyInput implements Serializable{
         }
 
         //main menu keys. q is above
-        else if (input.equals("n") || input.equals("N")) {
+        /*else if (input.equals("n") || input.equals("N")) {
             StdDraw.clear();
             Font font = new Font("Monaco", Font.BOLD, 64);
             StdDraw.setPenColor(Color.WHITE);
@@ -97,10 +145,10 @@ public class KeyInput implements Serializable{
                 else {
                     TETile[][] gamee = game.playWithInputString(input);
                     ter.renderFrame(gamee);
-                    screen.drawHUD();
+                    readKey();
                 }
             }
-        }
+        }*/
         else if (input.equals("l") || input.equals("L")) {
             Game g = loadworld();
             //supposedly this is all it needs
