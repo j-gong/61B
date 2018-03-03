@@ -61,6 +61,7 @@ public class KeyInput implements Serializable{
         String input = "";
         keyPressed(input);
         while (!screen.gameover) {
+            //TODO pointer doesn't clear. have to move key to clear
             StdDraw.text(screen.width/5, screen.height - 9, screen.mousepoint());
             StdDraw.show();
             if (!StdDraw.hasNextKeyTyped()) {
