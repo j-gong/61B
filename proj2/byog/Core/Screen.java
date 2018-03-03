@@ -79,18 +79,18 @@ public class Screen {
             int y = (int) StdDraw.mouseY();
             if (layout[x][y].equals(Tileset.WALL)) {
                 return "Wall" + Integer.toString(x) + Integer.toString(y);
-            }
-            else if (layout[x][y].equals(Tileset.PLAYER)) {
+            } else if (layout[x][y].equals(Tileset.PLAYER)) {
                 return "Dats you" + Integer.toString(x) + Integer.toString(y);
-            }
-            else if (layout[x][y].equals(Tileset.FLOOR)) {
+            } else if (layout[x][y].equals(Tileset.FLOOR)) {
                 return "Floor" + Integer.toString(x) + Integer.toString(y);
-            }
-            else if (layout[x][y].equals(Tileset.NOTHING)) {
-                return "This should be blank, but filler for now" + Integer.toString(x) + Integer.toString(y);
+            } else if (layout[x][y].equals(Tileset.NOTHING)) {
+                return " ";
             }
         }
-        return "This is just a filler";
+        return " ";
     }
 
+    void nightTime() {
+        //TODO: make all the tiles darker shades
+    }
 }

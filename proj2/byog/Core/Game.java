@@ -16,6 +16,7 @@ public class Game {
     static KeyInput keys;
     static Screen screen;
     static int seed;
+    static int sunlight = 40; //TODO: implement sunlight everywhere, make things slightly darker when moving under
 
 
     /**

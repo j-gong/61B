@@ -154,8 +154,7 @@ public class KeyInput implements Serializable{
             System.exit(0);
             //quit the game
         }
-        //ter.renderFrame(layout);
-        //screen.drawHUD();
+        updateGame();
     }
 
     //Is supposed to pull a file called world.txt and load it. makes one if doesn't exist
@@ -201,6 +200,13 @@ public class KeyInput implements Serializable{
         } catch (IOException e) {
             System.out.println(e);
             System.exit(0);
+        }
+    }
+
+    private void updateGame() {
+        //TODO: villains move, energy goes down, sunlight fades
+        if (game.sunlight < 15) {
+            screen.nightTime();
         }
     }
 
