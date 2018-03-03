@@ -65,8 +65,6 @@ public class KeyInput implements Serializable{
             //StdDraw.clear();
             //StdDraw.text(screen.width/5, screen.height - 9, screen.mousepoint());
             //StdDraw.show();
-            ter.renderFrame(layout);
-            //screen.drawHUD();
             screen.fillHUD();
             if (!StdDraw.hasNextKeyTyped()) {
                 continue;
