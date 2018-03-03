@@ -148,7 +148,6 @@ public class Room {
         }
         if (!found) {
             check = null;
-            builder.dead(entrance);
         }
         site = check;
     }
@@ -156,7 +155,7 @@ public class Room {
     /* creates a set of random openings in the walls */
     private void digOpenings(int tries) {
 
-        boolean need = key.ROOMCOUNT < 7;
+        boolean need = key.ROOMCOUNT < 10;
         int numHoles = key.R.nextInt(3 - numOpenings);
         if (need && numHoles < 1) {
             numHoles = 3;
@@ -168,8 +167,8 @@ public class Room {
             }
         }
 
-        if (openings[3] == null && !closeToEdge(site, 3)) {
-            digHole(3);
+        if (openings[2] == null && !closeToEdge(site, 2)) {
+            digHole(2);
         }
 
         need = (key.ROOMCOUNT < key.MINROOMS && numOpenings < 3);
