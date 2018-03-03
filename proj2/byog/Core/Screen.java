@@ -8,12 +8,12 @@ import java.awt.Color;
 import java.util.Random;
 
 public class Screen {
-    private int width;
-    private int height;
-    private Random rand;
-    private Game game;
-    private boolean gameover = false;
-    private Map key;
+     int width;
+     int height;
+     Random rand;
+     Game game;
+     boolean gameover = false;
+     Map key;
 
     //Screen might need to take in a seed?
     public Screen(int width, int height) {
@@ -84,19 +84,4 @@ public class Screen {
         return "This is just a filler";
     }
 
-    public int getWidth() {
-        return width;
-    }
-
-    public int getHeight() {
-        return height;
-    }
-
-    public boolean getGameover() {
-        return gameover;
-    }
-
-    public void setGameover(boolean tf) {
-        this.gameover = tf;
-    }
 }

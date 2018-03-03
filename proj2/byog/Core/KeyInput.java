@@ -18,11 +18,11 @@ import edu.princeton.cs.introcs.StdDraw;
 
 public class KeyInput implements Serializable{
 
-    private Screen screen;
-    private Player p;
-    private Game game;
-    private ArrayDeque<String> history = new ArrayDeque<>(); //when a game is loaded, history needs to include all
-    private Map key;
+    Screen screen;
+    Player p;
+    Game game;
+    ArrayDeque<String> history = new ArrayDeque<String>(); //when a game is loaded, history needs to include all
+    Map key;
 
     TERenderer ter = new TERenderer();
 
@@ -41,7 +41,7 @@ public class KeyInput implements Serializable{
         screen.drawHUD();
         String input = "";
         keyPressed(input);
-        while (!screen.getGameover()) {
+        while (!screen.gameover) {
             if (!StdDraw.hasNextKeyTyped()) {
                 continue;
             }
@@ -54,10 +54,10 @@ public class KeyInput implements Serializable{
         return input;
     }
 
-    public String readSeed() {
+    public String readSeed() { //gets the game from the input string
         String input = "";
         keyPressedSeed(input);
-        while (!history.peekLast().equals(("s")) || history.size() == 0) {
+        while (!history.peekLast().equals(("s"))) {
             if (!StdDraw.hasNextKeyTyped()) {
                 continue;
             }
@@ -70,8 +70,8 @@ public class KeyInput implements Serializable{
         return input;
     }
 
-    public void keyPressedSeed(String input) {
-        /*screen = new Screen(screen.getWidth(), screen.getHeight());
+    public void keyPressedSeed(String input) { //takes in whats pressed, when an n or s is pressed, game starts
+        /*screen = new Screen(screen.width, screen.height);
         if (history.isEmpty()) {
             screen.MainMenu();
             //might need to std.clear right after this
@@ -81,12 +81,12 @@ public class KeyInput implements Serializable{
             Font font = new Font("Monaco", Font.BOLD, 64);
             StdDraw.setPenColor(Color.WHITE);
             StdDraw.setFont(font);
-            StdDraw.text(screen.getWidth() / 2, screen.getHeight() / 2 + screen.getHeight() / 5, "New Game");
-            StdDraw.text(screen.getWidth() / 2, screen.getHeight() / 2, "Please enter a seed. Press s to start.");
+            StdDraw.text(screen.width / 2, screen.height / 2 + screen.height / 5, "New Game");
+            StdDraw.text(screen.width / 2, screen.height / 2, "Please enter a seed. Press s to start.");
             StdDraw.show();
             if (input.equals("s") || input.equals("S")) {
                 if (history.getFirst().equals("n") || history.getFirst().equals("N")) {
-                    StdDraw.text(screen.getWidth() / 2, screen.getHeight() / 2, "Please enter a seed");
+                    StdDraw.text(screen.width / 2, screen.height / 2, "Please enter a seed");
                     StdDraw.show();
                     history.removeLast();
                 } else {
@@ -104,51 +104,30 @@ public class KeyInput implements Serializable{
         TETile[][] layout = key.LAYOUT;
 
         if (input.equals("w") || input.equals("W")) {
-            if (!layout[p.getX()][p.getY() + 1].equals(Tileset.WALL)) {
-                p.setY(p.getY() + 1);
+            if (!layout[p.x][p.y + 1].equals(Tileset.WALL)) {
+                p.y += + 1;
             }
         } else if (input.equals("a") || input.equals("A")) {
-            if (!layout[p.getY() - 1][p.getY()].equals(Tileset.WALL)) {
-                p.setX(p.getX() - 1);
+            if (!layout[p.y - 1][p.y].equals(Tileset.WALL)) {
+                p.x -= 1;
             }
         } else if (input.equals("s") || input.equals("S")) {
-            if (!layout[p.getX()][p.getY() - 1].equals(Tileset.WALL)) {
-                p.setY(p.getY() - 1);
+            if (!layout[p.x][p.y - 1].equals(Tileset.WALL)) {
+                p.y -= 1;
             }
         } else if (input.equals("d") || input.equals("D")) {
-            if (!layout[p.getX() + 1][p.getY()].equals(Tileset.WALL)) {
-                p.setX(p.getX() + 1);
+            if (!layout[p.x + 1][p.y].equals(Tileset.WALL)) {
+                p.x += 1;
             }
         }
         else if (input.equals("q") || input.equals("Q")) {
-            screen.setGameover(true);
+            screen.gameover = true;
             saveWorld(this.game);
             System.exit(0);
             //quit the game
         }
 
-        //main menu keys. q is above
-        /*else if (input.equals("n") || input.equals("N")) {
-            StdDraw.clear();
-            Font font = new Font("Monaco", Font.BOLD, 64);
-            StdDraw.setPenColor(Color.WHITE);
-            StdDraw.setFont(font);
-            StdDraw.text(screen.getWidth()/2, screen.getHeight()/2 + screen.getHeight()/5, "New Game");
-            StdDraw.text(screen.getWidth()/2, screen.getHeight()/2, "Please enter a seed. Press s to start.");
-            StdDraw.show();
-            if (input.equals("s")|| input.equals("S")) {
-                if (history.getFirst().equals("n") || history.getFirst().equals("N")) {
-                    StdDraw.text(screen.getWidth()/2, screen.getHeight()/2, "Please enter a seed");
-                    StdDraw.show();
-                    history.removeLast();
-                }
-                else {
-                    TETile[][] gamee = game.playWithInputString(input);
-                    ter.renderFrame(gamee);
-                    readKey();
-                }
-            }
-        }*/
+       
         else if (input.equals("l") || input.equals("L")) {
             Game g = loadworld();
             //supposedly this is all it needs
