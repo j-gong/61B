@@ -60,14 +60,14 @@ public class Game {
     }
 
     public static void main(String[] args) {
-        /*TERenderer ter = new TERenderer();
+        TERenderer ter = new TERenderer();
         //want to initialize with 0 offset width and -2? offset on height
-        ter.initialize(WIDTH, HEIGHT, 0, -2);
+        ter.initialize(WIDTusH, HEIGHT, 0, -2);
         int seed = 24573;
         WORLD = new TETile[WIDTH][HEIGHT];
         Map map = new Map(WORLD, seed, HEIGHT, WIDTH);
         WORLD = map.makeMap();
-        ter.renderFrame(WORLD);*/
+        ter.renderFrame(WORLD);
 
         /*Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         double width = screenSize.getWidth();
@@ -75,7 +75,7 @@ public class Game {
         System.out.println(width); //1280
         System.out.println(height); //720 */
 
-        Game game = new Game();
-        game.playWithKeyboard();
+       // Game game = new Game();
+       // game.playWithInputString();
     }
 }
