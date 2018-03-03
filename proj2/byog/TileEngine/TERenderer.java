@@ -27,7 +27,6 @@ public class TERenderer {
      * @param w width of the window in tiles
      * @param h height of the window in tiles.
      */
-
     public void initialize(int w, int h, int xOff, int yOff) {
         this.width = w;
         this.height = h;
