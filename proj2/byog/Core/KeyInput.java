@@ -39,16 +39,23 @@ public class KeyInput implements Serializable{
     }
 
     public void StartGame() {
-        screen = new Screen(100, 80);
+        screen = new Screen(90, 50);
+
         screen.MainMenu();
-        //Player dude = new Player(0, 0, game);
+
+        makePlayer();
         layout = game.playWithInputString(readSeed());
-        //dude.place();
+        p.place();
+    }
+
+    public void makePlayer() {
+        p = new Player(0, 0, game);
+        //return p;
     }
 
     //Reads what key is pressed
     public String readKey() {
-        screen.drawHUD();
+        //screen.drawHUD();
         String input = "";
         keyPressed(input);
         while (!screen.gameover) {
@@ -58,7 +65,7 @@ public class KeyInput implements Serializable{
             if (StdDraw.hasNextKeyTyped()) {
                 char key = StdDraw.nextKeyTyped();
                 input = String.valueOf(key);
-                history.addLast(String.valueOf(key));
+                //history.addLast(String.valueOf(key));
                 keyPressed(input);
             }
         }
@@ -117,27 +124,43 @@ public class KeyInput implements Serializable{
         TETile[][] layout = this.layout;
 
         if (input.equals("w") || input.equals("W")) {
+            System.out.println("w");
             if (!layout[p.x][p.y + 1].equals(Tileset.WALL)) {
                 layout[p.x][p.y] = Tileset.FLOOR;
                 layout[p.x][p.y + 1] = Tileset.PLAYER;
+                //StdDraw.clear();
+                //StdDraw.show();
+                ter.renderFrame(layout);
                 p.y += 1;
             }
         } else if (input.equals("a") || input.equals("A")) {
-            if (!layout[p.y - 1][p.y].equals(Tileset.WALL)) {
+            System.out.println("a");
+            if (!layout[p.x - 1][p.y].equals(Tileset.WALL)) {
                 layout[p.x][p.y] = Tileset.FLOOR;
                 layout[p.x - 1][p.y] = Tileset.PLAYER;
+                //StdDraw.clear();
+                //StdDraw.show();
+                ter.renderFrame(layout);
                 p.x -= 1;
             }
         } else if (input.equals("s") || input.equals("S")) {
+            System.out.println("s");
             if (!layout[p.x][p.y - 1].equals(Tileset.WALL)) {
                 layout[p.x][p.y] = Tileset.FLOOR;
                 layout[p.x][p.y - 1] = Tileset.PLAYER;
+                //StdDraw.clear();
+                //StdDraw.show();
+                ter.renderFrame(layout);
                 p.y -= 1;
             }
         } else if (input.equals("d") || input.equals("D")) {
+            System.out.println("d");
             if (!layout[p.x + 1][p.y].equals(Tileset.WALL)) {
                 layout[p.x][p.y] = Tileset.FLOOR;
                 layout[p.x + 1][p.y] = Tileset.PLAYER;
+                //StdDraw.clear();
+                //StdDraw.show();
+                ter.renderFrame(layout);
                 p.x += 1;
             }
         }

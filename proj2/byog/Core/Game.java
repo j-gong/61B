@@ -10,8 +10,8 @@ import java.awt.Dimension;
 public class Game {
     TERenderer ter = new TERenderer();
     /* Feel free to change the width and height. */
-    static int WIDTH = 100;
-    static int HEIGHT = 80;
+    static int WIDTH = 90;
+    static int HEIGHT = 50;
     static TETile[][] WORLD;
     static KeyInput keys;
     static Screen screen;
@@ -23,26 +23,16 @@ public class Game {
      */
     public void playWithKeyboard() {
 
+        boolean gameover = false;
         KeyInput key1 = new KeyInput(this);
         key1.StartGame();
         //WORLD = key1.layout;
-        Player play = new Player(0, 0, this);
-        play.place();
-        ter.initialize(100, 80);
+        //Player play = new Player(0, 0, this);
+        //play.place();
+        ter.initialize(WIDTH, HEIGHT, 0, 0);
         ter.renderFrame(key1.layout);
         key1.readKey();
 
-        /*ter.initialize(WIDTH, HEIGHT, 0, -2);
-        //this seed doesn't parse the letters
-        int seed = Integer.parseInt(key1.readSeed());
-        WORLD = new TETile[WIDTH][HEIGHT];
-        Map map = new Map(WORLD, seed, HEIGHT, WIDTH);
-
-        KeyInput key2 = new KeyInput(this, map);*/
-        /*Screen screen = new Screen(WIDTH, HEIGHT);
-        screen.MainMenu();
-        screen.drawHUD();
-        //key2.readKey();*/
 
     }
 

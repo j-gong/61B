@@ -45,14 +45,14 @@ public class Screen {
 
     //will run this method while !gameover
     public void drawHUD(){
-        //if (!gameover) {
+        while (!gameover) {
             Font smallFont = new Font("Monaco", Font.BOLD, 20);
             StdDraw.setFont(smallFont);
             StdDraw.setPenColor(Color.WHITE);
-            StdDraw.line(0, height - 16, width, height - 16);
+            StdDraw.line(0, height * .9 , width, height * .9);
             //show below depends on whether the next while loops stays
             StdDraw.show();
-       // }
+        }
         //might need to move this while loop somewhere else
         /*while (!gameover) {
             StdDraw.text(width / 5, height * 0.8, "" + mousepoint());
