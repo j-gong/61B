@@ -63,7 +63,7 @@ public class Screen {
     void fillHUD() {
 
         StdDraw.setPenColor(Color.LIGHT_GRAY);
-        StdDraw.text(this.width/5, this.height - 9, this.mousepoint());
+        StdDraw.text(this.width - this.width/5, this.height - 9, this.mousepoint());
         StdDraw.show();
     }
 
@@ -84,7 +84,7 @@ public class Screen {
             } else if (layout[x][y].equals(Tileset.FLOOR)) {
                 return "Floor" + Integer.toString(x) + Integer.toString(y);
             } else if (layout[x][y].equals(Tileset.NOTHING)) {
-                return " ";
+                return " " + Integer.toString(x) + Integer.toString(y);
             }
         }
         return " ";
