@@ -74,7 +74,7 @@ public class Screen {
 
 
         while(!gameover) {
-            //TODO scale is wrong. on mine. x is positioned 2 to left
+
             int x = (int) StdDraw.mouseX();
             int y = (int) StdDraw.mouseY();
             if (layout[x][y].equals(Tileset.WALL)) {
