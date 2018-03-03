@@ -50,6 +50,7 @@ public class Screen {
             StdDraw.setPenColor(Color.WHITE);
             StdDraw.line(0, height -12 , width, height - 12);
             //show below depends on whether the next while loops stays
+            fillHUD();
             StdDraw.show();
 
         //might need to move this while loop somewhere else
@@ -57,6 +58,13 @@ public class Screen {
             StdDraw.text(width / 5, height * 0.8, "" + mousepoint());
             StdDraw.show();
         }*/
+    }
+
+    void fillHUD() {
+
+        StdDraw.setPenColor(Color.LIGHT_GRAY);
+        StdDraw.text(this.width/5, this.height - 9, this.mousepoint());
+        StdDraw.show();
     }
 
     public String mousepoint() {

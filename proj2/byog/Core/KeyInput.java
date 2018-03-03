@@ -62,8 +62,10 @@ public class KeyInput implements Serializable{
         keyPressed(input);
         while (!screen.gameover) {
             //TODO pointer doesn't clear. have to move key to clear
-            StdDraw.text(screen.width/5, screen.height - 9, screen.mousepoint());
-            StdDraw.show();
+            //StdDraw.clear();
+            //StdDraw.text(screen.width/5, screen.height - 9, screen.mousepoint());
+            //StdDraw.show();
+            screen.fillHUD();
             if (!StdDraw.hasNextKeyTyped()) {
                 continue;
             }
@@ -77,7 +79,7 @@ public class KeyInput implements Serializable{
         return input;
     }
 
-    public String readSeed() { //gets the game from the input string
+    private String readSeed() { //gets the game from the input string
         String input = "";
         String input2 = "";
         keyPressedSeed(input);
@@ -96,7 +98,7 @@ public class KeyInput implements Serializable{
         return input;
     }
 
-    public void keyPressedSeed(String input) { //takes in whats pressed, when an n or s is pressed, game starts
+    private void keyPressedSeed(String input) { //takes in whats pressed, when an n or s is pressed, game starts
 
         if (input.equals("n") || input.equals("N")) {
             StdDraw.clear(Color.BLACK);
@@ -125,48 +127,23 @@ public class KeyInput implements Serializable{
 
 
     //takes what readKey does and processes it
-    public void keyPressed(String input){
-        TETile[][] layout = this.layout;
+    void keyPressed(String input){
 
         if (input.equals("w") || input.equals("W")) {
             if (!layout[p.x][p.y + 1].equals(Tileset.WALL)) {
-                layout[p.x][p.y] = Tileset.FLOOR;
-                layout[p.x][p.y + 1] = Tileset.PLAYER;
-                //StdDraw.clear();
-                //StdDraw.show();
-                ter.renderFrame(layout);
-                screen.drawHUD();
-                p.y += 1;
+                p.move(layout,0, 1);
             }
         } else if (input.equals("a") || input.equals("A")) {
             if (!layout[p.x - 1][p.y].equals(Tileset.WALL)) {
-                layout[p.x][p.y] = Tileset.FLOOR;
-                layout[p.x - 1][p.y] = Tileset.PLAYER;
-                //StdDraw.clear();
-                //StdDraw.show();
-                ter.renderFrame(layout);
-                screen.drawHUD();
-                p.x -= 1;
+                p.move(layout, -1, 0);
             }
         } else if (input.equals("s") || input.equals("S")) {
             if (!layout[p.x][p.y - 1].equals(Tileset.WALL)) {
-                layout[p.x][p.y] = Tileset.FLOOR;
-                layout[p.x][p.y - 1] = Tileset.PLAYER;
-                //StdDraw.clear();
-                //StdDraw.show();
-                ter.renderFrame(layout);
-                screen.drawHUD();
-                p.y -= 1;
+                p.move(layout, 0, -1);
             }
         } else if (input.equals("d") || input.equals("D")) {
             if (!layout[p.x + 1][p.y].equals(Tileset.WALL)) {
-                layout[p.x][p.y] = Tileset.FLOOR;
-                layout[p.x + 1][p.y] = Tileset.PLAYER;
-                //StdDraw.clear();
-                //StdDraw.show();
-                ter.renderFrame(layout);
-                screen.drawHUD();
-                p.x += 1;
+                p.move(layout, 1, 0);
             }
         }
         else if (input.equals("q") || input.equals("Q")) {
@@ -175,6 +152,8 @@ public class KeyInput implements Serializable{
             System.exit(0);
             //quit the game
         }
+        //ter.renderFrame(layout);
+        //screen.drawHUD();
     }
 
     //Is supposed to pull a file called world.txt and load it. makes one if doesn't exist
@@ -224,4 +203,3 @@ public class KeyInput implements Serializable{
     }
 
 }
-

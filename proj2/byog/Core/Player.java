@@ -5,29 +5,39 @@ import byog.TileEngine.Tileset;
 
 import java.util.Random;
 
-public class Player {
-    int x;
-    int y;
-    Game game;
-    String imgFileName;
+public class Player extends Character {
 
-    public Player(int x, int y, Game game) {
+    int energy;
+    int capacity;
+    Tools weapon;
+    String name = "Robocop";
+
+    Player(int x, int y, Game game) {
         this.x = 10;
         this.y = 10;
         this.game = game;
+        this.capacity = 30;
     }
 
-    void place() {
-        Random r = new Random(game.seed);
-        boolean found = false;
-        while (!found) {
-            if (game.WORLD[x][y].description().equals("floor")) {
-                found = true;
-            } else {
-                x = r.nextInt(game.WIDTH);
-                y = r.nextInt(game.HEIGHT);
-            }
+    void pickup(Tools grab) {
+        if (grab.name.equals("energy")) {
+            refill();
+        } else {
+            weapon = grab;
         }
-        game.WORLD[x][y] = Tileset.PLAYER;
     }
+
+    void move(TETile[][] world, int xDir, int yDir) {
+        world[this.x][this.y] = Tileset.FLOOR;
+
+        this.x += xDir;
+        this.y += yDir;
+
+        world[this.x][this.y] = Tileset.PLAYER;
+    }
+
+    private void refill() {
+        energy = capacity;
+    }
+
 }
