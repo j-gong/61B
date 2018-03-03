@@ -44,7 +44,11 @@ public class KeyInput implements Serializable{
         screen = new Screen((int) screenSize.getWidth(), (int) screenSize.getHeight());
         screen.MainMenu();
 
-        readSeed();
+
+        TETile[][] gamee = game.playWithInputString(readSeed());
+        ter.renderFrame(gamee);
+        readKey();
+
     }
 
     //Reads what key is pressed
@@ -68,6 +72,7 @@ public class KeyInput implements Serializable{
 
     public String readSeed() { //gets the game from the input string
         String input = "";
+        String input2 = "";
         keyPressedSeed(input);
         while (history.isEmpty() || !history.peekLast().equals(("s"))) {
             if (!StdDraw.hasNextKeyTyped()) {
@@ -76,14 +81,16 @@ public class KeyInput implements Serializable{
             if (StdDraw.hasNextKeyTyped()) {
                 char key = StdDraw.nextKeyTyped();
                 input += String.valueOf(key);
+                input2 = String.valueOf(key);
                 history.addLast(String.valueOf(key));
-                keyPressedSeed(input);
+                keyPressedSeed(input2);
             }
         }
         return input;
     }
 
     public void keyPressedSeed(String input) { //takes in whats pressed, when an n or s is pressed, game starts
+
         if (input.equals("n") || input.equals("N")) {
             StdDraw.clear(Color.BLACK);
             Font font = new Font("Monaco", Font.BOLD, 64);
@@ -92,19 +99,18 @@ public class KeyInput implements Serializable{
             StdDraw.text(screen.width / 2, screen.height / 2 + screen.height / 5, "New Game");
             StdDraw.text(screen.width / 2, screen.height / 2, "Please enter a seed. Press s to start.");
             StdDraw.show();
-            if (input.equals("s") || input.equals("S")) {
-                if (history.getFirst().equals("n") || history.getFirst().equals("N")) {
-                    StdDraw.text(screen.width / 2, screen.height / 2, "Please enter a seed");
-                    StdDraw.show();
-                    history.removeLast();
-                } else {
-                    TETile[][] gamee = game.playWithInputString(input);
-                    ter.renderFrame(gamee);
-                    readKey();
-                }
+        }
+        if (input.equals("s") || input.equals("S")) {
+            if (history.size() == 2) {
+                StdDraw.clear(Color.blue);
+                StdDraw.text(screen.width / 2, screen.height / 2, "Please enter a seed");
+                StdDraw.show();
+                history.removeLast();
+                //does not loop back
             }
         }
     }
+
 
     //takes what readKey does and processes it
     public void keyPressed(String input){
