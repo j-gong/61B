@@ -13,7 +13,7 @@ public class Screen {
      Random rand;
      Game game;
      boolean gameover = false;
-     Map key;
+     TETile[][] layout;
 
     //Screen might need to take in a seed?
     public Screen(int width, int height) {
@@ -26,7 +26,6 @@ public class Screen {
         StdDraw.setYscale(0, this.height);
         StdDraw.clear(Color.BLACK);
         StdDraw.enableDoubleBuffering();
-
        // key = passed;
     }
 
@@ -45,14 +44,14 @@ public class Screen {
 
     //will run this method while !gameover
     public void drawHUD(){
-        while (!gameover) {
+            /*
             Font smallFont = new Font("Monaco", Font.BOLD, 20);
-            StdDraw.setFont(smallFont);
+            StdDraw.setFont(smallFont);*/
             StdDraw.setPenColor(Color.WHITE);
-            StdDraw.line(0, height * .9 , width, height * .9);
+            StdDraw.line(0, height -12 , width, height - 12);
             //show below depends on whether the next while loops stays
             StdDraw.show();
-        }
+
         //might need to move this while loop somewhere else
         /*while (!gameover) {
             StdDraw.text(width / 5, height * 0.8, "" + mousepoint());
@@ -65,21 +64,21 @@ public class Screen {
         //may want to include a delay? otherwise will continually update
         //like if mouse point stays the same for 1 second, then show?
 
-        TETile[][] layout = key.LAYOUT;
+
         while(!gameover) {
-            int x = (int) StdDraw.mouseX();
+            int x = (int) StdDraw.mouseX() + 2;
             int y = (int) StdDraw.mouseY();
             if (layout[x][y].equals(Tileset.WALL)) {
-                return "Wall";
+                return "Wall" + Integer.toString(x) + Integer.toString(y);
             }
             else if (layout[x][y].equals(Tileset.PLAYER)) {
-                return "Dats you";
+                return "Dats you" + Integer.toString(x) + Integer.toString(y);
             }
             else if (layout[x][y].equals(Tileset.FLOOR)) {
-                return "Floor";
+                return "Floor" + Integer.toString(x) + Integer.toString(y);
             }
             else if (layout[x][y].equals(Tileset.NOTHING)) {
-                return "This should be blank, but filler for now";
+                return "This should be blank, but filler for now" + Integer.toString(x) + Integer.toString(y);
             }
         }
         return "This is just a filler";
