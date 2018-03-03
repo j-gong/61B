@@ -65,7 +65,7 @@ public class Hallway {
                 break;
             case 2: builder.dead(exit);
                 break;
-            default: builder.dead(exit);
+            default: break;
         }
 
     }
@@ -78,6 +78,7 @@ public class Hallway {
         if (maxLength < 1) {
             length = -maxLength;
             connected = true;
+            key.ROOMCOUNT -= 1;
 
         } else {
             while (length == 0) {

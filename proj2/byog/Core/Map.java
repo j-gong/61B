@@ -7,7 +7,7 @@ public class Map {
     TETile[][] LAYOUT;
     int ROOMCOUNT = 0;
     int MAXROOMS;
-    int MINROOMS = 10;
+    int MINROOMS = 15;
 
     int SEED;
     Random R;
@@ -24,7 +24,7 @@ public class Map {
     /* makes the map using rooms and hallways, triggers double recursion*/
     public TETile[][] makeMap() {
         R = new Random(SEED);
-        MAXROOMS = R.nextInt(10) + 10;
+        MAXROOMS = R.nextInt(10) + 20;
         Location startPoint = new Location(R.nextInt(WIDTH / 5) + 1, R.nextInt(HEIGHT / 5) + 1);
 
         Room root = new Room(startPoint, this);
