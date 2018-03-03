@@ -63,11 +63,11 @@ public class Game {
         /*TERenderer ter = new TERenderer();
         //want to initialize with 0 offset width and -2? offset on height
         ter.initialize(WIDTH, HEIGHT);
-        int seed = 24573;
+        int seed = 1234;
         WORLD = new TETile[WIDTH][HEIGHT];
         Map map = new Map(WORLD, seed, HEIGHT, WIDTH);
         WORLD = map.makeMap();
-        ter.renderFrame(WORLD);
+        ter.renderFrame(WORLD);*/
 
         /*Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         double width = screenSize.getWidth();
