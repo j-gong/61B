@@ -9,8 +9,8 @@ import java.awt.Dimension;
 public class Game {
     TERenderer ter = new TERenderer();
     /* Feel free to change the width and height. */
-    private static int WIDTH = 80;
-    private static int HEIGHT = 45;
+    private static int WIDTH = 100;
+    private static int HEIGHT = 80;
     private static TETile[][] WORLD;
     private static KeyInput keys;
     private static Screen screen;
@@ -23,6 +23,10 @@ public class Game {
 
         KeyInput key1 = new KeyInput(this);
         key1.StartGame();
+
+        ter.initialize(WIDTH, HEIGHT);
+
+        ter.renderFrame(key1.layout);
         /*ter.initialize(WIDTH, HEIGHT, 0, -2);
         //this seed doesn't parse the letters
         int seed = Integer.parseInt(key1.readSeed());
@@ -60,14 +64,14 @@ public class Game {
     }
 
     public static void main(String[] args) {
-        TERenderer ter = new TERenderer();
+        /*TERenderer ter = new TERenderer();
         //want to initialize with 0 offset width and -2? offset on height
-        ter.initialize(WIDTusH, HEIGHT, 0, -2);
+        ter.initialize(WIDTH, HEIGHT, 0, -2);
         int seed = 24573;
         WORLD = new TETile[WIDTH][HEIGHT];
         Map map = new Map(WORLD, seed, HEIGHT, WIDTH);
         WORLD = map.makeMap();
-        ter.renderFrame(WORLD);
+        ter.renderFrame(WORLD); */
 
         /*Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         double width = screenSize.getWidth();
@@ -75,7 +79,7 @@ public class Game {
         System.out.println(width); //1280
         System.out.println(height); //720 */
 
-       // Game game = new Game();
-       // game.playWithInputString();
+       Game game = new Game();
+       game.playWithKeyboard();
     }
 }

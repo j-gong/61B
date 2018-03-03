@@ -23,6 +23,7 @@ public class KeyInput implements Serializable{
     Game game;
     ArrayDeque<String> history = new ArrayDeque<String>(); //when a game is loaded, history needs to include all
     Map key;
+    TETile[][] layout;
 
     TERenderer ter = new TERenderer();
 
@@ -41,8 +42,9 @@ public class KeyInput implements Serializable{
         screen = new Screen(80, 45);
         screen.MainMenu();
         TETile[][] gamee = game.playWithInputString(readSeed());
-        ter.renderFrame(gamee);
-        readKey();
+        layout = gamee;
+        //ter.renderFrame(gamee);
+        //readKey();
 
     }
 
