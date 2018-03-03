@@ -13,8 +13,8 @@ public class Player extends Character {
     String name = "Robocop";
 
     Player(int x, int y, Game game) {
-        this.x = 10;
-        this.y = 10;
+        this.x = x;
+        this.y = y;
         this.game = game;
         this.capacity = 30;
     }
