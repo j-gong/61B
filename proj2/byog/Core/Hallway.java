@@ -55,17 +55,15 @@ public class Hallway {
             rand = 2;
         }
 
-        switch (rand) {
-            case 0: Room addroom = new Room(exit, direction, key);
-                deadRoom(addroom);
-                break;
-            case 1: Location angle = turn(nextDirect);
-                Hallway newhall = new Hallway(angle, nextDirect, key);
-                newhall.makeHallway();
-                break;
-            case 2: builder.dead(exit);
-                break;
-            default: break;
+        if (rand == 0) {
+            Room addroom = new Room(exit, direction, key);
+            deadRoom(addroom);
+        } else if (rand == 1) {
+            Location angle = turn(nextDirect);
+            Hallway newhall = new Hallway(angle, nextDirect, key);
+            newhall.makeHallway();
+        } else if (rand == 2){
+            builder.dead(exit);
         }
 
     }

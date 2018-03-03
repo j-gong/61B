@@ -10,8 +10,8 @@ import java.awt.Dimension;
 public class Game {
     TERenderer ter = new TERenderer();
     /* Feel free to change the width and height. */
-    static int WIDTH = 90;
-    static int HEIGHT = 50;
+    static final int WIDTH = 84;
+    static final int HEIGHT = 42;
     static TETile[][] WORLD;
     static KeyInput keys;
     static Screen screen;
@@ -29,7 +29,7 @@ public class Game {
         //WORLD = key1.layout;
         //Player play = new Player(0, 0, this);
         //play.place();
-        ter.initialize(WIDTH, HEIGHT, 0, 0);
+        ter.initialize(WIDTH, HEIGHT);
         ter.renderFrame(key1.layout);
         key1.readKey();
 
@@ -61,12 +61,12 @@ public class Game {
     public static void main(String[] args) {
         /*TERenderer ter = new TERenderer();
         //want to initialize with 0 offset width and -2? offset on height
-        ter.initialize(WIDTH, HEIGHT, 0, -2);
+        ter.initialize(WIDTH, HEIGHT);
         int seed = 24573;
         WORLD = new TETile[WIDTH][HEIGHT];
         Map map = new Map(WORLD, seed, HEIGHT, WIDTH);
         WORLD = map.makeMap();
-        ter.renderFrame(WORLD); */
+        ter.renderFrame(WORLD);
 
         /*Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         double width = screenSize.getWidth();
