@@ -22,15 +22,18 @@ public class Game {
     public void playWithKeyboard() {
 
         KeyInput key1 = new KeyInput(this);
-
-        ter.initialize(WIDTH, HEIGHT, 0, -2);
+        key1.StartGame();
+        /*ter.initialize(WIDTH, HEIGHT, 0, -2);
+        //this seed doesn't parse the letters
         int seed = Integer.parseInt(key1.readSeed());
         WORLD = new TETile[WIDTH][HEIGHT];
         Map map = new Map(WORLD, seed, HEIGHT, WIDTH);
-        WORLD = map.makeMap();
 
-        KeyInput key2 = new KeyInput(this, map);
-        key2.readKey();
+        KeyInput key2 = new KeyInput(this, map);*/
+        /*Screen screen = new Screen(WIDTH, HEIGHT);
+        screen.MainMenu();
+        screen.drawHUD();
+        //key2.readKey();*/
 
     }
 

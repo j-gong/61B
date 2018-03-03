@@ -15,6 +15,8 @@ import byog.TileEngine.TERenderer;
 import byog.TileEngine.TETile;
 import byog.TileEngine.Tileset;
 import edu.princeton.cs.introcs.StdDraw;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 
 public class KeyInput implements Serializable{
 
@@ -28,12 +30,21 @@ public class KeyInput implements Serializable{
 
     public KeyInput(Game game) {
         this.game = game;
+
         //key = passed;
     }
 
     public KeyInput(Game game, Map passed) {
         this.game = game;
         key = passed;
+    }
+
+    public void StartGame() {
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        screen = new Screen((int) screenSize.getWidth(), (int) screenSize.getHeight());
+        screen.MainMenu();
+
+        readSeed();
     }
 
     //Reads what key is pressed
@@ -49,6 +60,7 @@ public class KeyInput implements Serializable{
                 char key = StdDraw.nextKeyTyped();
                 input += String.valueOf(key);
                 history.addLast(String.valueOf(key));
+                keyPressed(input);
             }
         }
         return input;
@@ -57,7 +69,7 @@ public class KeyInput implements Serializable{
     public String readSeed() { //gets the game from the input string
         String input = "";
         keyPressedSeed(input);
-        while (!history.peekLast().equals(("s"))) {
+        while (history.isEmpty() || !history.peekLast().equals(("s"))) {
             if (!StdDraw.hasNextKeyTyped()) {
                 continue;
             }
@@ -65,19 +77,15 @@ public class KeyInput implements Serializable{
                 char key = StdDraw.nextKeyTyped();
                 input += String.valueOf(key);
                 history.addLast(String.valueOf(key));
+                keyPressedSeed(input);
             }
         }
         return input;
     }
 
     public void keyPressedSeed(String input) { //takes in whats pressed, when an n or s is pressed, game starts
-        /*screen = new Screen(screen.width, screen.height);
-        if (history.isEmpty()) {
-            screen.MainMenu();
-            //might need to std.clear right after this
-        }*/
         if (input.equals("n") || input.equals("N")) {
-            StdDraw.clear();
+            StdDraw.clear(Color.BLACK);
             Font font = new Font("Monaco", Font.BOLD, 64);
             StdDraw.setPenColor(Color.WHITE);
             StdDraw.setFont(font);
@@ -93,7 +101,6 @@ public class KeyInput implements Serializable{
                     TETile[][] gamee = game.playWithInputString(input);
                     ter.renderFrame(gamee);
                     readKey();
-
                 }
             }
         }
