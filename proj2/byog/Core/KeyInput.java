@@ -39,13 +39,11 @@ public class KeyInput implements Serializable{
     }
 
     public void StartGame() {
-        screen = new Screen(80, 45);
+        screen = new Screen(100, 80);
         screen.MainMenu();
-        TETile[][] gamee = game.playWithInputString(readSeed());
-        layout = gamee;
-        //ter.renderFrame(gamee);
-        //readKey();
-
+        //Player dude = new Player(0, 0, game);
+        layout = game.playWithInputString(readSeed());
+        //dude.place();
     }
 
     //Reads what key is pressed
@@ -59,7 +57,7 @@ public class KeyInput implements Serializable{
             }
             if (StdDraw.hasNextKeyTyped()) {
                 char key = StdDraw.nextKeyTyped();
-                input += String.valueOf(key);
+                input = String.valueOf(key);
                 history.addLast(String.valueOf(key));
                 keyPressed(input);
             }
@@ -97,6 +95,11 @@ public class KeyInput implements Serializable{
             StdDraw.text(screen.width / 2, screen.height / 2, "Please enter a seed. Press s to start.");
             StdDraw.show();
         }
+        if (input.equals("l") || input.equals("L")) {
+            Game g = loadworld();
+            //supposedly this is all it needs
+            //I want to be able to save the game g tho. perhaps this.game is all I need?
+        }
         if (input.equals("s") || input.equals("S")) {
             if (history.size() == 2) {
                 StdDraw.clear(Color.BLACK);
@@ -105,27 +108,36 @@ public class KeyInput implements Serializable{
                 history.removeLast();
             }
         }
+        //add a quit method "q"
     }
 
 
     //takes what readKey does and processes it
     public void keyPressed(String input){
-        TETile[][] layout = key.LAYOUT;
+        TETile[][] layout = this.layout;
 
         if (input.equals("w") || input.equals("W")) {
             if (!layout[p.x][p.y + 1].equals(Tileset.WALL)) {
-                p.y += + 1;
+                layout[p.x][p.y] = Tileset.FLOOR;
+                layout[p.x][p.y + 1] = Tileset.PLAYER;
+                p.y += 1;
             }
         } else if (input.equals("a") || input.equals("A")) {
             if (!layout[p.y - 1][p.y].equals(Tileset.WALL)) {
+                layout[p.x][p.y] = Tileset.FLOOR;
+                layout[p.x - 1][p.y] = Tileset.PLAYER;
                 p.x -= 1;
             }
         } else if (input.equals("s") || input.equals("S")) {
             if (!layout[p.x][p.y - 1].equals(Tileset.WALL)) {
+                layout[p.x][p.y] = Tileset.FLOOR;
+                layout[p.x][p.y - 1] = Tileset.PLAYER;
                 p.y -= 1;
             }
         } else if (input.equals("d") || input.equals("D")) {
             if (!layout[p.x + 1][p.y].equals(Tileset.WALL)) {
+                layout[p.x][p.y] = Tileset.FLOOR;
+                layout[p.x + 1][p.y] = Tileset.PLAYER;
                 p.x += 1;
             }
         }
@@ -134,13 +146,6 @@ public class KeyInput implements Serializable{
             saveWorld(this.game);
             System.exit(0);
             //quit the game
-        }
-
-       
-        else if (input.equals("l") || input.equals("L")) {
-            Game g = loadworld();
-            //supposedly this is all it needs
-            //I want to be able to save the game g tho. perhaps this.game is all I need?
         }
     }
 

@@ -49,7 +49,7 @@ public class Screen {
             Font smallFont = new Font("Monaco", Font.BOLD, 20);
             StdDraw.setFont(smallFont);
             StdDraw.setPenColor(Color.WHITE);
-            StdDraw.line(0, height - 2, width, height - 2);
+            StdDraw.line(0, height - 16, width, height - 16);
             //show below depends on whether the next while loops stays
             StdDraw.show();
        // }

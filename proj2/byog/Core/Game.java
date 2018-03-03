@@ -2,6 +2,7 @@ package byog.Core;
 
 import byog.TileEngine.TERenderer;
 import byog.TileEngine.TETile;
+import byog.TileEngine.Tileset;
 import byog.lab5.HexWorld;
 import java.awt.Toolkit;
 import java.awt.Dimension;
@@ -9,11 +10,12 @@ import java.awt.Dimension;
 public class Game {
     TERenderer ter = new TERenderer();
     /* Feel free to change the width and height. */
-    private static int WIDTH = 100;
-    private static int HEIGHT = 80;
-    private static TETile[][] WORLD;
-    private static KeyInput keys;
-    private static Screen screen;
+    static int WIDTH = 100;
+    static int HEIGHT = 80;
+    static TETile[][] WORLD;
+    static KeyInput keys;
+    static Screen screen;
+    static int seed;
 
 
     /**
@@ -23,10 +25,13 @@ public class Game {
 
         KeyInput key1 = new KeyInput(this);
         key1.StartGame();
-
-        ter.initialize(WIDTH, HEIGHT);
-
+        //WORLD = key1.layout;
+        Player play = new Player(0, 0, this);
+        play.place();
+        ter.initialize(100, 80);
         ter.renderFrame(key1.layout);
+        key1.readKey();
+
         /*ter.initialize(WIDTH, HEIGHT, 0, -2);
         //this seed doesn't parse the letters
         int seed = Integer.parseInt(key1.readSeed());
@@ -56,7 +61,7 @@ public class Game {
     public TETile[][] playWithInputString(String input) {
 
         //ter.initialize(WIDTH, HEIGHT, 0, -2);
-        int seed = (int) Long.parseLong(input.replaceAll("[\\D]", ""));
+        seed = (int) Long.parseLong(input.replaceAll("[\\D]", ""));
         WORLD = new TETile[WIDTH][HEIGHT];
         Map map = new Map(WORLD, seed, HEIGHT, WIDTH);
         WORLD = map.makeMap();
