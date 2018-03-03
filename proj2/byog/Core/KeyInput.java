@@ -15,8 +15,6 @@ import byog.TileEngine.TERenderer;
 import byog.TileEngine.TETile;
 import byog.TileEngine.Tileset;
 import edu.princeton.cs.introcs.StdDraw;
-import java.awt.Dimension;
-import java.awt.Toolkit;
 
 public class KeyInput implements Serializable{
 
@@ -40,11 +38,8 @@ public class KeyInput implements Serializable{
     }
 
     public void StartGame() {
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        screen = new Screen((int) screenSize.getWidth(), (int) screenSize.getHeight());
+        screen = new Screen(80, 45);
         screen.MainMenu();
-
-
         TETile[][] gamee = game.playWithInputString(readSeed());
         ter.renderFrame(gamee);
         readKey();
@@ -102,11 +97,10 @@ public class KeyInput implements Serializable{
         }
         if (input.equals("s") || input.equals("S")) {
             if (history.size() == 2) {
-                StdDraw.clear(Color.blue);
+                StdDraw.clear(Color.BLACK);
                 StdDraw.text(screen.width / 2, screen.height / 2, "Please enter a seed");
                 StdDraw.show();
                 history.removeLast();
-                //does not loop back
             }
         }
     }

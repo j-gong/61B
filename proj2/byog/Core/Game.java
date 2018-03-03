@@ -9,8 +9,8 @@ import java.awt.Dimension;
 public class Game {
     TERenderer ter = new TERenderer();
     /* Feel free to change the width and height. */
-    private static int WIDTH = 2300;
-    private static int HEIGHT = 1245;
+    private static int WIDTH = 80;
+    private static int HEIGHT = 45;
     private static TETile[][] WORLD;
     private static KeyInput keys;
     private static Screen screen;
