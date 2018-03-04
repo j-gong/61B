@@ -1,66 +1,75 @@
 package byog.Core;
 
+import byog.TileEngine.TETile;
 import byog.TileEngine.Tileset;
 import java.util.ArrayList;
-import java.util.Random;
 
 public class Antagonist extends Character {
 
-    ArrayList<Location> previous;
+    //@Source docs.Oracle.com
+    ArrayList<Location> previous = new ArrayList<>();
 
     Antagonist(Game game) {
         super(10, 10, game, Tileset.MOUNTAIN);
 
     }
 
+    private class Pair {
+        public final int x;
+        public final int y;
+        Pair(int x, int y) {
+            this.x = x;
+            this.y = y;
+        }
+    }
+
     void aiMove() {
 
-        ArrayList<Integer> available = new ArrayList<>();
+        ArrayList<Pair> available = findSpaceOptions();
 
+        if (available.size() == 0) {
+            previous.clear();
+            previous.add(new Location(this.x, this.y));
+            aiMove();
+
+        } else {
+
+            Pair chosen = available.get(r.nextInt(available.size()));
+            this.move(game.WORLD, chosen.x, chosen.y);
+            previous.add(new Location(this.x, this.y));
+            if (previous.size() == 3) {
+                previous.remove(0);
+
+            }
+        }
+    }
+
+    private ArrayList<Pair> findSpaceOptions() {
+        ArrayList<Pair> available = new ArrayList<>();
         for (int x = -1; x < 2; x += 1) {
             for (int y = -1; y < 2; y += 1) {
                 if (validSpace(new Location(x, y))) {
-
+                    available.add(new Pair(x, y));
                 }
             }
         }
-        //if  available is empty, clear previous
-
-
-        previous.add(new Location(this.x, this.y));
-        previous.remove(0);
+        return available;
     }
 
     private boolean validSpace(Location check) {
-        if (!game.WORLD[check.xPos][check.yPos].description().equals("floor")) {
-            for (int i = 0; i < previous.size(); i += 1) {
-                if (!previous.get(i).equals(check)) {
-                    return true;
-            }
+        TETile checkfloor = game.WORLD[this.x + check.xPos][this.y + check.yPos];
+        Location locate = new Location(check.xPos, check.yPos);
+
+        if (!checkfloor.description().equals("floor")) {
             return false;
+        } else {
+            for (int i = 0; i < previous.size(); i += 1) {
+                if (locate.equals(previous.get(i))) {
+                    return false;
+                }
+            }
+            return true;
+        }
     }
-
-
-
-    /*void randomMove() {
-
-        Random r = new Random(game.seed);
-
-        Location track = new Location(this.x, this.y);
-        Location start = track.copy();
-
-        int[] dir = new int[]{-1, 0, 1};
-
-        while (track.xPos == start.xPos && track.yPos == start.yPos) {
-
-            this.move(game.WORLD, dir[r.nextInt(3)], dir[r.nextInt(3)]);
-            track = new Location(this.x, this.y);
-
-        }*/
-
-    }
-
-
-
 
 }

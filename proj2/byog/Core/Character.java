@@ -10,12 +10,17 @@ public class Character {
     protected int y;
     protected Game game;
     TETile tile;
+    Random r;
 
     Character(int x, int y, Game game, TETile tileset) {
         this.x = x;
         this.y = y;
+
         this.game = game;
+        this.r = game.r;
+
         this.tile = tileset;
+
 
         this.place();
 

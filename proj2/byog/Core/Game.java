@@ -8,6 +8,7 @@ import edu.princeton.cs.introcs.StdDraw;
 
 import java.awt.Toolkit;
 import java.awt.Dimension;
+import java.util.Random;
 
 public class Game {
     TERenderer ter = new TERenderer();
@@ -24,6 +25,7 @@ public class Game {
     Player robocop;
     Antagonist[] criminals = new Antagonist[4];
     boolean gameover = false;
+    Random r;
 
     /**
      * Method used for playing a fresh game. The game should start from the main menu.
@@ -55,6 +57,7 @@ public class Game {
         //ter.initialize(WIDTH, HEIGHT, 0, -2);
         seed = (int) Long.parseLong(input.replaceAll("[\\D]", ""));
         TETile[][] world = new TETile[WIDTH][HEIGHT];
+        r = new Random(seed);
         Map map = new Map(world, seed, HEIGHT, WIDTH);
         world = map.makeMap();
         return world;
