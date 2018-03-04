@@ -1,6 +1,8 @@
 package byog.Core;
 
-public class Location {
+import java.io.Serializable;
+
+public class Location implements Serializable {
     int xPos;
     int yPos;
 

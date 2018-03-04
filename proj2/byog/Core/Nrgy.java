@@ -1,6 +1,8 @@
 package byog.Core;
 
-public class Nrgy extends Tools{
+import java.io.Serializable;
+
+public class Nrgy extends Tools implements Serializable {
 
     String name = "energy";
 

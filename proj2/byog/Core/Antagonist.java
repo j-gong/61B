@@ -1,10 +1,12 @@
 package byog.Core;
 
 import byog.TileEngine.Tileset;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Antagonist extends Character {
+public class Antagonist extends Character implements Serializable {
 
     ArrayList<Location> previous;
 

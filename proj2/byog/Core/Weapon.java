@@ -1,6 +1,8 @@
 package byog.Core;
 
-public class Weapon extends Tools {
+import java.io.Serializable;
+
+public class Weapon extends Tools implements Serializable {
 
     public Weapon(int x, int y, Game game) {
         super(x, y, game);

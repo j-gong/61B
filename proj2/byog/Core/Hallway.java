@@ -3,7 +3,9 @@ package byog.Core;
 import byog.TileEngine.TETile;
 import byog.TileEngine.Tileset;
 
-public class Hallway {
+import java.io.Serializable;
+
+public class Hallway implements Serializable {
 
     private Map key;
 

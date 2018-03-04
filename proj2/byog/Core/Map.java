@@ -1,9 +1,11 @@
 package byog.Core;
 import byog.TileEngine.TETile;
 import byog.TileEngine.Tileset;
+
+import java.io.Serializable;
 import java.util.Random;
 
-public class Map {
+public class Map implements Serializable {
     TETile[][] LAYOUT;
     int ROOMCOUNT = 0;
     int MAXROOMS;

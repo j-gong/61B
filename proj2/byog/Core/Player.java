@@ -3,9 +3,10 @@ package byog.Core;
 import byog.TileEngine.TETile;
 import byog.TileEngine.Tileset;
 
+import java.io.Serializable;
 import java.util.Random;
 
-public class Player extends Character {
+public class Player extends Character implements Serializable {
 
     int energy;
     int capacity;
