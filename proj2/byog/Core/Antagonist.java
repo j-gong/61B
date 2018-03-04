@@ -2,12 +2,12 @@ package byog.Core;
 
 import byog.TileEngine.TETile;
 import byog.TileEngine.Tileset;
-import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class Antagonist extends Character {
 
     //@Source docs.Oracle.com
-    ArrayList<Location> previous = new ArrayList<>();
+    LinkedList<Location> previous = new LinkedList<>();
 
     Antagonist(Game game) {
         super(10, 10, game, Tileset.MOUNTAIN);
@@ -25,7 +25,7 @@ public class Antagonist extends Character {
 
     void aiMove() {
 
-        ArrayList<Pair> available = findSpaceOptions();
+        LinkedList<Pair> available = findSpaceOptions();
 
         if (available.size() == 0) {
             previous.clear();
@@ -37,18 +37,18 @@ public class Antagonist extends Character {
             Pair chosen = available.get(r.nextInt(available.size()));
             this.move(game.WORLD, chosen.x, chosen.y);
             previous.add(new Location(this.x, this.y));
-            if (previous.size() == 3) {
-                previous.remove(0);
-
+            if (previous.size() > 3) {
+                previous.remove();
             }
         }
     }
 
-    private ArrayList<Pair> findSpaceOptions() {
-        ArrayList<Pair> available = new ArrayList<>();
+    private LinkedList<Pair> findSpaceOptions() {
+        LinkedList<Pair> available = new LinkedList<>();
         for (int x = -1; x < 2; x += 1) {
             for (int y = -1; y < 2; y += 1) {
-                if (validSpace(new Location(x, y))) {
+                Pair check = new Pair(x, y);
+                if (validSpace(check)) {
                     available.add(new Pair(x, y));
                 }
             }
@@ -56,15 +56,16 @@ public class Antagonist extends Character {
         return available;
     }
 
-    private boolean validSpace(Location check) {
-        TETile checkfloor = game.WORLD[this.x + check.xPos][this.y + check.yPos];
-        Location locate = new Location(check.xPos, check.yPos);
+    private boolean validSpace(Pair check) {
+        Location locate = new Location(this.x + check.x, this.y + check.y);
+        TETile checkfloor = game.WORLD[locate.xPos][locate.yPos];
+
 
         if (!checkfloor.description().equals("floor")) {
             return false;
         } else {
             for (int i = 0; i < previous.size(); i += 1) {
-                if (locate.equals(previous.get(i))) {
+                if (previous.get(i).xPos == locate.xPos && previous.get(i).yPos == locate.yPos) {
                     return false;
                 }
             }
