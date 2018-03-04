@@ -76,6 +76,7 @@ public class Game {
     private void createObjects(){
 
         robocop = new Player(0, 0, this);
+
         for (int i = 5; i > 0; i -= 1) {
             Antagonist badguy = new Antagonist(this);
             criminals[i] = badguy;

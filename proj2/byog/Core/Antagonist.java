@@ -15,11 +15,10 @@ public class Antagonist extends Character {
 
         Random r = new Random(5);
 
-        Location track = new Location(this.x, this.y);
-        Location start = track.copy();
-        while (track == start) {
+        int[] xOpen = new int[2];
+        int[] yOpen = 
 
-            this.move(game.WORLD, r.nextInt(2), r.nextInt(2));
+        if (game.WORLD[x + 1][y].description().equals("floor")) {
 
         }
 
