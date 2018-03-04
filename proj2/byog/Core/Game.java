@@ -77,7 +77,7 @@ public class Game {
 
         robocop = new Player(0, 0, this);
 
-        for (int i = 5; i > 0; i -= 1) {
+        for (int i = 0; i < 4; i += 1) {
             Antagonist badguy = new Antagonist(this);
             criminals[i] = badguy;
         }
@@ -102,9 +102,9 @@ public class Game {
     }
 
     private void updateGame() {
-        //TODO: sunglight, move randos, place objects
-        for (Antagonist c : criminals) {
-            c.randomMove();
+        //TODO: sunglight, AI randos, place objects
+        for (int c = 0; c < 4; c += 1) {
+            criminals[c].aiMove();
         }
     }
 

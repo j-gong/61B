@@ -38,7 +38,7 @@ public class KeyInput implements Serializable{
             keyPressed(String.valueOf(stroke));
             return true;
         }
-        return false;
+        return true;
     }
 
     void keyPressed(String input) {
