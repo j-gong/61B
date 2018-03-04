@@ -15,6 +15,7 @@ public class Player extends Character {
     Player(int x, int y, Game game) {
         super(x, y, game, Tileset.PLAYER);
         this.capacity = 100;
+        this.energy = capacity;
     }
 
     private void pickup(Tools grab) {
@@ -27,7 +28,7 @@ public class Player extends Character {
     }
 
     private void refill(Tools grab) {
-        if (grab.used) {
+        if (!grab.used) {
             this.energy = capacity;
             grab.used = true;
         }
