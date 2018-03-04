@@ -6,6 +6,8 @@ import java.util.LinkedList;
 
 public class Antagonist extends Character {
 
+    boolean caught = false;
+
     //@Source docs.Oracle.com
     LinkedList<Location> previous = new LinkedList<>();
 
@@ -25,14 +27,24 @@ public class Antagonist extends Character {
 
     void aiMove() {
 
+        if (caught) {
+            return;
+        }
+
         LinkedList<Pair> available = findSpaceOptions();
 
         if (available.size() == 0) {
             previous.clear();
             previous.add(new Location(this.x, this.y));
-            aiMove();
+            try {
+                aiMove();
+            } catch (StackOverflowError e) {
+                return;
+            }
 
         } else {
+
+            //TODO: Ai run away from the robocop
 
             Pair chosen = available.get(r.nextInt(available.size()));
             this.move(game.WORLD, chosen.x, chosen.y);
@@ -45,10 +57,16 @@ public class Antagonist extends Character {
 
     private LinkedList<Pair> findSpaceOptions() {
         LinkedList<Pair> available = new LinkedList<>();
+        double distBetween = Math.sqrt(Math.pow(game.robocop.x - x, 2) - Math.pow(game.robocop.y - y, 2));
+
+        if (distBetween < 7) {
+            previous.clear();
+        }
+
         for (int x = -1; x < 2; x += 1) {
             for (int y = -1; y < 2; y += 1) {
                 Pair check = new Pair(x, y);
-                if (validSpace(check)) {
+                if (runAway(check, distBetween) && validSpace(check)) {
                     available.add(new Pair(x, y));
                 }
             }
@@ -64,13 +82,37 @@ public class Antagonist extends Character {
         if (!checkfloor.description().equals("floor")) {
             return false;
         } else {
-            for (int i = 0; i < previous.size(); i += 1) {
-                if (previous.get(i).xPos == locate.xPos && previous.get(i).yPos == locate.yPos) {
+            for (Location prev : previous) {
+                if (prev.xPos == locate.xPos && prev.yPos == locate.yPos) {
                     return false;
                 }
             }
             return true;
         }
     }
+
+    private boolean runAway(Pair check, double origDistance) {
+        //double origDistance = Math.sqrt(Math.pow(game.robocop.x - x, 2) - Math.pow(game.robocop.y - y, 2));
+        double newXdist = Math.pow(game.robocop.x - (x + check.x), 2);
+        double newYdist = Math.pow(game.robocop.y - (y + check.y), 2);
+
+        double newDistance = Math.sqrt(newXdist + newYdist);
+        if (origDistance < 7) {
+            return newDistance > origDistance;
+        }
+        return true;
+    }
+
+    void interact() {
+        game.robocop.interact();
+    }
+
+    public static void main(String[] args) {
+        System.out.print(Math.pow(0, 2));
+    }
+
+    //TODO: move faster in sunlight or something
+    //
+    // //TODO: make sure anatagonists can't mess with tools.
 
 }

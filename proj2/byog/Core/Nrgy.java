@@ -1,12 +1,18 @@
 package byog.Core;
 
-public class Nrgy extends Tools{
+import byog.TileEngine.TETile;
+import byog.TileEngine.Tileset;
+
+public class Nrgy extends Tools {
 
     String name = "energy";
 
-    public Nrgy(int x, int y, Game game) {
-        super(x, y, game);
+    Nrgy(Game game) {
+        super(game, Tileset.GRASS);
+        used = false;
+
     }
+
 
     //TODO: place them somewhere
 }

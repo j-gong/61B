@@ -23,7 +23,8 @@ public class Game {
 
     int sunlight = 40; //TODO: implement sunlight everywhere, make things slightly darker when moving under
     Player robocop;
-    Antagonist[] criminals = new Antagonist[4];
+    Antagonist[] criminals;
+    Tools[] items;
     boolean gameover = false;
     Random r;
 
@@ -79,10 +80,18 @@ public class Game {
     private void createObjects(){
 
         robocop = new Player(0, 0, this);
+        criminals = new Antagonist[r.nextInt(5) + 4];
+        items = new Tools[r.nextInt(4) + 3];
 
-        for (int i = 0; i < 4; i += 1) {
+        for (int i = 0; i < criminals.length; i += 1) {
             Antagonist badguy = new Antagonist(this);
             criminals[i] = badguy;
+        }
+
+        for (int i = 0; i < items.length; i += 1) {
+            Nrgy addNrgy = new Nrgy(this);
+            items[i] = addNrgy;
+
         }
 
     }
@@ -105,10 +114,13 @@ public class Game {
     }
 
     private void updateGame() {
+
         //TODO: sunglight, AI randos, place objects
-        for (int c = 0; c < 4; c += 1) {
-            criminals[c].aiMove();
+        for (Antagonist criminal : criminals) {
+            criminal.aiMove();
         }
+
+        robocop.drain(1);
     }
 
 

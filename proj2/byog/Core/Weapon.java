@@ -1,8 +1,11 @@
 package byog.Core;
 
+import byog.TileEngine.Tileset;
+
 public class Weapon extends Tools {
 
     public Weapon(int x, int y, Game game) {
-        super(x, y, game);
+        super(game, Tileset.WATER);
+
     }
 }

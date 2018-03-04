@@ -44,16 +44,22 @@ public class Character {
 
         Location check = new Location(this.x + xDir, this.y + yDir);
 
-        if (game.WORLD[check.xPos][check.yPos].description().equals("floor")) {
+        if (!game.WORLD[check.xPos][check.yPos].description().equals("wall") ||
+                game.WORLD[check.xPos][check.yPos].description().equals("flower")) {
 
             world[this.x][this.y] = Tileset.FLOOR;
 
             this.x = check.xPos;
             this.y = check.yPos;
+            interact();
 
             world[this.x][this.y] = tile;
 
         }
     }
+
+    void interact() {
+    }
+
 
 }
