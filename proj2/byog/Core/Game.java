@@ -4,6 +4,8 @@ import byog.TileEngine.TERenderer;
 import byog.TileEngine.TETile;
 import byog.TileEngine.Tileset;
 import byog.lab5.HexWorld;
+import edu.princeton.cs.introcs.StdDraw;
+
 import java.awt.Toolkit;
 import java.awt.Dimension;
 
@@ -12,27 +14,26 @@ public class Game {
     /* Feel free to change the width and height. */
     static final int WIDTH = 84;
     static final int HEIGHT = 42;
-    static TETile[][] WORLD;
-    static KeyInput keys;
-    static Screen screen;
-    static int seed;
-    static int sunlight = 40; //TODO: implement sunlight everywhere, make things slightly darker when moving under
+    TETile[][] WORLD;
+    int seed;
 
+    private KeyInput key;
+    private Screen screen;
+
+    int sunlight = 40; //TODO: implement sunlight everywhere, make things slightly darker when moving under
+    Player robocop;
+    Antagonist[] criminals = new Antagonist[4];
+    boolean gameover = false;
 
     /**
      * Method used for playing a fresh game. The game should start from the main menu.
      */
     public void playWithKeyboard() {
+        startGame();
 
-        boolean gameover = false;
-        KeyInput key1 = new KeyInput(this);
-        key1.StartGame();
-        //WORLD = key1.layout;
-        //Player play = new Player(0, 0, this);
-        //play.place();
         ter.initialize(WIDTH, HEIGHT);
-        ter.renderFrame(key1.layout);
-        key1.readKey();
+        ter.renderFrame(WORLD);
+        readKey();
 
 
     }
@@ -53,11 +54,60 @@ public class Game {
 
         //ter.initialize(WIDTH, HEIGHT, 0, -2);
         seed = (int) Long.parseLong(input.replaceAll("[\\D]", ""));
-        WORLD = new TETile[WIDTH][HEIGHT];
-        Map map = new Map(WORLD, seed, HEIGHT, WIDTH);
-        WORLD = map.makeMap();
-        return WORLD;
+        TETile[][] world = new TETile[WIDTH][HEIGHT];
+        Map map = new Map(world, seed, HEIGHT, WIDTH);
+        world = map.makeMap();
+        return world;
     }
+
+    private void startGame() {
+        screen = new Screen(90, 50, this);
+        screen.MainMenu();
+
+        key = new KeyInput(this, screen);
+        String input = key.readSeed();
+
+        WORLD = playWithInputString(input);
+
+        createObjects();
+    }
+
+
+    private void createObjects(){
+
+        robocop = new Player(0, 0, this);
+        for (int i = 5; i > 0; i -= 1) {
+            Antagonist badguy = new Antagonist(this);
+            criminals[i] = badguy;
+        }
+
+    }
+
+    private void readKey() {
+        screen.drawHUD();
+        String input = "";
+        key.keyPressed(input);
+
+        while (!gameover) {
+
+            ter.renderFrame(WORLD);
+            screen.fillHUD();
+
+            boolean update = key.keystrokeReader();
+            if (update) {
+                updateGame();
+            }
+        }
+    }
+
+    private void updateGame() {
+        //TODO: sunglight, move randos, place objects
+        for (Antagonist c : criminals) {
+            c.randomMove();
+        }
+    }
+
+
 
     public static void main(String[] args) {
         /*TERenderer ter = new TERenderer();
@@ -69,11 +119,6 @@ public class Game {
         WORLD = map.makeMap();
         ter.renderFrame(WORLD);*/
 
-        /*Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        double width = screenSize.getWidth();
-        double height = screenSize.getHeight();
-        System.out.println(width); //1280
-        System.out.println(height); //720 */
 
        Game game = new Game();
        game.playWithKeyboard();

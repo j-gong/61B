@@ -13,8 +13,6 @@ public class Room {
     private Map key;
     private Build builder;
 
-    //private static TETile[][] Map.LAYOUT = Map.Map.LAYOUT;
-
     public Room(Location startPoint, Map passed) { //constructs the first room
         key = passed;
         site = startPoint;

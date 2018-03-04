@@ -7,4 +7,6 @@ public class Nrgy extends Tools{
     public Nrgy(int x, int y, Game game) {
         super(x, y, game);
     }
+
+    //TODO: place them somewhere
 }

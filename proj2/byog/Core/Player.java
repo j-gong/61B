@@ -10,12 +10,9 @@ public class Player extends Character {
     int energy;
     int capacity;
     Tools weapon;
-    String name = "Robocop";
 
     Player(int x, int y, Game game) {
-        this.x = x;
-        this.y = y;
-        this.game = game;
+        super(x, y, game, Tileset.PLAYER);
         this.capacity = 30;
     }
 
@@ -25,15 +22,6 @@ public class Player extends Character {
         } else {
             weapon = grab;
         }
-    }
-
-    void move(TETile[][] world, int xDir, int yDir) {
-        world[this.x][this.y] = Tileset.FLOOR;
-
-        this.x += xDir;
-        this.y += yDir;
-
-        world[this.x][this.y] = Tileset.PLAYER;
     }
 
     private void refill() {

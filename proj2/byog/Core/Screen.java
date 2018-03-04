@@ -10,15 +10,15 @@ import java.util.Random;
 public class Screen {
      int width;
      int height;
-     Random rand;
-     Game game;
      boolean gameover = false;
-     TETile[][] layout;
+     Game game;
 
     //Screen might need to take in a seed?
-    public Screen(int width, int height) {
+    Screen(int width, int height, Game game) {
+        this.game = game;
         this.width = width;
         this.height = height;
+
         StdDraw.setCanvasSize(this.width * 16, this.height * 16);
         Font font = new Font("Monaco", Font.BOLD, 30);
         StdDraw.setFont(font);
@@ -29,7 +29,7 @@ public class Screen {
        // key = passed;
     }
 
-    public void MainMenu() {
+    void MainMenu() {
         Font font = new Font("Monaco", Font.BOLD, 64);
         StdDraw.setPenColor(Color.WHITE);
         StdDraw.setFont(font);
@@ -43,14 +43,13 @@ public class Screen {
     }
 
     //will run this method while !gameover
-    public void drawHUD(){
+    void drawHUD(){
             /*
             Font smallFont = new Font("Monaco", Font.BOLD, 20);
             StdDraw.setFont(smallFont);*/
             StdDraw.setPenColor(Color.WHITE);
             StdDraw.line(0, height -12 , width, height - 12);
             //show below depends on whether the next while loops stays
-            fillHUD();
             StdDraw.show();
 
         //might need to move this while loop somewhere else
@@ -67,23 +66,18 @@ public class Screen {
         StdDraw.show();
     }
 
-    public String mousepoint() {
-        //want to see what tile is under the mouse
-        //may want to include a delay? otherwise will continually update
-        //like if mouse point stays the same for 1 second, then show?
-
-
+    String mousepoint() {
         while(!gameover) {
             //TODO scale is wrong. on mine. x is positioned 2 to left
             int x = (int) StdDraw.mouseX();
             int y = (int) StdDraw.mouseY();
-            if (layout[x][y].equals(Tileset.WALL)) {
+            if (game.WORLD[x][y].equals(Tileset.WALL)) {
                 return "Wall" + Integer.toString(x) + Integer.toString(y);
-            } else if (layout[x][y].equals(Tileset.PLAYER)) {
+            } else if (game.WORLD[x][y].equals(Tileset.PLAYER)) {
                 return "Dats you" + Integer.toString(x) + Integer.toString(y);
-            } else if (layout[x][y].equals(Tileset.FLOOR)) {
+            } else if (game.WORLD[x][y].equals(Tileset.FLOOR)) {
                 return "Floor" + Integer.toString(x) + Integer.toString(y);
-            } else if (layout[x][y].equals(Tileset.NOTHING)) {
+            } else if (game.WORLD[x][y].equals(Tileset.NOTHING)) {
                 return " " + Integer.toString(x) + Integer.toString(y);
             }
         }
