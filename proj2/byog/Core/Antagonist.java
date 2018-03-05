@@ -7,6 +7,7 @@ import java.util.LinkedList;
 public class Antagonist extends Character {
 
     boolean caught = false;
+    static int damage = 0;
 
     //@Source docs.Oracle.com
     LinkedList<Location> previous = new LinkedList<>();
@@ -44,7 +45,6 @@ public class Antagonist extends Character {
 
         } else {
 
-            //TODO: Ai run away from the robocop
 
             Pair chosen = available.get(r.nextInt(available.size()));
             this.move(game.WORLD, chosen.x, chosen.y);
@@ -105,14 +105,13 @@ public class Antagonist extends Character {
 
     void interact() {
         game.robocop.interact();
+        game.robocop.drain(damage);
     }
 
     public static void main(String[] args) {
         System.out.print(Math.pow(0, 2));
     }
 
-    //TODO: move faster in sunlight or something
-    //
     // //TODO: make sure anatagonists can't mess with tools.
 
 }

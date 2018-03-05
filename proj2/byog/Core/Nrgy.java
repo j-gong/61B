@@ -14,6 +14,4 @@ public class Nrgy extends Tools {
 
     }
 
-
-    //TODO: place them somewhere
 }

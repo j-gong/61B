@@ -58,8 +58,7 @@ public class Player extends Character {
         subject.aiMove();
         subject.caught = true;
         game.WORLD[x][y] = Tileset.PLAYER;
-
-        //TODO: change number of apprehended criminals in the HUD.
+        game.crimsleft -= 1;
     }
 
 }

@@ -10,14 +10,15 @@ import java.util.Random;
 public class Screen {
      int width;
      int height;
-     boolean gameover = false;
-     Game game;
+     boolean gameover;
+     private Game game;
 
     //Screen might need to take in a seed?
     Screen(int width, int height, Game game) {
         this.game = game;
         this.width = width;
         this.height = height;
+        this.gameover = game.gameover;
 
         StdDraw.setCanvasSize(this.width * 16, this.height * 16);
         Font font = new Font("Monaco", Font.BOLD, 30);
@@ -33,12 +34,19 @@ public class Screen {
         Font font = new Font("Monaco", Font.BOLD, 64);
         StdDraw.setPenColor(Color.WHITE);
         StdDraw.setFont(font);
-        StdDraw.text(width/2, height/2 + height/5, "Title of Game");
+        StdDraw.text(width/2, height/2 + height/5, "Robocop");
         Font smallerFont = new Font("Monaco", Font.BOLD, 30);
         StdDraw.setFont(smallerFont);
         StdDraw.text(width/2, height/2 - 2, "New Game  (N)");
         StdDraw.text(width/2, height/2 - 5, "Load Game  (L)");
         StdDraw.text(width/2, height/2 - 8, "Quit  (Q)");
+        StdDraw.show();
+    }
+
+    void intro() {
+        StdDraw.setPenColor(Color.CYAN);
+        StdDraw.text(3, height - 4, "Some teenage delinquents have been defacing public property. Apprehend them!");
+        StdDraw.setPenColor(Color.WHITE);
         StdDraw.show();
     }
 
@@ -48,28 +56,46 @@ public class Screen {
             Font smallFont = new Font("Monaco", Font.BOLD, 20);
             StdDraw.setFont(smallFont);*/
             StdDraw.setPenColor(Color.WHITE);
-            StdDraw.line(0, height -12 , width, height - 12);
+            //StdDraw.line(0, height -12 , width, height - 12);
             //show below depends on whether the next while loops stays
             StdDraw.show();
 
-        //might need to move this while loop somewhere else
-        /*while (!gameover) {
-            StdDraw.text(width / 5, height * 0.8, "" + mousepoint());
-            StdDraw.show();
-        }*/
     }
 
     void fillHUD() {
 
-        StdDraw.setPenColor(Color.LIGHT_GRAY);
-        StdDraw.text(this.width - this.width/5, this.height - 9, this.mousepoint());
+        StdDraw.setPenColor(Color.YELLOW);
+        //StdDraw.text(this.width - this.width/5, this.height - 9, this.mousepoint());
         StdDraw.text(this.width - this.width/5, this.height - 14, "energy: " + game.robocop.energy);
+        StdDraw.text(this.width - this.width/5, this.height - 19,"Minutes before night: " + game.sunlight);
         StdDraw.show();
+
+        showDefacers();
+
+        StdDraw.show();
+
     }
+
+    private void showDefacers() {
+        for (int i = 0; i < game.criminals.length; i += 1) {
+            if (!game.criminals[i].caught) {
+                StdDraw.text(this.width - this.width / 5, 17 - (i * 2), "Defacer" + i + ": ▲");
+            } else {
+                StdDraw.text(this.width - this.width / 5, 17 - (i * 2), "Defacer" + i + ": ❀");
+            }
+            StdDraw.show();
+        }
+    }
+
+    void showMousePoint() {
+        StdDraw.setPenColor(Color.BLACK);
+        StdDraw.filledCircle(this.width - this.width/5, this.height - 9, 4);
+        StdDraw.setPenColor(Color.YELLOW);
+        StdDraw.text(this.width - this.width/5, this.height - 9, this.mousepoint());
+        StdDraw.show(); }
 
     private String mousepoint() {
         while(!gameover) {
-            //TODO scale is wrong. on mine. x is positioned 2 to left
             int x = (int) StdDraw.mouseX();
             int y = (int) StdDraw.mouseY();
             if (game.WORLD[x][y].equals(Tileset.WALL)) {
@@ -83,9 +109,36 @@ public class Screen {
             }
         }
         return " ";
+
+        //TODO: inlcude other objects in mousepoint database
     }
 
-    void nightTime() {
-        //TODO: make all the tiles darker shades
+    void gameover() {
+        StdDraw.setPenColor(Color.CYAN);
+        Font saved = StdDraw.getFont();
+        StdDraw.setFont(new Font("Monaco", Font.BOLD, 64));
+        StdDraw.text(width / 2, height / 2, "GameOver");
+        StdDraw.setPenColor(Color.WHITE);
+        StdDraw.setFont(saved);
+        StdDraw.show();
     }
+
+    void win() {
+        StdDraw.setPenColor(Color.CYAN);
+        Font saved = StdDraw.getFont();
+        StdDraw.setFont(new Font("Monaco", Font.BOLD, 64));
+        StdDraw.text(width / 2, height / 2, "You Win");
+        StdDraw.setPenColor(Color.WHITE);
+        StdDraw.setFont(saved);
+        StdDraw.show();
+    }
+
+    void darken() {
+        StdDraw.setPenColor(Color.CYAN);
+        StdDraw.text(width / 2, height - 5, "Bad things happen after dark");
+        //TODO: make all the tiles darker shades
+        StdDraw.setPenColor(Color.WHITE);
+        StdDraw.show();
+    }
+
 }

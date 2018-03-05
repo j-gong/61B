@@ -159,12 +159,4 @@ public class KeyInput implements Serializable{
         }
     }
 
-
-    private void updateGame() {
-        //TODO: villains move, energy goes down, sunlight fades
-        if (game.sunlight < 15) {
-            menu.nightTime();
-        }
-    }
-
 }
