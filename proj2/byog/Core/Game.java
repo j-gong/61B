@@ -25,6 +25,7 @@ public class Game {
     Player robocop;
     Antagonist[] criminals;
     Tools[] items;
+    Tools[] weapons;
 
     boolean gameover = false;
     boolean win = false;
@@ -87,12 +88,15 @@ public class Game {
         robocop = new Player(0, 0, this);
         criminals = new Antagonist[r.nextInt(5) + 4];
         items = new Tools[r.nextInt(5) + 8];
+        weapons = new Tools[4];
+
+        crimsleft = criminals.length;
 
         for (int i = 0; i < criminals.length; i += 1) {
             Antagonist badguy = new Antagonist(this);
             criminals[i] = badguy;
         }
-        crimsleft = criminals.length;
+
 
         for (int i = 0; i < items.length; i += 1) {
             Nrgy addNrgy = new Nrgy(this);
@@ -102,7 +106,8 @@ public class Game {
 
         //TODO: add 2 types of weapons -> projectile, stun, speed
         for (int i = 0; i < 2; i += 1) {
-
+            Projectile addproj = new Projectile(this);
+            items[i] = addproj;
         }
 
 
@@ -151,6 +156,7 @@ public class Game {
 
         if (crimsleft < 1) {
             win = true;
+            gameover = true;
         }
     }
 
@@ -161,9 +167,10 @@ public class Game {
 
     private void triggerGameOver() {
         if (win) {
-        screen.win();
+            screen.win();
+        } else {
+            screen.gameover();
         }
-        screen.gameover();
     }
 
     public static void main(String[] args) {

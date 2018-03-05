@@ -14,8 +14,7 @@ public class Player extends Character {
         super(x, y, game, Tileset.PLAYER);
         this.capacity = 100;
         this.energy = capacity;
-        //this.weapon = new Nothing(game, Tileset.NOTHING);
-        this.weapon = new Projectile(game);
+        this.weapon = new Nothing(game, Tileset.NOTHING);
     }
 
     class Pair {
