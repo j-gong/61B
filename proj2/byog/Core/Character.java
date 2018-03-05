@@ -11,12 +11,17 @@ public class Character implements Serializable {
     protected int y;
     protected Game game;
     TETile tile;
+    Random r;
 
     Character(int x, int y, Game game, TETile tileset) {
         this.x = x;
         this.y = y;
+
         this.game = game;
+        this.r = game.r;
+
         this.tile = tileset;
+
 
         this.place();
 
@@ -40,16 +45,22 @@ public class Character implements Serializable {
 
         Location check = new Location(this.x + xDir, this.y + yDir);
 
-        if (game.WORLD[check.xPos][check.yPos].description().equals("floor")) {
+        if (!game.WORLD[check.xPos][check.yPos].description().equals("wall") ||
+                game.WORLD[check.xPos][check.yPos].description().equals("flower")) {
 
             world[this.x][this.y] = Tileset.FLOOR;
 
             this.x = check.xPos;
             this.y = check.yPos;
+            interact();
 
             world[this.x][this.y] = tile;
 
         }
     }
+
+    void interact() {
+    }
+
 
 }

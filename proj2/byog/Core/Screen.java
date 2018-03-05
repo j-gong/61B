@@ -64,10 +64,11 @@ public class Screen implements Serializable {
 
         StdDraw.setPenColor(Color.LIGHT_GRAY);
         StdDraw.text(this.width - this.width/5, this.height - 9, this.mousepoint());
+        StdDraw.text(this.width - this.width/5, this.height - 14, "energy: " + game.robocop.energy);
         StdDraw.show();
     }
 
-    String mousepoint() {
+    private String mousepoint() {
         while(!gameover) {
             //TODO scale is wrong. on mine. x is positioned 2 to left
             int x = (int) StdDraw.mouseX();

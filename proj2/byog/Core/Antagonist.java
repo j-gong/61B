@@ -1,68 +1,120 @@
 package byog.Core;
 
+import byog.TileEngine.TETile;
 import byog.TileEngine.Tileset;
-
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Random;
+import java.util.LinkedList;
+
 
 public class Antagonist extends Character implements Serializable {
 
-    ArrayList<Location> previous;
+    boolean caught = false;
+
+    //@Source docs.Oracle.com
+    LinkedList<Location> previous = new LinkedList<>();
 
     Antagonist(Game game) {
         super(10, 10, game, Tileset.MOUNTAIN);
 
     }
 
+    private class Pair {
+        public final int x;
+        public final int y;
+        Pair(int x, int y) {
+            this.x = x;
+            this.y = y;
+        }
+    }
+
     void aiMove() {
 
-        ArrayList<Integer> available = new ArrayList<>();
+        if (caught) {
+            return;
+        }
+
+        LinkedList<Pair> available = findSpaceOptions();
+
+        if (available.size() == 0) {
+            previous.clear();
+            previous.add(new Location(this.x, this.y));
+            try {
+                aiMove();
+            } catch (StackOverflowError e) {
+                return;
+            }
+
+        } else {
+
+            //TODO: Ai run away from the robocop
+
+            Pair chosen = available.get(r.nextInt(available.size()));
+            this.move(game.WORLD, chosen.x, chosen.y);
+            previous.add(new Location(this.x, this.y));
+            if (previous.size() > 3) {
+                previous.remove();
+            }
+        }
+    }
+
+    private LinkedList<Pair> findSpaceOptions() {
+        LinkedList<Pair> available = new LinkedList<>();
+        double distBetween = Math.sqrt(Math.pow(game.robocop.x - x, 2) - Math.pow(game.robocop.y - y, 2));
+
+        if (distBetween < 7) {
+            previous.clear();
+        }
 
         for (int x = -1; x < 2; x += 1) {
             for (int y = -1; y < 2; y += 1) {
-                if (validSpace(new Location(x, y))) {
-
+                Pair check = new Pair(x, y);
+                if (runAway(check, distBetween) && validSpace(check)) {
+                    available.add(new Pair(x, y));
                 }
             }
         }
-        //if  available is empty, clear previous
-
-
-        previous.add(new Location(this.x, this.y));
-        previous.remove(0);
+        return available;
     }
 
-    private boolean validSpace(Location check) {
-        if (!game.WORLD[check.xPos][check.yPos].description().equals("floor")) {
-            for (int i = 0; i < previous.size(); i += 1) {
-                if (!previous.get(i).equals(check)) {
-                    return true;
-            }
+    private boolean validSpace(Pair check) {
+        Location locate = new Location(this.x + check.x, this.y + check.y);
+        TETile checkfloor = game.WORLD[locate.xPos][locate.yPos];
+
+
+        if (!checkfloor.description().equals("floor")) {
             return false;
+        } else {
+            for (Location prev : previous) {
+                if (prev.xPos == locate.xPos && prev.yPos == locate.yPos) {
+                    return false;
+                }
+            }
+            return true;
+        }
     }
 
+    private boolean runAway(Pair check, double origDistance) {
+        //double origDistance = Math.sqrt(Math.pow(game.robocop.x - x, 2) - Math.pow(game.robocop.y - y, 2));
+        double newXdist = Math.pow(game.robocop.x - (x + check.x), 2);
+        double newYdist = Math.pow(game.robocop.y - (y + check.y), 2);
 
-
-    /*void randomMove() {
-
-        Random r = new Random(game.seed);
-
-        Location track = new Location(this.x, this.y);
-        Location start = track.copy();
-
-        int[] dir = new int[]{-1, 0, 1};
-
-        while (track.xPos == start.xPos && track.yPos == start.yPos) {
-
-            this.move(game.WORLD, dir[r.nextInt(3)], dir[r.nextInt(3)]);
-            track = new Location(this.x, this.y);
-
-        }*/
-
+        double newDistance = Math.sqrt(newXdist + newYdist);
+        if (origDistance < 7) {
+            return newDistance > origDistance;
+        }
+        return true;
     }
 
+    void interact() {
+        game.robocop.interact();
+    }
 
+    public static void main(String[] args) {
+        System.out.print(Math.pow(0, 2));
+    }
 
+    //TODO: move faster in sunlight or something
+    //
+    // //TODO: make sure anatagonists can't mess with tools.
 
 }
