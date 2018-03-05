@@ -8,9 +8,10 @@ import edu.princeton.cs.introcs.StdDraw;
 
 import java.awt.Toolkit;
 import java.awt.Dimension;
+import java.io.Serializable;
 import java.util.Random;
 
-public class Game {
+public class Game implements Serializable {
     TERenderer ter = new TERenderer();
     /* Feel free to change the width and height. */
     static final int WIDTH = 84;

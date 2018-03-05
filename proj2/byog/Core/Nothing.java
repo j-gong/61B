@@ -2,7 +2,9 @@ package byog.Core;
 
 import byog.TileEngine.TETile;
 
-public class Nothing extends Tools{
+import java.io.Serializable;
+
+public class Nothing extends Tools implements Serializable {
 
     String name = "nothing";
 
