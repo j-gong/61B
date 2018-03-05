@@ -19,7 +19,7 @@ public class Game {
     int seed;
 
     private KeyInput key;
-    private Screen screen;
+    Screen screen;
 
     int sunlight = 200;
     Player robocop;

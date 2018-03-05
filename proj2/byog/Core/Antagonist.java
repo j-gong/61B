@@ -17,7 +17,7 @@ public class Antagonist extends Character {
 
     }
 
-    private class Pair {
+    public class Pair {
         public final int x;
         public final int y;
         Pair(int x, int y) {

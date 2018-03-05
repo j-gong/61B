@@ -3,31 +3,45 @@ package byog.Core;
 import byog.TileEngine.TETile;
 import byog.TileEngine.Tileset;
 
-import javax.tools.Tool;
-import java.util.Random;
-
 public class Player extends Character {
 
     int energy;
     int capacity;
     Tools weapon;
+    Pair last;
 
     Player(int x, int y, Game game) {
         super(x, y, game, Tileset.PLAYER);
         this.capacity = 100;
         this.energy = capacity;
+        //this.weapon = new Nothing(game, Tileset.NOTHING);
+        this.weapon = new Projectile(game);
+    }
+
+    class Pair {
+        public final int x;
+        public final int y;
+        Pair(int x, int y) {
+            this.x = x;
+            this.y = y;
+        }
+    }
+
+    void move(TETile[][] world, int xDir, int yDir) {
+        last = new Pair(xDir, yDir);
+        super.move(world, xDir, yDir);
     }
 
     private void pickup(Tools grab) {
         if (grab.name.equals("energy")) {
-            refill(grab);
+            refill((Nrgy) grab);
         } else {
             weapon = grab;
-            //TODO: put old weapon back on ground
+            //TODO: put old weapon back on ground, write swapTools()
         }
     }
 
-    private void refill(Tools grab) {
+    private void refill(Nrgy grab) {
         if (!grab.used) {
             this.energy = capacity;
             grab.used = true;

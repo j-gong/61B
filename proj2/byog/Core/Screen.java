@@ -68,6 +68,7 @@ public class Screen {
         //StdDraw.text(this.width - this.width/5, this.height - 9, this.mousepoint());
         StdDraw.text(this.width - this.width/5, this.height - 14, "energy: " + game.robocop.energy);
         StdDraw.text(this.width - this.width/5, this.height - 19,"Minutes before night: " + game.sunlight);
+        StdDraw.text(this.width - this.width/5, this.height - 24,"Weapon: " + game.robocop.weapon.name + ". Uses: " + game.robocop.weapon.uses);
         StdDraw.show();
 
         showDefacers();
@@ -137,6 +138,13 @@ public class Screen {
         StdDraw.setPenColor(Color.CYAN);
         StdDraw.text(width / 2, height - 5, "Bad things happen after dark");
         //TODO: make all the tiles darker shades
+        StdDraw.setPenColor(Color.WHITE);
+        StdDraw.show();
+    }
+
+    void use(String weaponName) {
+        StdDraw.setPenColor(Color.CYAN);
+        StdDraw.text(width / 2, height - 5, weaponName + " used");
         StdDraw.setPenColor(Color.WHITE);
         StdDraw.show();
     }

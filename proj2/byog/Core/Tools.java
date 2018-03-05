@@ -12,7 +12,7 @@ public class Tools{
     Game game;
     String name;
     TETile tile;
-    boolean used;
+    int uses;
 
     public Tools(Game game, TETile t) {
         this.game = game;
@@ -23,7 +23,7 @@ public class Tools{
 
     }
 
-    private void place() {
+    void place() {
         Random r = new Random(game.seed);
         boolean found = false;
         while (!found) {
@@ -41,6 +41,14 @@ public class Tools{
         return ((game.WORLD[x + 1][y].description().equals("floor") || game.WORLD[x - 1][y].description().equals("floor"))
                 && (game.WORLD[x][y + 1].description().equals("floor")) || game.WORLD[x][y-1].description().equals("floor"));
 
+    }
+
+    void use() {
+        uses -= 1;
+        if (uses < 1) {
+            //discard();
+            //TODO: write discard
+        }
     }
 
 }
