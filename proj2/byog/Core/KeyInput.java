@@ -46,14 +46,17 @@ public class KeyInput implements Serializable{
         this.layout = game.WORLD;
         this.p = game.robocop;
 
-        if (input.equals("w") || input.equals("W")) {
+        if (input.equals("w")) {
             p.move(layout, 0, 1);
-        } else if (input.equals("a") || input.equals("W")) {
+        } else if (input.equals("a")) {
             p.move(layout, -1, 0);
-        } else if (input.equals("s") || input.equals("W")) {
+        } else if (input.equals("s")) {
             p.move(layout, 0, -1);
-        } else if (input.equals("d") || input.equals("W")) {
+        } else if (input.equals("d")) {
             p.move(layout, 1, 0);
+        } else if (input.equals(" ")){
+            p.weapon.use();
+            game.screen.use(p.weapon.name); //TODO: fix screen.use so it actually shows up
         } else if (input.equals("q") || input.equals("W")) {
             menu.gameover = true;
             saveWorld(this.game);
@@ -156,14 +159,6 @@ public class KeyInput implements Serializable{
         } catch (IOException e) {
             System.out.println(e);
             System.exit(0);
-        }
-    }
-
-
-    private void updateGame() {
-        //TODO: villains move, energy goes down, sunlight fades
-        if (game.sunlight < 15) {
-            menu.nightTime();
         }
     }
 

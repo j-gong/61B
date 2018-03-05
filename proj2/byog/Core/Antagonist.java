@@ -9,6 +9,7 @@ import java.util.LinkedList;
 public class Antagonist extends Character implements Serializable {
 
     boolean caught = false;
+    static int damage = 0;
 
     //@Source docs.Oracle.com
     LinkedList<Location> previous = new LinkedList<>();
@@ -18,7 +19,7 @@ public class Antagonist extends Character implements Serializable {
 
     }
 
-    private class Pair {
+    public class Pair {
         public final int x;
         public final int y;
         Pair(int x, int y) {
@@ -46,7 +47,6 @@ public class Antagonist extends Character implements Serializable {
 
         } else {
 
-            //TODO: Ai run away from the robocop
 
             Pair chosen = available.get(r.nextInt(available.size()));
             this.move(game.WORLD, chosen.x, chosen.y);
@@ -107,14 +107,15 @@ public class Antagonist extends Character implements Serializable {
 
     void interact() {
         game.robocop.interact();
+        if (game.robocop.x == x && game.robocop.y == y) {
+            game.robocop.drain(damage);
+        }
     }
 
     public static void main(String[] args) {
         System.out.print(Math.pow(0, 2));
     }
 
-    //TODO: move faster in sunlight or something
-    //
     // //TODO: make sure anatagonists can't mess with tools.
 
 }

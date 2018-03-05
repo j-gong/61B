@@ -10,7 +10,8 @@ public class Nrgy extends Tools implements Serializable {
 
 
 
-
+    boolean used;
+    //took this out of tools, might cause an error
 
     Nrgy(Game game) {
         super(game, Tileset.GRASS);
@@ -19,6 +20,4 @@ public class Nrgy extends Tools implements Serializable {
 
     }
 
-
-    //TODO: place them somewhere
 }

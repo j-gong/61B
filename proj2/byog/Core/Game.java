@@ -19,13 +19,17 @@ public class Game {
     int seed;
 
     private KeyInput key;
-    private Screen screen;
+    Screen screen;
 
-    int sunlight = 40; //TODO: implement sunlight everywhere, make things slightly darker when moving under
+    int sunlight = 200;
     Player robocop;
     Antagonist[] criminals;
     Tools[] items;
+    Tools[] weapons;
+
     boolean gameover = false;
+    boolean win = false;
+    int crimsleft;
     Random r;
 
     /**
@@ -35,9 +39,11 @@ public class Game {
         startGame();
 
         ter.initialize(WIDTH, HEIGHT);
+        screen.intro();
         ter.renderFrame(WORLD);
         readKey();
 
+        triggerGameOver();
 
     }
 
@@ -81,12 +87,16 @@ public class Game {
 
         robocop = new Player(0, 0, this);
         criminals = new Antagonist[r.nextInt(5) + 4];
-        items = new Tools[r.nextInt(4) + 3];
+        items = new Tools[r.nextInt(5) + 8];
+        weapons = new Tools[4];
+
+        crimsleft = criminals.length;
 
         for (int i = 0; i < criminals.length; i += 1) {
             Antagonist badguy = new Antagonist(this);
             criminals[i] = badguy;
         }
+
 
         for (int i = 0; i < items.length; i += 1) {
             Nrgy addNrgy = new Nrgy(this);
@@ -94,47 +104,77 @@ public class Game {
 
         }
 
+        //TODO: add 2 types of weapons -> projectile, stun, speed
+        for (int i = 0; i < 2; i += 1) {
+            Projectile addproj = new Projectile(this);
+            items[i] = addproj;
+        }
+
+
     }
 
     private void readKey() {
-        screen.drawHUD();
+        screen.drawHUD(); //TODO: fix the offset thing
+        screen.fillHUD();
         String input = "";
         key.keyPressed(input);
 
         while (!gameover) {
 
-            ter.renderFrame(WORLD);
-            screen.fillHUD();
+            screen.showMousePoint();
 
             boolean update = key.keystrokeReader();
             if (update) {
                 updateGame();
+                if (!gameover) {
+                    ter.renderFrame(WORLD);
+                    screen.fillHUD();
+                }
             }
         }
     }
 
     private void updateGame() {
 
-        //TODO: sunglight, AI randos, place objects
         for (Antagonist criminal : criminals) {
             criminal.aiMove();
+            if (sunlight < 1) {
+                criminal.aiMove();
+            }
         }
 
         robocop.drain(1);
+        sunlight -= 1;
+
+        if (sunlight < 1) {
+            nightTime();
+        }
+
+        if (robocop.energy < 1) {
+            gameover = true;
+        }
+
+        if (crimsleft < 1) {
+            win = true;
+            gameover = true;
+        }
     }
 
+    private void nightTime () {
+        screen.darken();
+        Antagonist.damage = 5;
+    }
 
+    private void triggerGameOver() {
+        ter.renderFrame(WORLD);
+        if (win) {
+            screen.win();
+        } else {
+            screen.gameover();
+        }
+    }
 
     public static void main(String[] args) {
-        /*TERenderer ter = new TERenderer();
-        //want to initialize with 0 offset width and -2? offset on height
-        ter.initialize(WIDTH, HEIGHT);
-        int seed = 1234;
-        WORLD = new TETile[WIDTH][HEIGHT];
-        Map map = new Map(WORLD, seed, HEIGHT, WIDTH);
-        WORLD = map.makeMap();
-        ter.renderFrame(WORLD);*/
-
 
        Game game = new Game();
        game.playWithKeyboard();
