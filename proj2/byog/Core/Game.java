@@ -166,6 +166,7 @@ public class Game {
     }
 
     private void triggerGameOver() {
+        ter.renderFrame(WORLD);
         if (win) {
             screen.win();
         } else {

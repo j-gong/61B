@@ -137,7 +137,7 @@ public class Screen {
     void darken() {
         StdDraw.setPenColor(Color.CYAN);
         StdDraw.text(width / 2, height - 5, "Bad things happen after dark");
-        //TODO: make all the tiles darker shades
+        //TODO: make all the tiles darker shades -> make the message show up as well, getting rendered over
         StdDraw.setPenColor(Color.WHITE);
         StdDraw.show();
     }

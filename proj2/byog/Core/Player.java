@@ -53,7 +53,7 @@ public class Player extends Character {
 
     void interact() {
         for (Antagonist bad : game.criminals) {
-            if (bad.x == x && bad.y == y) {
+            if (bad.x == x && bad.y == y && !bad.caught) {
                 apprehend(bad);
             }
         }
