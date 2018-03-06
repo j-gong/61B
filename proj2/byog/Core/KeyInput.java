@@ -53,16 +53,16 @@ public class KeyInput implements Serializable{
         this.p = game.robocop;
 
         if (input.equals("w")) {
-            System.out.println(input);
+
             p.move(layout, 0, 1);
         } else if (input.equals("a")) {
-            System.out.println(input);
+
             p.move(layout, - 1, 0);
         } else if (input.equals("s")) {
-            System.out.println(input);
+
             p.move(layout, 0, -1);
         } else if (input.equals("d")) {
-            System.out.println(input);
+
             p.move(layout, 1, 0);
         }
         else if (input.equals(" ")){

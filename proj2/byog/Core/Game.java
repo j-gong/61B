@@ -103,7 +103,7 @@ public class Game implements Serializable {
             keystring.removeFirst();
 
         } else if (checkL.equals("l")) {
-            keystring.removeFirst();
+            //keystring.removeFirst();
             g = key.loadworld();
             fillg(g);
         }

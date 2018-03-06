@@ -17,17 +17,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Game.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/byog/Core/Game.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="186">
-              <caret line="208" column="0" lean-forward="false" selection-start-line="208" selection-start-column="0" selection-end-line="208" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Screen.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Screen.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/byog/Core/Screen.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="105">
@@ -41,11 +31,21 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="Game.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/byog/Core/Game.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="455">
+              <caret line="105" column="14" lean-forward="false" selection-start-line="105" selection-start-column="14" selection-end-line="105" selection-end-column="14" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="KeyInput.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/byog/Core/KeyInput.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="216">
-              <caret line="34" column="17" lean-forward="false" selection-start-line="34" selection-start-column="12" selection-end-line="34" selection-end-column="17" />
+            <state relative-caret-position="-652">
+              <caret line="36" column="33" lean-forward="false" selection-start-line="36" selection-start-column="28" selection-end-line="36" selection-end-column="33" />
               <folding />
             </state>
           </provider>
@@ -128,7 +128,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>nightTime</find>
       <find>use</find>
       <find>crims</find>
       <find>pai</find>
@@ -138,10 +137,8 @@
       <find>showde</find>
       <find>startGame</find>
       <find>inputseed</find>
-      <find>deliver</find>
       <find>parseLomg</find>
       <find>screen</find>
-      <find>deliv</find>
       <find>inputs</find>
       <find>inputstr</find>
       <find>inputstri</find>
@@ -155,9 +152,12 @@
       <find>save</find>
       <find>mouse</find>
       <find>game</find>
-      <find>keyst</find>
-      <find>gameo</find>
       <find>gameov</find>
+      <find>keyst</find>
+      <find>:</find>
+      <find>gameo</find>
+      <find>deliver</find>
+      <find>deliv</find>
     </findStrings>
     <replaceStrings>
       <replace>end</replace>
@@ -217,10 +217,10 @@
         <option value="$PROJECT_DIR$/byog/Core/Player.java" />
         <option value="$PROJECT_DIR$/byog/Core/Character.java" />
         <option value="$PROJECT_DIR$/byog/Core/Tools.java" />
+        <option value="$PROJECT_DIR$/byog/Core/Screen.java" />
         <option value="$PROJECT_DIR$/byog/Core/KeyInput.java" />
         <option value="$PROJECT_DIR$/byog/Core/KeyInput.java" />
         <option value="$PROJECT_DIR$/byog/Core/Game.java" />
-        <option value="$PROJECT_DIR$/byog/Core/Screen.java" />
       </list>
     </option>
   </component>
@@ -967,26 +967,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/byog/Core/KeyInput.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
-          <caret line="34" column="17" lean-forward="false" selection-start-line="34" selection-start-column="12" selection-end-line="34" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$PROJECT_DIR$/../../sp18-bda/library-sp18/javalib/stdlib-package.jar!/edu/princeton/cs/introcs/StdDraw.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="147">
           <caret line="1566" column="0" lean-forward="false" selection-start-line="1566" selection-start-column="0" selection-end-line="1566" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/byog/Core/Game.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="186">
-          <caret line="208" column="0" lean-forward="false" selection-start-line="208" selection-start-column="0" selection-end-line="208" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -1000,6 +984,22 @@
             <element signature="e#6573#6574#0" expanded="true" />
             <element signature="e#6622#6623#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/byog/Core/KeyInput.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-652">
+          <caret line="36" column="33" lean-forward="false" selection-start-line="36" selection-start-column="28" selection-end-line="36" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/byog/Core/Game.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="455">
+          <caret line="105" column="14" lean-forward="false" selection-start-line="105" selection-start-column="14" selection-end-line="105" selection-end-column="14" />
+          <folding />
         </state>
       </provider>
     </entry>
