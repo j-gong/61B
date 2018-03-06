@@ -23,6 +23,7 @@ public class KeyInput implements Serializable{
     private Screen menu;
     private TETile[][] layout;
     private Player p;
+    boolean newgame;
 
     public KeyInput(Game game, Screen open) {
         this.game = game;
@@ -59,7 +60,7 @@ public class KeyInput implements Serializable{
             game.screen.use(p.weapon.name); //TODO: fix screen.use so it actually shows up
         } else if (input.equals("q") || input.equals("W")) {
             menu.gameover = true;
-            saveWorld(this.game);
+            saveWorld(this.game.WORLD);
             System.exit(0);
         }
     }
@@ -69,7 +70,8 @@ public class KeyInput implements Serializable{
             String input = "";
             String input2 = "";
             keyPressedSeed(input);
-            while (history.isEmpty() || !history.peekLast().equals(("s"))) {
+            //works if i don't call !history.peekLast().equals(("l"))
+            while (history.isEmpty() || !history.peekLast().equals(("s")) && newgame) {
             if (!StdDraw.hasNextKeyTyped()) {
                 continue;
             }
@@ -87,6 +89,7 @@ public class KeyInput implements Serializable{
     private void keyPressedSeed(String input) { //takes in whats pressed, when an n or s is pressed, game starts
 
         if (input.equals("n") || input.equals("N")) {
+            newgame = true;
             StdDraw.clear(Color.BLACK);
             Font font = new Font("Monaco", Font.BOLD, 64);
             StdDraw.setPenColor(Color.WHITE);
@@ -96,7 +99,8 @@ public class KeyInput implements Serializable{
             StdDraw.show();
         }
         if (input.equals("l") || input.equals("L")) {
-            Game g = loadworld();
+            //Game g = loadworld();
+            newgame = false;
             //supposedly this is all it needs
             //I want to be able to save the game g tho. perhaps this.game is all I need?
         }
@@ -117,14 +121,14 @@ public class KeyInput implements Serializable{
 
 
     //Is supposed to pull a file called world.txt and load it. makes one if doesn't exist
-    Game loadworld() {
+    TETile[][] loadworld() {
         //@Source from SaveDemo
         File f = new File("./world.txt");
         if (f.exists()) {
             try {
                 FileInputStream fs = new FileInputStream(f);
                 ObjectInputStream os = new ObjectInputStream(fs);
-                Game loadWorld = (Game) os.readObject();
+                TETile[][] loadWorld = (TETile[][]) os.readObject();
                 os.close();
                 return loadWorld;
             } catch (FileNotFoundException e) {
@@ -138,11 +142,11 @@ public class KeyInput implements Serializable{
                 System.exit(0);
             }
         }
-        return new Game();
+        return new TETile[][]{};
     }
 
     //Is supposed to save it. hope it works. i don't see how it saves keys
-    void saveWorld(Game g) {
+    void saveWorld(TETile[][] g) {
         //@source from SaveDemo
         File f = new File("./world.txt");
         try {

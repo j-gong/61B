@@ -20,7 +20,7 @@ public class Player extends Character implements Serializable {
         this.weapon = new Nothing(game, Tileset.NOTHING);
     }
 
-    class Pair {
+    class Pair implements Serializable {
         public final int x;
         public final int y;
         Pair(int x, int y) {

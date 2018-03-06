@@ -15,5 +15,5 @@ public class Location implements Serializable {
         Location copy = new Location(this.xPos, this.yPos);
         return copy;
     }
-
 }
+

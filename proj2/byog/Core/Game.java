@@ -39,9 +39,17 @@ public class Game implements Serializable {
     public void playWithKeyboard() {
         startGame();
 
-        ter.initialize(WIDTH, HEIGHT);
-        screen.intro();
-        ter.renderFrame(WORLD);
+        if (key.newgame) {
+            ter.initialize(WIDTH, HEIGHT);
+            screen.intro();
+            ter.renderFrame(WORLD);
+        }
+        else {
+            screen = new Screen(90, 50, this);
+            ter.initialize(WIDTH, HEIGHT);
+            TETile[][] g = key.loadworld();
+            ter.renderFrame(g);
+        }
         readKey();
 
         triggerGameOver();
@@ -77,10 +85,12 @@ public class Game implements Serializable {
 
         key = new KeyInput(this, screen);
         String input = key.readSeed();
+        if (key.newgame) {
 
-        WORLD = playWithInputString(input);
+            WORLD = playWithInputString(input);
 
-        createObjects();
+            createObjects();
+        }
     }
 
 
