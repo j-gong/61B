@@ -105,7 +105,7 @@ public class Game implements Serializable {
             fillg(g);
         }
 
-        while (!gameover) {
+        while (keystring.peekFirst() != null) {
             key.keystrokeReader();
             updateGame();
         }
@@ -130,7 +130,7 @@ public class Game implements Serializable {
     String deliverNext() {
         if (!keystring.peekFirst().equals(":")) {
             key.saveWorld(this);
-            System.exit(0);
+            return null;
         } else if (keystring.size() > 1) {
             String next = keystring.removeFirst();
             return next;
@@ -265,7 +265,7 @@ public class Game implements Serializable {
       TETile[][] world = g.playWithInputString("n4979154725301381123swwawd");
 
 
-       // Game game = new Game();
-       // game.playWithKeyboard();
+      // Game game = new Game();
+      // game.playWithKeyboard();
     }
 }
