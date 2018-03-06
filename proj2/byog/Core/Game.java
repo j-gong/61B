@@ -89,14 +89,15 @@ public class Game implements Serializable {
             String stringSeed = "";
             while (!keystring.peekFirst().equals("s")) {
                 stringSeed += keystring.removeFirst();
-                int seed = (int) Long.parseLong(stringSeed);
-                r = new Random(seed);
-
-                WORLD = new TETile[WIDTH][HEIGHT];
-                Map map = new Map(WORLD, seed, HEIGHT, WIDTH);
-                WORLD = map.makeMap();
-                createObjects();
             }
+            int seed = (int) Long.parseLong(stringSeed);
+            r = new Random(seed);
+
+            WORLD = new TETile[WIDTH][HEIGHT];
+            Map map = new Map(WORLD, seed, HEIGHT, WIDTH);
+            WORLD = map.makeMap();
+            createObjects();
+
             keystring.removeFirst();
 
         } else if (checkL.equals("l")) {
@@ -128,7 +129,7 @@ public class Game implements Serializable {
     }
     
     String deliverNext() {
-        if (!keystring.peekFirst().equals(":")) {
+        if (keystring.peekFirst().equals(":")) {
             key.saveWorld(this);
             return null;
         } else if (keystring.size() > 1) {
