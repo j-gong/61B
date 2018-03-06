@@ -32,7 +32,7 @@ public class Game implements Serializable {
     int crimsleft;
     Random r;
     private ArrayDeque<String> keystring = new ArrayDeque<>();
-    private boolean remaining;
+    //private boolean remaining;
 
     /**
      * Method used for playing a fresh game. The game should start from the main menu.
