@@ -58,7 +58,6 @@ public class Character implements Serializable {
 
                 world[this.x][this.y] = tile;
             }
-
         }
     }
 

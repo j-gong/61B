@@ -17,6 +17,9 @@ public class Screen implements Serializable {
      String prevAction;
 
     //Screen might need to take in a seed?
+    Screen() {
+    }
+
     Screen(int width, int height, Game game) {
         this.game = game;
         this.width = width;

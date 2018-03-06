@@ -2,15 +2,11 @@ package byog.Core;
 
 import byog.TileEngine.TERenderer;
 import byog.TileEngine.TETile;
-import byog.TileEngine.Tileset;
-import byog.lab5.HexWorld;
-import edu.princeton.cs.introcs.StdDraw;
 
-import java.awt.Toolkit;
-import java.awt.Dimension;
 import java.io.Serializable;
+import java.lang.Character;
 import java.util.Random;
-
+import java.util.ArrayDeque;
 
 public class Game implements Serializable {
     TERenderer ter = new TERenderer();
@@ -30,16 +26,21 @@ public class Game implements Serializable {
     Tools[] items;
     Tools[] weapons;
 
+    boolean inputString;
     boolean gameover = false;
-    boolean win = false;
+    private boolean win = false;
     int crimsleft;
     Random r;
+    private ArrayDeque<String> keystring = new ArrayDeque<>();
+    private boolean remaining;
 
     /**
      * Method used for playing a fresh game. The game should start from the main menu.
      */
     public void playWithKeyboard() {
+        inputString = true;
         startGame();
+
 
         if (key.newgame) {
             ter.initialize(WIDTH, HEIGHT);
@@ -84,30 +85,50 @@ public class Game implements Serializable {
      * @return the 2D TETile[][] representing the state of the world
      */
     public TETile[][] playWithInputString(String input) {
+        ter.initialize(WIDTH, HEIGHT);
+        remaining = false;
 
-        //ter.initialize(WIDTH, HEIGHT, 0, -2);
-        if (input.equals("")) {
-            System.exit(0);
+        for (int i = 0; i < input.length(); i += 1) {
+            char a = input.charAt(i);
+            keystring.addLast(Character.toString(a));
         }
-        if (input.equals(" ")) {
-            System.exit(0);
-        }
-        if (input.equals("  ")) {
-            System.exit(0);
-        }
-        if (input.equals("   ")) {
-            System.exit(0);
+        keystring.removeFirst();
+        String stringSeed = "";
+        while (!keystring.peekFirst().equals("s")) {
+            stringSeed += keystring.removeFirst();
         }
 
-
-
-        seed = (int) Long.parseLong(input.replaceAll("[\\D]", ""));
-
-        TETile[][] world = new TETile[WIDTH][HEIGHT];
+        keystring.removeFirst();
+        int seed = (int) Long.parseLong(stringSeed);
         r = new Random(seed);
-        Map map = new Map(world, seed, HEIGHT, WIDTH);
-        world = map.makeMap();
-        return world;
+
+        screen = new Screen();
+        key = new KeyInput(this, screen);
+
+        ter.initialize(WIDTH, HEIGHT);
+        WORLD = new TETile[WIDTH][HEIGHT];
+        Map map = new Map(WORLD, seed, HEIGHT, WIDTH);
+        WORLD = map.makeMap();
+        createObjects();
+
+        while (!gameover) {
+            key.keystrokeReader();
+            updateGame();
+        }
+
+        ter.renderFrame(WORLD);
+        return WORLD;
+    }
+    
+    String deliverNext() {
+        if (!keystring.peekFirst().equals(":")) {
+            key.saveWorld(this);
+            System.exit(0);
+        } else if (keystring.size() > 1) {
+            String next = keystring.removeFirst();
+            return next;
+        }
+        return null;
     }
 
     private void startGame() {
@@ -116,14 +137,17 @@ public class Game implements Serializable {
 
         key = new KeyInput(this, screen);
         String input = key.readSeed();
+        seed = Integer.parseInt(input);
         if (key.newgame) {
 
-            WORLD = playWithInputString(input);
+            ter.initialize(WIDTH, HEIGHT);
+            Map map = new Map(WORLD, seed, WIDTH, HEIGHT);
+            WORLD = map.makeMap();
+            ter.renderFrame(WORLD);
 
             createObjects();
         }
     }
-
 
     private void createObjects(){
 
@@ -156,10 +180,12 @@ public class Game implements Serializable {
     }
 
     private void readKey() {
+
         screen.drawHUD(); //TODO: fix the offset thing
         screen.fillHUD();
         String input = "";
         key.keyPressed(input);
+
 
         while (!gameover) {
 
@@ -222,7 +248,114 @@ public class Game implements Serializable {
 
     public static void main(String[] args) {
 
-       Game game = new Game();
-       game.playWithKeyboard();
+        Game g = new Game();
+        TETile[][] world = g.playWithInputString("n4979154725301381123swwawd");
+
+
+        //Game game = new Game();
+        //game.playWithKeyboard();
     }
 }
+
+        /* //seed = (int) Long.parseLong(input.replaceAll("[\\D]", ""));
+
+
+
+        for (int i = 0; i < input.length(); i += 1) {
+            char a = input.charAt(i);
+            keystring.addLast(Character.toString(a));
+        }
+        keystring.removeFirst();
+        String stringSeed = "";
+        while (!keystring.peekFirst().equals("s")) {
+            stringSeed += keystring.removeFirst();
+        }
+
+        keystring.removeFirst();
+        int seed = Integer.parseInt(stringSeed);
+
+
+        //char[] series = parseString(input);
+
+        //int counter = parseSeed(input);
+
+        /*TETile[][] world = new TETile[WIDTH][HEIGHT];
+        Random r = new Random(seed);
+        Map map = new Map(world, seed, HEIGHT, WIDTH);
+        world = map.makeMap();
+        KeyInput key1 = new KeyInput();*/
+       /* while (!keystring.isEmpty()) {
+            String input1 = keystring.removeFirst();
+
+        }*/
+
+
+       /* Game g = new Game();
+        g.r = r;
+        g.startGame();
+        g.WORLD = world;
+        g.setVars(g);
+        world = runKeys(g, series, counter);
+
+        return world;
+    }
+
+    private void setVars(Game g){
+        g.gameover = false;
+        g.ter = new TERenderer();
+        g.createObjects();
+        g.setVars(g);
+        g.screen = new Screen();
+        g.key = new KeyInput(g, g.screen);
+        g.win = false;
+   }
+
+   /* private char[] parseString(String input) {
+        char[] chars = new char[input.length()];
+        int charscounter = 0;
+        for (char ch : input.toCharArray()) {
+            chars[charscounter] = ch;
+        }
+        return chars;
+    }
+
+    private int parseSeed(String input) {
+        char[] chars = new char[input.length()];
+        int charscounter = 0;
+        int counter = 1;
+        for (char ch : input.toCharArray()){
+            chars[charscounter] = ch;
+        }
+
+        if (chars[0] == 'n') {
+
+            StringBuilder sd = new StringBuilder();
+            char check = chars[counter];
+            while (check != 's') {
+                sd.append(String.valueOf(chars[counter]));
+                counter += 1;
+            }
+
+            counter += 1;
+
+            seed = Integer.parseInt(sd.toString());
+
+        }
+        return counter;
+    }
+
+    private TETile[][] runKeys(Game game, char[] input, int counter) {
+        if (input.length <= counter) {
+            return game.WORLD;
+        }
+
+        for (int k = counter; k < input.length; k += 1) {
+            game.WORLD = keyAction(game, input[k]);
+        }
+        return game.WORLD;
+    }
+
+    private TETile[][] keyAction(Game game, char key) {
+        game.key.keyPressed(Character.toString(key));
+        return game.WORLD;
+    }*/

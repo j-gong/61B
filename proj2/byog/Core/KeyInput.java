@@ -3,6 +3,7 @@ package byog.Core;
 import java.awt.Color;
 import java.awt.Font;
 import java.io.Serializable;
+import java.security.Key;
 import java.util.ArrayDeque;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -32,6 +33,11 @@ public class KeyInput implements Serializable{
     }
 
     boolean keystrokeReader() {
+        if (game.inputString) {
+            keyPressed(game.deliverNext());
+            return true;
+        }
+
         if (!StdDraw.hasNextKeyTyped()) {
             return false;
         } else if (StdDraw.hasNextKeyTyped()) {
@@ -57,9 +63,13 @@ public class KeyInput implements Serializable{
             p.move(layout, 1, 0);
         } else if (input.equals(" ")){
             p.weapon.use();
-            game.screen.screenUse(p.weapon.name);
+            if (game.inputString) {
+                game.screen.screenUse(p.weapon.name);
+            }
         } else if (input.equals("q") || input.equals("W")) {
-            menu.gameover = true;
+            if (game.inputString) {
+                menu.gameover = true;
+            }
             saveWorld(this.game);
             System.exit(0);
         }
@@ -75,6 +85,7 @@ public class KeyInput implements Serializable{
             if (!StdDraw.hasNextKeyTyped()) {
                 continue;
             }
+
             if (StdDraw.hasNextKeyTyped()) {
                 char key = StdDraw.nextKeyTyped();
                 input += String.valueOf(key);
@@ -82,7 +93,8 @@ public class KeyInput implements Serializable{
                 history.addLast(String.valueOf(key));
                 keyPressedSeed(input2);
             }
-        }
+            }
+
         return input;
     }
 
@@ -98,12 +110,13 @@ public class KeyInput implements Serializable{
             StdDraw.text(menu.width / 2, menu.height / 2, "Please enter a seed. Press s to start.");
             StdDraw.show();
         }
+
         if (input.equals("l") || input.equals("L")) {
             //Game g = loadworld();
             newgame = false;
-            //supposedly this is all it needs
             //I want to be able to save the game g tho. perhaps this.game is all I need?
         }
+
         if (input.equals("s") || input.equals("S")) {
             if (!history.peekFirst().equals("n") || history.size() == 2) {
                 Font smallerFont = new Font("Monaco", Font.BOLD, 30);
