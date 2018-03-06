@@ -83,11 +83,24 @@ public class Game implements Serializable {
      */
     public TETile[][] playWithInputString(String input) {
 
+        //ter.initialize(WIDTH, HEIGHT, 0, -2);
         if (input.equals("")) {
             System.exit(0);
         }
-        //ter.initialize(WIDTH, HEIGHT, 0, -2);
+        if (input.equals(" ")) {
+            System.exit(0);
+        }
+        if (input.equals("  ")) {
+            System.exit(0);
+        }
+        if (input.equals("   ")) {
+            System.exit(0);
+        }
+
+
+
         seed = (int) Long.parseLong(input.replaceAll("[\\D]", ""));
+
         TETile[][] world = new TETile[WIDTH][HEIGHT];
         r = new Random(seed);
         Map map = new Map(world, seed, HEIGHT, WIDTH);
@@ -203,7 +216,10 @@ public class Game implements Serializable {
 
     public static void main(String[] args) {
 
-       Game game = new Game();
-       game.playWithInputString("");
+       //Game game = new Game();
+       //game.playWithInputString(" ");
+        /*String gay = "";
+        int tests = (int) Long.parseLong(gay.replaceAll("[\\D]", ""));
+        System.out.println(tests);*/
     }
 }
