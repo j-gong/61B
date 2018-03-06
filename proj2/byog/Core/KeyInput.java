@@ -60,7 +60,8 @@ public class KeyInput implements Serializable{
             p.move(layout, 0, -1);
         } else if (input.equals("d")) {
             p.move(layout, 1, 0);
-        } else if (input.equals(" ")){
+        }
+        else if (input.equals(" ")){
             p.weapon.use();
             if (game.inputString) {
                 game.screen.screenUse(p.weapon.name);

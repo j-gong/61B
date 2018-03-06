@@ -28,21 +28,25 @@ public class Tools implements Serializable {
     void place() {
         Random r = new Random(game.seed);
         boolean found = false;
+        int tries = 15;
         while (!found) {
-            if (game.WORLD[x][y].description().equals("floor") && in_room()) {
+            if (game.WORLD[x][y].description().equals("floor") && in_room(tries)) {
                 found = true;
             } else {
                 x = r.nextInt(game.WIDTH);
                 y = r.nextInt(game.HEIGHT);
+                tries -= 1;
             }
         }
         game.WORLD[x][y] = tile;
     }
 
-    private boolean in_room() {
-        return ((game.WORLD[x + 1][y].description().equals("floor") || game.WORLD[x - 1][y].description().equals("floor"))
-                && (game.WORLD[x][y + 1].description().equals("floor")) || game.WORLD[x][y-1].description().equals("floor"));
-
+    private boolean in_room(int tries) {
+        if (tries > 0) {
+            return ((game.WORLD[x + 1][y].description().equals("floor") || game.WORLD[x - 1][y].description().equals("floor"))
+                    && (game.WORLD[x][y + 1].description().equals("floor")) || game.WORLD[x][y - 1].description().equals("floor"));
+        }
+        return true;
     }
 
     void use() {

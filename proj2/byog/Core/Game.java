@@ -129,7 +129,12 @@ public class Game implements Serializable {
     }
     
     String deliverNext() {
-        if (keystring.size() > 0) {
+
+        if (keystring.peekFirst().equals(":")) {
+            keystring.removeFirst();
+            return keystring.removeFirst();
+        }
+        else if (keystring.size() > 0) {
             String next = keystring.removeFirst();
             return next;
         }
