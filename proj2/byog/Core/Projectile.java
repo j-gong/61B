@@ -2,7 +2,9 @@ package byog.Core;
 
 import byog.TileEngine.Tileset;
 
-public class Projectile extends Tools {
+import java.io.Serializable;
+
+public class Projectile extends Tools implements Serializable {
 
     Projectile(Game game) {
         super(game, Tileset.SAND);

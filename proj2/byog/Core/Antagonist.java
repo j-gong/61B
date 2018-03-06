@@ -2,9 +2,11 @@ package byog.Core;
 
 import byog.TileEngine.TETile;
 import byog.TileEngine.Tileset;
+import java.io.Serializable;
 import java.util.LinkedList;
 
-public class Antagonist extends Character {
+
+public class Antagonist extends Character implements Serializable {
 
     boolean caught = false;
     static int damage = 0;

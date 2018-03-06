@@ -5,9 +5,10 @@ import byog.TileEngine.Tileset;
 import edu.princeton.cs.introcs.StdDraw;
 import java.awt.Font;
 import java.awt.Color;
+import java.io.Serializable;
 import java.util.Random;
 
-public class Screen {
+public class Screen implements Serializable {
      int width;
      int height;
      boolean gameover;

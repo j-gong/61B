@@ -2,7 +2,9 @@ package byog.Core;
 import byog.TileEngine.TETile;
 import byog.TileEngine.Tileset;
 
-public class Build {
+import java.io.Serializable;
+
+public class Build implements Serializable {
 
     private Map key;
 

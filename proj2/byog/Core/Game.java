@@ -8,10 +8,13 @@ import edu.princeton.cs.introcs.StdDraw;
 
 import java.awt.Toolkit;
 import java.awt.Dimension;
+import java.io.Serializable;
 import java.util.Random;
 
-public class Game {
-    private TERenderer ter = new TERenderer();
+
+public class Game implements Serializable {
+    TERenderer ter = new TERenderer();
+
     /* Feel free to change the width and height. */
     static final int WIDTH = 84;
     static final int HEIGHT = 42;
@@ -38,9 +41,30 @@ public class Game {
     public void playWithKeyboard() {
         startGame();
 
-        ter.initialize(WIDTH, HEIGHT);
-        ter.renderFrame(WORLD);
-        screen.intro();
+        if (key.newgame) {
+            ter.initialize(WIDTH, HEIGHT);
+            screen.intro();
+            ter.renderFrame(WORLD);
+        }
+        else {
+            //screen = new Screen(90, 50, this);
+            ter.initialize(WIDTH, HEIGHT);
+            //TETile[][] g = key.loadworld();
+            Game g = key.loadworld();
+            this.robocop = g.robocop;
+            this.criminals = g.criminals;
+            this.items = g.items;
+            this.sunlight = g.sunlight;
+            this.screen = g.screen;
+            this.ter = g.ter;
+            this.gameover = g.gameover;
+            this.seed = g.seed;
+            this.crimsleft = g.crimsleft;
+            this.WORLD = g.WORLD;
+            this.r = g.r;
+            this.win = g.win;
+            ter.renderFrame(WORLD);
+        }
         readKey();
 
         triggerGameOver();
@@ -62,7 +86,23 @@ public class Game {
     public TETile[][] playWithInputString(String input) {
 
         //ter.initialize(WIDTH, HEIGHT, 0, -2);
+        if (input.equals("")) {
+            System.exit(0);
+        }
+        if (input.equals(" ")) {
+            System.exit(0);
+        }
+        if (input.equals("  ")) {
+            System.exit(0);
+        }
+        if (input.equals("   ")) {
+            System.exit(0);
+        }
+
+
+
         seed = (int) Long.parseLong(input.replaceAll("[\\D]", ""));
+
         TETile[][] world = new TETile[WIDTH][HEIGHT];
         r = new Random(seed);
         Map map = new Map(world, seed, HEIGHT, WIDTH);
@@ -76,10 +116,12 @@ public class Game {
 
         key = new KeyInput(this, screen);
         String input = key.readSeed();
+        if (key.newgame) {
 
-        WORLD = playWithInputString(input);
+            WORLD = playWithInputString(input);
 
-        createObjects();
+            createObjects();
+        }
     }
 
 

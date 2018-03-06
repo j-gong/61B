@@ -1,6 +1,8 @@
 package byog.Core;
 
-public class Location {
+import java.io.Serializable;
+
+public class Location implements Serializable {
     int xPos;
     int yPos;
 
@@ -13,5 +15,5 @@ public class Location {
         Location copy = new Location(this.xPos, this.yPos);
         return copy;
     }
-
 }
+

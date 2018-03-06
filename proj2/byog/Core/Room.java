@@ -1,7 +1,9 @@
 package byog.Core;
 import byog.TileEngine.TETile;
 
-public class Room {
+import java.io.Serializable;
+
+public class Room implements Serializable {
 
     Location site;
     Location[] openings = new Location[4];

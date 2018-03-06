@@ -3,7 +3,10 @@ package byog.Core;
 import byog.TileEngine.TETile;
 import byog.TileEngine.Tileset;
 
-public class Player extends Character {
+import java.io.Serializable;
+
+public class Player extends Character implements Serializable {
+
 
     int energy;
     int capacity;
@@ -17,7 +20,7 @@ public class Player extends Character {
         this.weapon = new Nothing(game, Tileset.NOTHING);
     }
 
-    class Pair {
+    class Pair implements Serializable {
         public final int x;
         public final int y;
         Pair(int x, int y) {

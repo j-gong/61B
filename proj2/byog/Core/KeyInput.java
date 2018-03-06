@@ -23,6 +23,7 @@ public class KeyInput implements Serializable{
     private Screen menu;
     private TETile[][] layout;
     private Player p;
+    boolean newgame;
 
     public KeyInput(Game game, Screen open) {
         this.game = game;
@@ -69,7 +70,8 @@ public class KeyInput implements Serializable{
             String input = "";
             String input2 = "";
             keyPressedSeed(input);
-            while (history.isEmpty() || !history.peekLast().equals(("s"))) {
+            //works if i don't call !history.peekLast().equals(("l"))
+            while (history.isEmpty() || !history.peekLast().equals(("s")) && newgame) {
             if (!StdDraw.hasNextKeyTyped()) {
                 continue;
             }
@@ -87,6 +89,7 @@ public class KeyInput implements Serializable{
     private void keyPressedSeed(String input) { //takes in whats pressed, when an n or s is pressed, game starts
 
         if (input.equals("n") || input.equals("N")) {
+            newgame = true;
             StdDraw.clear(Color.BLACK);
             Font font = new Font("Monaco", Font.BOLD, 64);
             StdDraw.setPenColor(Color.WHITE);
@@ -96,7 +99,8 @@ public class KeyInput implements Serializable{
             StdDraw.show();
         }
         if (input.equals("l") || input.equals("L")) {
-            Game g = loadworld();
+            //Game g = loadworld();
+            newgame = false;
             //supposedly this is all it needs
             //I want to be able to save the game g tho. perhaps this.game is all I need?
         }
@@ -125,7 +129,9 @@ public class KeyInput implements Serializable{
                 FileInputStream fs = new FileInputStream(f);
                 ObjectInputStream os = new ObjectInputStream(fs);
                 Game loadWorld = (Game) os.readObject();
+
                 os.close();
+                fs.close();
                 return loadWorld;
             } catch (FileNotFoundException e) {
                 System.out.println("file not found");
@@ -153,6 +159,7 @@ public class KeyInput implements Serializable{
             ObjectOutputStream os = new ObjectOutputStream(fs);
             os.writeObject(g);
             os.close();
+            fs.close();
         }  catch (FileNotFoundException e) {
             System.out.println("file not found");
             System.exit(0);

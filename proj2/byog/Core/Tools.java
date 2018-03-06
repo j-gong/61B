@@ -3,9 +3,10 @@ package byog.Core;
 import byog.TileEngine.TETile;
 import byog.TileEngine.Tileset;
 
+import java.io.Serializable;
 import java.util.Random;
 
-public class Tools{
+public class Tools implements Serializable {
 
     int x;
     int y;
