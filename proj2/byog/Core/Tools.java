@@ -13,6 +13,7 @@ public class Tools{
     String name;
     TETile tile;
     int uses;
+    boolean used;
 
     public Tools(Game game, TETile t) {
         this.game = game;
@@ -46,7 +47,7 @@ public class Tools{
     void use() {
         uses -= 1;
         if (uses < 1) {
-            //discard();
+            game.robocop.weapon = new Nothing(game, Tileset.NOTHING);
             //TODO: write discard
         }
     }

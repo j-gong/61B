@@ -56,7 +56,7 @@ public class KeyInput implements Serializable{
             p.move(layout, 1, 0);
         } else if (input.equals(" ")){
             p.weapon.use();
-            game.screen.use(p.weapon.name); //TODO: fix screen.use so it actually shows up
+            game.screen.screenUse(p.weapon.name);
         } else if (input.equals("q") || input.equals("W")) {
             menu.gameover = true;
             saveWorld(this.game);

@@ -11,7 +11,7 @@ import java.awt.Dimension;
 import java.util.Random;
 
 public class Game {
-    TERenderer ter = new TERenderer();
+    private TERenderer ter = new TERenderer();
     /* Feel free to change the width and height. */
     static final int WIDTH = 84;
     static final int HEIGHT = 42;
@@ -39,8 +39,8 @@ public class Game {
         startGame();
 
         ter.initialize(WIDTH, HEIGHT);
-        screen.intro();
         ter.renderFrame(WORLD);
+        screen.intro();
         readKey();
 
         triggerGameOver();
@@ -108,6 +108,8 @@ public class Game {
         for (int i = 0; i < 2; i += 1) {
             Projectile addproj = new Projectile(this);
             items[i] = addproj;
+            Roll addroll = new Roll(this);
+            items[i + 2] = addroll;
         }
 
 
@@ -146,8 +148,12 @@ public class Game {
         robocop.drain(1);
         sunlight -= 1;
 
-        if (sunlight < 1) {
+        if (sunlight == 0) {
             nightTime();
+        }
+
+        if (sunlight < -50) {
+            Antagonist.damage = 10;
         }
 
         if (robocop.energy < 1) {

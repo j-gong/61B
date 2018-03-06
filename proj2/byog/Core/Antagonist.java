@@ -105,8 +105,9 @@ public class Antagonist extends Character {
 
     void interact() {
         game.robocop.interact();
-        if (game.robocop.x == x && game.robocop.y == y) {
+        if (game.robocop.x == x && game.robocop.y == y && damage > 1) {
             game.robocop.drain(damage);
+            game.screen.prevAction = "took" + damage + "damage";
         }
     }
 

@@ -8,6 +8,7 @@ public class Projectile extends Tools {
         super(game, Tileset.SAND);
         this.name = "sock launcher";
         this.uses = 8;
+        this.used = false;
     }
 
     void use() {
