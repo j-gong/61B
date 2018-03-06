@@ -13,6 +13,11 @@ public class Roll extends Tools{
 
     void use() {
 
+        int rollX = game.robocop.last.x;
+        int rollY = game.robocop.last.y;
+        for (int i = 0; i < Game.WIDTH; i += 1) {
+            game.robocop.move(game.WORLD, rollX, rollY);
+        }
     }
 
 }

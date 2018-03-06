@@ -104,14 +104,13 @@ public class Game {
 
         }
 
-        //TODO: add 2 types of weapons -> projectile, stun, speed
+        //TODO: add radius stun weapon
         for (int i = 0; i < 2; i += 1) {
             Projectile addproj = new Projectile(this);
             items[i] = addproj;
             Roll addroll = new Roll(this);
             items[i + 2] = addroll;
         }
-
 
     }
 

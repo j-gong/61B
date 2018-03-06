@@ -106,13 +106,21 @@ public class Screen {
             int x = (int) StdDraw.mouseX();
             int y = (int) StdDraw.mouseY();
             if (game.WORLD[x][y].equals(Tileset.WALL)) {
-                return "Wall" + Integer.toString(x) + Integer.toString(y);
+                return "Wall " + Integer.toString(x) + Integer.toString(y);
             } else if (game.WORLD[x][y].equals(Tileset.PLAYER)) {
-                return "Dats you" + Integer.toString(x) + Integer.toString(y);
+                return "Dats you " + Integer.toString(x) + Integer.toString(y);
             } else if (game.WORLD[x][y].equals(Tileset.FLOOR)) {
-                return "Floor" + Integer.toString(x) + Integer.toString(y);
+                return "Floor " + Integer.toString(x) + Integer.toString(y);
             } else if (game.WORLD[x][y].equals(Tileset.NOTHING)) {
                 return " " + Integer.toString(x) + Integer.toString(y);
+            } else if (game.WORLD[x][y].equals(Tileset.MOUNTAIN)) {
+                return "vandal " + Integer.toString(x) + Integer.toString(y);
+            } else if (game.WORLD[x][y].equals(Tileset.GRASS)) {
+                return "energy pack " + Integer.toString(x) + Integer.toString(y);
+            } else if (game.WORLD[x][y].equals(Tileset.SAND)) {
+                return "sock launcher " + Integer.toString(x) + Integer.toString(y);
+            } else if (game.WORLD[x][y].equals(Tileset.WATER)) {
+                return "roller blades " + Integer.toString(x) + Integer.toString(y);
             }
         }
         return " ";
