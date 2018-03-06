@@ -83,6 +83,9 @@ public class Game implements Serializable {
      */
     public TETile[][] playWithInputString(String input) {
 
+        if (input.equals("")) {
+            System.exit(0);
+        }
         //ter.initialize(WIDTH, HEIGHT, 0, -2);
         seed = (int) Long.parseLong(input.replaceAll("[\\D]", ""));
         TETile[][] world = new TETile[WIDTH][HEIGHT];
@@ -201,6 +204,6 @@ public class Game implements Serializable {
     public static void main(String[] args) {
 
        Game game = new Game();
-       game.playWithKeyboard();
+       game.playWithInputString("");
     }
 }
