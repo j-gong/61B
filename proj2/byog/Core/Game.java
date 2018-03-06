@@ -129,10 +129,7 @@ public class Game implements Serializable {
     }
     
     String deliverNext() {
-        if (keystring.peekFirst().equals(":")) {
-            key.saveWorld(this);
-            return null;
-        } else if (keystring.size() > 0) {
+        if (keystring.size() > 0) {
             String next = keystring.removeFirst();
             return next;
         }
@@ -261,9 +258,20 @@ public class Game implements Serializable {
     }
 
     public static void main(String[] args) {
+        /*String input = "4203683569974799499";
+        TERenderer ter = new TERenderer();
+        ter.initialize(WIDTH, HEIGHT);
+        TETile[][] world = new TETile[WIDTH][HEIGHT];
+        int seed = (int) Long.parseLong(input.replaceAll("[\\D]", ""));
+        Map map = new Map(world, seed, HEIGHT, WIDTH);
+        world = map.makeMap();
+        Random rand = new Random();
+
+        ter.renderFrame(world);*/
 
       Game g = new Game();
-      TETile[][] world = g.playWithInputString("n4979154725301381123swwawd");
+      TETile[][] world = g.playWithInputString("n3415218040718096461ssdsddaddaa:q");
+        // g.playWithKeyboard();
 
 
       // Game game = new Game();
