@@ -10,6 +10,7 @@ public class Projectile extends Tools implements Serializable {
         super(game, Tileset.SAND);
         this.name = "sock launcher";
         this.uses = 8;
+        this.used = false;
     }
 
     void use() {

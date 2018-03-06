@@ -31,15 +31,18 @@ public class Player extends Character implements Serializable {
 
     void move(TETile[][] world, int xDir, int yDir) {
         last = new Pair(xDir, yDir);
-        super.move(world, xDir, yDir);
+        super.move(world, xDir, yDir, this);
     }
 
     private void pickup(Tools grab) {
         if (grab.name.equals("energy")) {
             refill((Nrgy) grab);
         } else {
-            weapon = grab;
-            //TODO: put old weapon back on ground, write swapTools()
+            if (!grab.used) {
+                weapon = grab;
+                grab.used = true;
+                game.screen.prevAction = "picked up" + grab.name;
+            }
         }
     }
 
@@ -47,6 +50,7 @@ public class Player extends Character implements Serializable {
         if (!grab.used) {
             this.energy = capacity;
             grab.used = true;
+            game.screen.prevAction = "refilled energy";
         }
     }
 
@@ -72,9 +76,13 @@ public class Player extends Character implements Serializable {
     void apprehend(Antagonist subject) {
         subject.tile = Tileset.FLOWER;
         subject.aiMove();
+        if (!subject.caught) {
+            game.screen.prevAction = "vandal apprehended";
+        }
         subject.caught = true;
         game.WORLD[x][y] = Tileset.PLAYER;
         game.crimsleft -= 1;
+
     }
 
 }

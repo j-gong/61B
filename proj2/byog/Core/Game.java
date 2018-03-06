@@ -2,17 +2,15 @@ package byog.Core;
 
 import byog.TileEngine.TERenderer;
 import byog.TileEngine.TETile;
-import byog.TileEngine.Tileset;
-import byog.lab5.HexWorld;
-import edu.princeton.cs.introcs.StdDraw;
 
-import java.awt.Toolkit;
-import java.awt.Dimension;
 import java.io.Serializable;
+import java.lang.Character;
 import java.util.Random;
+import java.util.ArrayDeque;
 
 public class Game implements Serializable {
     TERenderer ter = new TERenderer();
+
     /* Feel free to change the width and height. */
     static final int WIDTH = 84;
     static final int HEIGHT = 42;
@@ -28,16 +26,21 @@ public class Game implements Serializable {
     Tools[] items;
     Tools[] weapons;
 
+    boolean inputString;
     boolean gameover = false;
-    boolean win = false;
+    private boolean win = false;
     int crimsleft;
     Random r;
+    private ArrayDeque<String> keystring = new ArrayDeque<>();
+    private boolean remaining;
 
     /**
      * Method used for playing a fresh game. The game should start from the main menu.
      */
     public void playWithKeyboard() {
+        inputString = false;
         startGame();
+
 
         if (key.newgame) {
             ter.initialize(WIDTH, HEIGHT);
@@ -46,21 +49,10 @@ public class Game implements Serializable {
         }
         else {
             //screen = new Screen(90, 50, this);
-            ter.initialize(WIDTH, HEIGHT);
             //TETile[][] g = key.loadworld();
             Game g = key.loadworld();
-            this.robocop = g.robocop;
-            this.criminals = g.criminals;
-            this.items = g.items;
-            this.sunlight = g.sunlight;
-            this.screen = g.screen;
+            fillg(g);
             this.ter = g.ter;
-            this.gameover = g.gameover;
-            this.seed = g.seed;
-            this.crimsleft = g.crimsleft;
-            this.WORLD = g.WORLD;
-            this.r = g.r;
-            this.win = g.win;
             ter.renderFrame(WORLD);
         }
         readKey();
@@ -82,30 +74,67 @@ public class Game implements Serializable {
      * @return the 2D TETile[][] representing the state of the world
      */
     public TETile[][] playWithInputString(String input) {
-
-        //ter.initialize(WIDTH, HEIGHT, 0, -2);
-        if (input.equals("")) {
-            System.exit(0);
-        }
-        if (input.equals(" ")) {
-            System.exit(0);
-        }
-        if (input.equals("  ")) {
-            System.exit(0);
-        }
-        if (input.equals("   ")) {
-            System.exit(0);
+        for (int i = 0; i < input.length(); i += 1) {
+            char a = input.charAt(i);
+            keystring.addLast(Character.toString(a));
         }
 
+        screen = new Screen();
+        key = new KeyInput(this, screen);
 
+        Game g;
+        String checkL = keystring.removeFirst();
+        if (checkL.equals("n")) {
+            String stringSeed = "";
+            while (!keystring.peekFirst().equals("s")) {
+                stringSeed += keystring.removeFirst();
+                int seed = (int) Long.parseLong(stringSeed);
+                r = new Random(seed);
 
-        seed = (int) Long.parseLong(input.replaceAll("[\\D]", ""));
+                WORLD = new TETile[WIDTH][HEIGHT];
+                Map map = new Map(WORLD, seed, HEIGHT, WIDTH);
+                WORLD = map.makeMap();
+                createObjects();
+            }
+            keystring.removeFirst();
 
-        TETile[][] world = new TETile[WIDTH][HEIGHT];
-        r = new Random(seed);
-        Map map = new Map(world, seed, HEIGHT, WIDTH);
-        world = map.makeMap();
-        return world;
+        } else if (checkL.equals("l")) {
+            keystring.removeFirst();
+            g = key.loadworld();
+            fillg(g);
+        }
+
+        while (!gameover) {
+            key.keystrokeReader();
+            updateGame();
+        }
+
+        return WORLD;
+    }
+
+    private void fillg(Game g) {
+        this.robocop = g.robocop;
+        this.criminals = g.criminals;
+        this.items = g.items;
+        this.sunlight = g.sunlight;
+        this.screen = g.screen;
+        this.gameover = g.gameover;
+        this.seed = g.seed;
+        this.crimsleft = g.crimsleft;
+        this.WORLD = g.WORLD;
+        this.r = g.r;
+        this.win = g.win;
+    }
+    
+    String deliverNext() {
+        if (!keystring.peekFirst().equals(":")) {
+            key.saveWorld(this);
+            System.exit(0);
+        } else if (keystring.size() > 1) {
+            String next = keystring.removeFirst();
+            return next;
+        }
+        return null;
     }
 
     private void startGame() {
@@ -114,20 +143,29 @@ public class Game implements Serializable {
 
         key = new KeyInput(this, screen);
         String input = key.readSeed();
+
         if (key.newgame) {
 
-            WORLD = playWithInputString(input);
+            WORLD = mapMaker(input);
 
             createObjects();
         }
     }
 
+    private TETile[][] mapMaker(String input) {
+        seed = (int) Long.parseLong(input.replaceAll("[\\D]", ""));
+        TETile[][] world = new TETile[WIDTH][HEIGHT];
+        r = new Random(seed);
+        Map map = new Map(world, seed, HEIGHT, WIDTH);
+        world = map.makeMap();
+        return world;
+    }
 
     private void createObjects(){
 
         robocop = new Player(0, 0, this);
         criminals = new Antagonist[r.nextInt(5) + 4];
-        items = new Tools[r.nextInt(5) + 8];
+        items = new Tools[r.nextInt(5) + 8 + 4];
         weapons = new Tools[4];
 
         crimsleft = criminals.length;
@@ -138,26 +176,28 @@ public class Game implements Serializable {
         }
 
 
-        for (int i = 0; i < items.length; i += 1) {
+        for (int i = 0; i < items.length - 4; i += 1) {
             Nrgy addNrgy = new Nrgy(this);
             items[i] = addNrgy;
 
         }
 
-        //TODO: add 2 types of weapons -> projectile, stun, speed
-        for (int i = 0; i < 2; i += 1) {
+        for (int i = items.length - 4; i < items.length - 2; i += 1) {
             Projectile addproj = new Projectile(this);
             items[i] = addproj;
+            Roll addroll = new Roll(this);
+            items[i + 2] = addroll;
         }
-
 
     }
 
     private void readKey() {
+
         screen.drawHUD(); //TODO: fix the offset thing
         screen.fillHUD();
         String input = "";
         key.keyPressed(input);
+
 
         while (!gameover) {
 
@@ -186,8 +226,12 @@ public class Game implements Serializable {
         robocop.drain(1);
         sunlight -= 1;
 
-        if (sunlight < 1) {
+        if (sunlight == 0) {
             nightTime();
+        }
+
+        if (sunlight < -50) {
+            Antagonist.damage = 10;
         }
 
         if (robocop.energy < 1) {
@@ -216,10 +260,11 @@ public class Game implements Serializable {
 
     public static void main(String[] args) {
 
-       //Game game = new Game();
-       //game.playWithInputString(" ");
-        /*String gay = "";
-        int tests = (int) Long.parseLong(gay.replaceAll("[\\D]", ""));
-        System.out.println(tests);*/
+      Game g = new Game();
+      TETile[][] world = g.playWithInputString("n4979154725301381123swwawd");
+
+
+       // Game game = new Game();
+       // game.playWithKeyboard();
     }
 }

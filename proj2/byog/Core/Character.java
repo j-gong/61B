@@ -41,21 +41,23 @@ public class Character implements Serializable {
         game.WORLD[x][y] = tile;
     }
 
-    void move(TETile[][] world, int xDir, int yDir) {
+    void move(TETile[][] world, int xDir, int yDir, Character r) {
 
         Location check = new Location(this.x + xDir, this.y + yDir);
 
         if (!game.WORLD[check.xPos][check.yPos].description().equals("wall") ||
                 game.WORLD[check.xPos][check.yPos].description().equals("flower")) {
 
-            world[this.x][this.y] = Tileset.FLOOR;
+            if (r.equals(game.robocop) || game.WORLD[check.xPos][check.yPos].description().equals("floor")) {
 
-            this.x = check.xPos;
-            this.y = check.yPos;
-            interact();
+                world[this.x][this.y] = Tileset.FLOOR;
 
-            world[this.x][this.y] = tile;
+                this.x = check.xPos;
+                this.y = check.yPos;
+                interact();
 
+                world[this.x][this.y] = tile;
+            }
         }
     }
 

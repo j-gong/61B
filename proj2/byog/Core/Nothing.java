@@ -6,10 +6,11 @@ import java.io.Serializable;
 
 public class Nothing extends Tools implements Serializable {
 
-    String name = "nothing";
+
 
     Nothing(Game game, TETile tile) {
         super(game, tile);
+        this.name = "nothing";
     }
 
     void place() {

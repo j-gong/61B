@@ -49,7 +49,7 @@ public class Antagonist extends Character implements Serializable {
 
 
             Pair chosen = available.get(r.nextInt(available.size()));
-            this.move(game.WORLD, chosen.x, chosen.y);
+            this.move(game.WORLD, chosen.x, chosen.y, this);
             previous.add(new Location(this.x, this.y));
             if (previous.size() > 3) {
                 previous.remove();
@@ -107,8 +107,9 @@ public class Antagonist extends Character implements Serializable {
 
     void interact() {
         game.robocop.interact();
-        if (game.robocop.x == x && game.robocop.y == y) {
+        if (game.robocop.x == x && game.robocop.y == y && damage > 1) {
             game.robocop.drain(damage);
+            game.screen.prevAction = "took" + damage + "damage";
         }
     }
 

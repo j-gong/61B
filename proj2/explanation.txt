@@ -1,0 +1,1 @@
+We submitted late because we didn’t understand what playWithInputString was supposed to do exactly. We thought it was supposed to just return a world from a seed, and be called in playWithKeyboard.

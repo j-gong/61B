@@ -14,7 +14,12 @@ public class Screen implements Serializable {
      boolean gameover;
      private Game game;
 
+     String prevAction;
+
     //Screen might need to take in a seed?
+    Screen() {
+    }
+
     Screen(int width, int height, Game game) {
         this.game = game;
         this.width = width;
@@ -46,8 +51,9 @@ public class Screen implements Serializable {
 
     void intro() {
         StdDraw.setPenColor(Color.CYAN);
-        StdDraw.text(3, height - 4, "Some teenage delinquents have been defacing public property. Apprehend them!");
-        StdDraw.setPenColor(Color.WHITE);
+        StdDraw.text(10, game.HEIGHT - 3, "Some teenage delinquents have been");
+        StdDraw.text(13, game.HEIGHT - 5, "defacing public property. Apprehend them!");
+        StdDraw.setPenColor(Color.YELLOW);
         StdDraw.show();
     }
 
@@ -56,7 +62,7 @@ public class Screen implements Serializable {
             /*
             Font smallFont = new Font("Monaco", Font.BOLD, 20);
             StdDraw.setFont(smallFont);*/
-            StdDraw.setPenColor(Color.WHITE);
+            StdDraw.setPenColor(Color.YELLOW);
             //StdDraw.line(0, height -12 , width, height - 12);
             //show below depends on whether the next while loops stays
             StdDraw.show();
@@ -65,25 +71,28 @@ public class Screen implements Serializable {
 
     void fillHUD() {
 
+
         StdDraw.setPenColor(Color.YELLOW);
-        //StdDraw.text(this.width - this.width/5, this.height - 9, this.mousepoint());
-        StdDraw.text(this.width - this.width/5, this.height - 14, "energy: " + game.robocop.energy);
-        StdDraw.text(this.width - this.width/5, this.height - 19,"Minutes before night: " + game.sunlight);
-        StdDraw.text(this.width - this.width/5, this.height - 24,"Weapon: " + game.robocop.weapon.name + ". Uses: " + game.robocop.weapon.uses);
+        //StdDraw.text(game.WIDTH - this.width/5, game.HEIGHT - 9, this.mousepoint());
+        StdDraw.text(game.WIDTH - game.WIDTH / 7, game.HEIGHT - 9, "energy: " + game.robocop.energy);
+        StdDraw.text(game.WIDTH - game.WIDTH / 7, game.HEIGHT - 14,"Minutes before night: " + game.sunlight);
+        StdDraw.text(game.WIDTH - game.WIDTH / 7, game.HEIGHT - 19,"Weapon: " + game.robocop.weapon.name + ". Uses: " + game.robocop.weapon.uses);
         StdDraw.show();
 
-        showDefacers();
+        showPrev();
+        prevAction = " ";
+        showVandals();
 
         StdDraw.show();
 
     }
 
-    private void showDefacers() {
+    private void showVandals() {
         for (int i = 0; i < game.criminals.length; i += 1) {
             if (!game.criminals[i].caught) {
-                StdDraw.text(this.width - this.width / 5, 17 - (i * 2), "Defacer" + i + ": ▲");
+                StdDraw.text(game.WIDTH - game.WIDTH / 7, 17 - (i * 2), "Vandal" + i + ": ▲");
             } else {
-                StdDraw.text(this.width - this.width / 5, 17 - (i * 2), "Defacer" + i + ": ❀");
+                StdDraw.text(game.WIDTH - game.WIDTH / 7, 17 - (i * 2), "Vandal" + i + ": ❀");
             }
             StdDraw.show();
         }
@@ -91,9 +100,9 @@ public class Screen implements Serializable {
 
     void showMousePoint() {
         StdDraw.setPenColor(Color.BLACK);
-        StdDraw.filledCircle(this.width - this.width/5, this.height - 9, 4);
+        StdDraw.filledCircle(game.WIDTH - game.WIDTH / 7, game.HEIGHT - 4, 4);
         StdDraw.setPenColor(Color.YELLOW);
-        StdDraw.text(this.width - this.width/5, this.height - 9, this.mousepoint());
+        StdDraw.text(game.WIDTH - game.WIDTH / 7, game.HEIGHT - 4, this.mousepoint());
         StdDraw.show(); }
 
     private String mousepoint() {
@@ -101,13 +110,21 @@ public class Screen implements Serializable {
             int x = (int) StdDraw.mouseX();
             int y = (int) StdDraw.mouseY();
             if (game.WORLD[x][y].equals(Tileset.WALL)) {
-                return "Wall" + Integer.toString(x) + Integer.toString(y);
+                return "Wall " + Integer.toString(x) + Integer.toString(y);
             } else if (game.WORLD[x][y].equals(Tileset.PLAYER)) {
-                return "Dats you" + Integer.toString(x) + Integer.toString(y);
+                return "Dats you " + Integer.toString(x) + Integer.toString(y);
             } else if (game.WORLD[x][y].equals(Tileset.FLOOR)) {
-                return "Floor" + Integer.toString(x) + Integer.toString(y);
+                return "Floor " + Integer.toString(x) + Integer.toString(y);
             } else if (game.WORLD[x][y].equals(Tileset.NOTHING)) {
                 return " " + Integer.toString(x) + Integer.toString(y);
+            } else if (game.WORLD[x][y].equals(Tileset.MOUNTAIN)) {
+                return "vandal " + Integer.toString(x) + Integer.toString(y);
+            } else if (game.WORLD[x][y].equals(Tileset.GRASS)) {
+                return "energy pack " + Integer.toString(x) + Integer.toString(y);
+            } else if (game.WORLD[x][y].equals(Tileset.SAND)) {
+                return "sock launcher " + Integer.toString(x) + Integer.toString(y);
+            } else if (game.WORLD[x][y].equals(Tileset.WATER)) {
+                return "roller blades " + Integer.toString(x) + Integer.toString(y);
             }
         }
         return " ";
@@ -119,8 +136,8 @@ public class Screen implements Serializable {
         StdDraw.setPenColor(Color.CYAN);
         Font saved = StdDraw.getFont();
         StdDraw.setFont(new Font("Monaco", Font.BOLD, 64));
-        StdDraw.text(width / 2, height / 2, "GameOver");
-        StdDraw.setPenColor(Color.WHITE);
+        StdDraw.text(game.WIDTH / 2, game.HEIGHT / 2, "GameOver");
+        StdDraw.setPenColor(Color.YELLOW);
         StdDraw.setFont(saved);
         StdDraw.show();
     }
@@ -129,25 +146,45 @@ public class Screen implements Serializable {
         StdDraw.setPenColor(Color.CYAN);
         Font saved = StdDraw.getFont();
         StdDraw.setFont(new Font("Monaco", Font.BOLD, 64));
-        StdDraw.text(width / 2, height / 2, "You Win");
-        StdDraw.setPenColor(Color.WHITE);
+        StdDraw.text(game.WIDTH / 2, Game.HEIGHT / 2, "You Win");
+        StdDraw.setPenColor(Color.YELLOW);
         StdDraw.setFont(saved);
         StdDraw.show();
     }
 
     void darken() {
-        StdDraw.setPenColor(Color.CYAN);
-        StdDraw.text(width / 2, height - 5, "Bad things happen after dark");
-        //TODO: make all the tiles darker shades -> make the message show up as well, getting rendered over
-        StdDraw.setPenColor(Color.WHITE);
-        StdDraw.show();
+        prevAction = "Bad things happen after dark";
+        Tileset.PLAYER = new TETile('@', Color.GRAY, Color.black, "player");
+        Tileset.WALL = new TETile('#', new Color(142, 57, 57), new Color(56, 52, 52),
+                "wall");
+        Tileset.FLOOR = new TETile('·', new Color(62, 117, 62), Color.black,
+                "floor");
+        for (int x = 0; x < game.WIDTH; x += 1) {
+            for (int y = 0; y < game.HEIGHT; y += 1) {
+                if (game.WORLD[x][y].description().equals("floor")) {
+                    game.WORLD[x][y] = Tileset.FLOOR;
+                } else if (game.WORLD[x][y].description().equals("wall")) {
+                    game.WORLD[x][y] = Tileset.WALL;
+                } else if (game.WORLD[x][y].description().equals("player")) {
+                    game.WORLD[x][y] = Tileset.PLAYER;
+                }
+            }
+        }
     }
 
-    void use(String weaponName) {
+        //TODO: make all the tiles darker shades -> make the message show up as well, getting rendered over
+
+    void screenUse(String weaponName) {
+        prevAction = weaponName + " used";
+    }
+
+    private void showPrev() {
+        if (prevAction == null) {
+            prevAction = " ";
+        }
         StdDraw.setPenColor(Color.CYAN);
-        StdDraw.text(width / 2, height - 5, weaponName + " used");
-        StdDraw.setPenColor(Color.WHITE);
-        StdDraw.show();
+        StdDraw.text(game.WIDTH - game.WIDTH / 7, game.HEIGHT - 22, prevAction);
+        StdDraw.setPenColor(Color.YELLOW);
     }
 
 }
