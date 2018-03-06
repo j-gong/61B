@@ -47,7 +47,7 @@ public class Antagonist extends Character {
 
 
             Pair chosen = available.get(r.nextInt(available.size()));
-            this.move(game.WORLD, chosen.x, chosen.y);
+            this.move(game.WORLD, chosen.x, chosen.y, this);
             previous.add(new Location(this.x, this.y));
             if (previous.size() > 3) {
                 previous.remove();

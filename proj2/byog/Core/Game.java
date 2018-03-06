@@ -87,7 +87,7 @@ public class Game {
 
         robocop = new Player(0, 0, this);
         criminals = new Antagonist[r.nextInt(5) + 4];
-        items = new Tools[r.nextInt(5) + 8];
+        items = new Tools[r.nextInt(5) + 8 + 4];
         weapons = new Tools[4];
 
         crimsleft = criminals.length;
@@ -98,14 +98,13 @@ public class Game {
         }
 
 
-        for (int i = 0; i < items.length; i += 1) {
+        for (int i = 0; i < items.length - 4; i += 1) {
             Nrgy addNrgy = new Nrgy(this);
             items[i] = addNrgy;
 
         }
 
-        //TODO: add radius stun weapon
-        for (int i = 0; i < 2; i += 1) {
+        for (int i = items.length - 4; i < items.length - 2; i += 1) {
             Projectile addproj = new Projectile(this);
             items[i] = addproj;
             Roll addroll = new Roll(this);

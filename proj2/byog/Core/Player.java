@@ -28,7 +28,7 @@ public class Player extends Character {
 
     void move(TETile[][] world, int xDir, int yDir) {
         last = new Pair(xDir, yDir);
-        super.move(world, xDir, yDir);
+        super.move(world, xDir, yDir, this);
     }
 
     private void pickup(Tools grab) {
