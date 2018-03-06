@@ -76,9 +76,10 @@ public class KeyInput implements Serializable{
             }
         } else if (input.equals("l")) {
             if (!game.inputString) {
-                loadworld();
-                newgame = false;
+                //loadworld();
+
             }
+            newgame = false;
         }
     }
 

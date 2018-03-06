@@ -134,7 +134,7 @@ public class Game implements Serializable {
             keystring.removeFirst();
             return keystring.removeFirst();
         }
-        else if (keystring.size() > 0) {
+        else if (!keystring.isEmpty()) {
             String next = keystring.removeFirst();
             return next;
         }
@@ -275,8 +275,8 @@ public class Game implements Serializable {
         ter.renderFrame(world);*/
 
       Game g = new Game();
-      TETile[][] world = g.playWithInputString("n3415218040718096461ssdsddaddaa:q");
-        // g.playWithKeyboard();
+      //TETile[][] world = g.playWithInputString("n3415218040718096461ssdsddaddaa:q");
+         g.playWithKeyboard();
 
 
       // Game game = new Game();
