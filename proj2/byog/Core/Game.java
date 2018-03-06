@@ -132,7 +132,7 @@ public class Game implements Serializable {
         if (keystring.peekFirst().equals(":")) {
             key.saveWorld(this);
             return null;
-        } else if (keystring.size() > 1) {
+        } else if (keystring.size() > 0) {
             String next = keystring.removeFirst();
             return next;
         }
