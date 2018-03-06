@@ -38,7 +38,7 @@ public class Game implements Serializable {
      * Method used for playing a fresh game. The game should start from the main menu.
      */
     public void playWithKeyboard() {
-        inputString = true;
+        inputString = false;
         startGame();
 
 
@@ -52,18 +52,7 @@ public class Game implements Serializable {
             ter.initialize(WIDTH, HEIGHT);
             //TETile[][] g = key.loadworld();
             Game g = key.loadworld();
-            this.robocop = g.robocop;
-            this.criminals = g.criminals;
-            this.items = g.items;
-            this.sunlight = g.sunlight;
-            this.screen = g.screen;
-            this.ter = g.ter;
-            this.gameover = g.gameover;
-            this.seed = g.seed;
-            this.crimsleft = g.crimsleft;
-            this.WORLD = g.WORLD;
-            this.r = g.r;
-            this.win = g.win;
+            fillg(g);
             ter.renderFrame(WORLD);
         }
         readKey();
@@ -92,24 +81,32 @@ public class Game implements Serializable {
             char a = input.charAt(i);
             keystring.addLast(Character.toString(a));
         }
-        keystring.removeFirst();
-        String stringSeed = "";
-        while (!keystring.peekFirst().equals("s")) {
-            stringSeed += keystring.removeFirst();
-        }
-
-        keystring.removeFirst();
-        int seed = (int) Long.parseLong(stringSeed);
-        r = new Random(seed);
 
         screen = new Screen();
         key = new KeyInput(this, screen);
 
-        ter.initialize(WIDTH, HEIGHT);
-        WORLD = new TETile[WIDTH][HEIGHT];
-        Map map = new Map(WORLD, seed, HEIGHT, WIDTH);
-        WORLD = map.makeMap();
-        createObjects();
+        Game g;
+        String checkL = keystring.removeFirst();
+        if (checkL.equals("n")) {
+            String stringSeed = "";
+            while (!keystring.peekFirst().equals("s")) {
+                stringSeed += keystring.removeFirst();
+                int seed = (int) Long.parseLong(stringSeed);
+                r = new Random(seed);
+
+                ter.initialize(WIDTH, HEIGHT);
+                WORLD = new TETile[WIDTH][HEIGHT];
+                Map map = new Map(WORLD, seed, HEIGHT, WIDTH);
+                WORLD = map.makeMap();
+                createObjects();
+            }
+            keystring.removeFirst();
+
+        } else if (checkL.equals("l")) {
+            keystring.removeFirst();
+            g = key.loadworld();
+            fillg(g);
+        }
 
         while (!gameover) {
             key.keystrokeReader();
@@ -118,6 +115,21 @@ public class Game implements Serializable {
 
         ter.renderFrame(WORLD);
         return WORLD;
+    }
+
+    private void fillg(Game g) {
+        this.robocop = g.robocop;
+        this.criminals = g.criminals;
+        this.items = g.items;
+        this.sunlight = g.sunlight;
+        this.screen = g.screen;
+        this.ter = g.ter;
+        this.gameover = g.gameover;
+        this.seed = g.seed;
+        this.crimsleft = g.crimsleft;
+        this.WORLD = g.WORLD;
+        this.r = g.r;
+        this.win = g.win;
     }
     
     String deliverNext() {
@@ -137,16 +149,22 @@ public class Game implements Serializable {
 
         key = new KeyInput(this, screen);
         String input = key.readSeed();
-        seed = Integer.parseInt(input);
+
         if (key.newgame) {
 
-            ter.initialize(WIDTH, HEIGHT);
-            Map map = new Map(WORLD, seed, WIDTH, HEIGHT);
-            WORLD = map.makeMap();
-            ter.renderFrame(WORLD);
+            WORLD = mapMaker(input);
 
             createObjects();
         }
+    }
+
+    private TETile[][] mapMaker(String input) {
+        seed = (int) Long.parseLong(input.replaceAll("[\\D]", ""));
+        TETile[][] world = new TETile[WIDTH][HEIGHT];
+        r = new Random(seed);
+        Map map = new Map(world, seed, HEIGHT, WIDTH);
+        world = map.makeMap();
+        return world;
     }
 
     private void createObjects(){
@@ -248,114 +266,11 @@ public class Game implements Serializable {
 
     public static void main(String[] args) {
 
-        Game g = new Game();
-        TETile[][] world = g.playWithInputString("n4979154725301381123swwawd");
+      Game g = new Game();
+      TETile[][] world = g.playWithInputString("n4979154725301381123swwawd");
 
 
-        //Game game = new Game();
-        //game.playWithKeyboard();
+       // Game game = new Game();
+       // game.playWithKeyboard();
     }
 }
-
-        /* //seed = (int) Long.parseLong(input.replaceAll("[\\D]", ""));
-
-
-
-        for (int i = 0; i < input.length(); i += 1) {
-            char a = input.charAt(i);
-            keystring.addLast(Character.toString(a));
-        }
-        keystring.removeFirst();
-        String stringSeed = "";
-        while (!keystring.peekFirst().equals("s")) {
-            stringSeed += keystring.removeFirst();
-        }
-
-        keystring.removeFirst();
-        int seed = Integer.parseInt(stringSeed);
-
-
-        //char[] series = parseString(input);
-
-        //int counter = parseSeed(input);
-
-        /*TETile[][] world = new TETile[WIDTH][HEIGHT];
-        Random r = new Random(seed);
-        Map map = new Map(world, seed, HEIGHT, WIDTH);
-        world = map.makeMap();
-        KeyInput key1 = new KeyInput();*/
-       /* while (!keystring.isEmpty()) {
-            String input1 = keystring.removeFirst();
-
-        }*/
-
-
-       /* Game g = new Game();
-        g.r = r;
-        g.startGame();
-        g.WORLD = world;
-        g.setVars(g);
-        world = runKeys(g, series, counter);
-
-        return world;
-    }
-
-    private void setVars(Game g){
-        g.gameover = false;
-        g.ter = new TERenderer();
-        g.createObjects();
-        g.setVars(g);
-        g.screen = new Screen();
-        g.key = new KeyInput(g, g.screen);
-        g.win = false;
-   }
-
-   /* private char[] parseString(String input) {
-        char[] chars = new char[input.length()];
-        int charscounter = 0;
-        for (char ch : input.toCharArray()) {
-            chars[charscounter] = ch;
-        }
-        return chars;
-    }
-
-    private int parseSeed(String input) {
-        char[] chars = new char[input.length()];
-        int charscounter = 0;
-        int counter = 1;
-        for (char ch : input.toCharArray()){
-            chars[charscounter] = ch;
-        }
-
-        if (chars[0] == 'n') {
-
-            StringBuilder sd = new StringBuilder();
-            char check = chars[counter];
-            while (check != 's') {
-                sd.append(String.valueOf(chars[counter]));
-                counter += 1;
-            }
-
-            counter += 1;
-
-            seed = Integer.parseInt(sd.toString());
-
-        }
-        return counter;
-    }
-
-    private TETile[][] runKeys(Game game, char[] input, int counter) {
-        if (input.length <= counter) {
-            return game.WORLD;
-        }
-
-        for (int k = counter; k < input.length; k += 1) {
-            game.WORLD = keyAction(game, input[k]);
-        }
-        return game.WORLD;
-    }
-
-    private TETile[][] keyAction(Game game, char key) {
-        game.key.keyPressed(Character.toString(key));
-        return game.WORLD;
-    }*/

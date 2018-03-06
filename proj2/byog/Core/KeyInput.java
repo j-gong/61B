@@ -37,7 +37,6 @@ public class KeyInput implements Serializable{
             keyPressed(game.deliverNext());
             return true;
         }
-
         if (!StdDraw.hasNextKeyTyped()) {
             return false;
         } else if (StdDraw.hasNextKeyTyped()) {
@@ -53,10 +52,12 @@ public class KeyInput implements Serializable{
         this.layout = game.WORLD;
         this.p = game.robocop;
 
+        keyPressedSeed(input);
+
         if (input.equals("w")) {
             p.move(layout, 0, 1);
         } else if (input.equals("a")) {
-            p.move(layout, -1, 0);
+            p.move(layout, - 1, 0);
         } else if (input.equals("s")) {
             p.move(layout, 0, -1);
         } else if (input.equals("d")) {
@@ -114,7 +115,7 @@ public class KeyInput implements Serializable{
         if (input.equals("l") || input.equals("L")) {
             //Game g = loadworld();
             newgame = false;
-            //I want to be able to save the game g tho. perhaps this.game is all I need?
+
         }
 
         if (input.equals("s") || input.equals("S")) {
@@ -142,7 +143,6 @@ public class KeyInput implements Serializable{
                 FileInputStream fs = new FileInputStream(f);
                 ObjectInputStream os = new ObjectInputStream(fs);
                 Game loadWorld = (Game) os.readObject();
-
                 os.close();
                 fs.close();
                 return loadWorld;
