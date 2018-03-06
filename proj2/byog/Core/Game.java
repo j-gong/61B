@@ -74,6 +74,7 @@ public class Game implements Serializable {
      * @return the 2D TETile[][] representing the state of the world
      */
     public TETile[][] playWithInputString(String input) {
+        inputString = true;
         for (int i = 0; i < input.length(); i += 1) {
             char a = input.charAt(i);
             keystring.addLast(Character.toString(a));

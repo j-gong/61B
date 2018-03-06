@@ -109,7 +109,9 @@ public class Antagonist extends Character implements Serializable {
         game.robocop.interact();
         if (game.robocop.x == x && game.robocop.y == y && damage > 1) {
             game.robocop.drain(damage);
-            game.screen.prevAction = "took" + damage + "damage";
+            if (!game.inputString) {
+                game.screen.prevAction = "took" + damage + "damage";
+            }
         }
     }
 
