@@ -52,8 +52,6 @@ public class KeyInput implements Serializable{
         this.layout = game.WORLD;
         this.p = game.robocop;
 
-        keyPressedSeed(input);
-
         if (input.equals("w")) {
             p.move(layout, 0, 1);
         } else if (input.equals("a")) {
@@ -74,6 +72,11 @@ public class KeyInput implements Serializable{
             saveWorld(this.game);
             if (!game.inputString) {
                 System.exit(0);
+            }
+        } else if (input.equals("l")) {
+            if (!game.inputString) {
+                loadworld();
+                newgame = false;
             }
         }
     }
@@ -120,7 +123,7 @@ public class KeyInput implements Serializable{
 
         }
 
-        if (input.equals("s") || input.equals("S")) {
+        if (input.equals("s")) {
             if (!history.peekFirst().equals("n") || history.size() == 2) {
                 Font smallerFont = new Font("Monaco", Font.BOLD, 30);
                 StdDraw.setFont(smallerFont);
