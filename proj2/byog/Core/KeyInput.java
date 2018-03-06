@@ -70,7 +70,7 @@ public class KeyInput implements Serializable{
             if (game.inputString) {
                 game.screen.screenUse(p.weapon.name);
             }
-        } else if (input.equals("q") || input.equals("W")) {
+        } else if (input.equals("q")) {
             if (game.inputString) {
                 menu.gameover = true;
             }
@@ -81,9 +81,9 @@ public class KeyInput implements Serializable{
         } else if (input.equals("l")) {
             if (!game.inputString) {
                 //loadworld();
-
+                newgame = false;
             }
-            newgame = false;
+
         }
     }
 

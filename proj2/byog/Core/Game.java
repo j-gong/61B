@@ -205,16 +205,14 @@ public class Game implements Serializable {
         //key.keyPressed(input);
 
         while (!gameover) {
-
             screen.showMousePoint();
-
             boolean update = key.keystrokeReader();
             if (update) {
                 updateGame();
-                //if (!inputString) {
+                if (!inputString) {
                 ter.renderFrame(WORLD);
                 screen.fillHUD();
-                //}
+                }
             }
         }
     }
