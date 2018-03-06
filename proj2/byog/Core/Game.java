@@ -45,10 +45,23 @@ public class Game implements Serializable {
             ter.renderFrame(WORLD);
         }
         else {
-            screen = new Screen(90, 50, this);
+            //screen = new Screen(90, 50, this);
             ter.initialize(WIDTH, HEIGHT);
-            TETile[][] g = key.loadworld();
-            ter.renderFrame(g);
+            //TETile[][] g = key.loadworld();
+            Game g = key.loadworld();
+            this.robocop = g.robocop;
+            this.criminals = g.criminals;
+            this.items = g.items;
+            this.sunlight = g.sunlight;
+            this.screen = g.screen;
+            this.ter = g.ter;
+            this.gameover = g.gameover;
+            this.seed = g.seed;
+            this.crimsleft = g.crimsleft;
+            this.WORLD = g.WORLD;
+            this.r = g.r;
+            this.win = g.win;
+            ter.renderFrame(WORLD);
         }
         readKey();
 

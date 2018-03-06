@@ -60,7 +60,7 @@ public class KeyInput implements Serializable{
             game.screen.use(p.weapon.name); //TODO: fix screen.use so it actually shows up
         } else if (input.equals("q") || input.equals("W")) {
             menu.gameover = true;
-            saveWorld(this.game.WORLD);
+            saveWorld(this.game);
             System.exit(0);
         }
     }
@@ -121,15 +121,17 @@ public class KeyInput implements Serializable{
 
 
     //Is supposed to pull a file called world.txt and load it. makes one if doesn't exist
-    TETile[][] loadworld() {
+    Game loadworld() {
         //@Source from SaveDemo
         File f = new File("./world.txt");
         if (f.exists()) {
             try {
                 FileInputStream fs = new FileInputStream(f);
                 ObjectInputStream os = new ObjectInputStream(fs);
-                TETile[][] loadWorld = (TETile[][]) os.readObject();
+                Game loadWorld = (Game) os.readObject();
+
                 os.close();
+                fs.close();
                 return loadWorld;
             } catch (FileNotFoundException e) {
                 System.out.println("file not found");
@@ -142,11 +144,11 @@ public class KeyInput implements Serializable{
                 System.exit(0);
             }
         }
-        return new TETile[][]{};
+        return new Game();
     }
 
     //Is supposed to save it. hope it works. i don't see how it saves keys
-    void saveWorld(TETile[][] g) {
+    void saveWorld(Game g) {
         //@source from SaveDemo
         File f = new File("./world.txt");
         try {
@@ -157,6 +159,7 @@ public class KeyInput implements Serializable{
             ObjectOutputStream os = new ObjectOutputStream(fs);
             os.writeObject(g);
             os.close();
+            fs.close();
         }  catch (FileNotFoundException e) {
             System.out.println("file not found");
             System.exit(0);
