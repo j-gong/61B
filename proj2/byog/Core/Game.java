@@ -49,10 +49,10 @@ public class Game implements Serializable {
         }
         else {
             //screen = new Screen(90, 50, this);
-            ter.initialize(WIDTH, HEIGHT);
             //TETile[][] g = key.loadworld();
             Game g = key.loadworld();
             fillg(g);
+            this.ter = g.ter;
             ter.renderFrame(WORLD);
         }
         readKey();
@@ -74,8 +74,6 @@ public class Game implements Serializable {
      * @return the 2D TETile[][] representing the state of the world
      */
     public TETile[][] playWithInputString(String input) {
-        remaining = false;
-
         for (int i = 0; i < input.length(); i += 1) {
             char a = input.charAt(i);
             keystring.addLast(Character.toString(a));
@@ -120,7 +118,6 @@ public class Game implements Serializable {
         this.items = g.items;
         this.sunlight = g.sunlight;
         this.screen = g.screen;
-        this.ter = g.ter;
         this.gameover = g.gameover;
         this.seed = g.seed;
         this.crimsleft = g.crimsleft;
