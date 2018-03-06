@@ -50,9 +50,11 @@ public class Game implements Serializable {
         else {
             //screen = new Screen(90, 50, this);
             //TETile[][] g = key.loadworld();
+            ter.initialize(WIDTH, HEIGHT);
             Game g = key.loadworld();
-            fillg(g);
             this.ter = g.ter;
+            fillg(g);
+
             ter.renderFrame(WORLD);
         }
         readKey();
@@ -199,9 +201,8 @@ public class Game implements Serializable {
 
         screen.drawHUD(); //TODO: fix the offset thing
         screen.fillHUD();
-        String input = "";
-        key.keyPressed(input);
-
+        //String input = "";
+        //key.keyPressed(input);
 
         while (!gameover) {
 
@@ -210,10 +211,10 @@ public class Game implements Serializable {
             boolean update = key.keystrokeReader();
             if (update) {
                 updateGame();
-                if (!gameover) {
-                    ter.renderFrame(WORLD);
-                    screen.fillHUD();
-                }
+                //if (!inputString) {
+                ter.renderFrame(WORLD);
+                screen.fillHUD();
+                //}
             }
         }
     }
