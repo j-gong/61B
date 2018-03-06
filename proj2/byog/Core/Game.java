@@ -74,7 +74,6 @@ public class Game implements Serializable {
      * @return the 2D TETile[][] representing the state of the world
      */
     public TETile[][] playWithInputString(String input) {
-        ter.initialize(WIDTH, HEIGHT);
         remaining = false;
 
         for (int i = 0; i < input.length(); i += 1) {
@@ -94,7 +93,6 @@ public class Game implements Serializable {
                 int seed = (int) Long.parseLong(stringSeed);
                 r = new Random(seed);
 
-                ter.initialize(WIDTH, HEIGHT);
                 WORLD = new TETile[WIDTH][HEIGHT];
                 Map map = new Map(WORLD, seed, HEIGHT, WIDTH);
                 WORLD = map.makeMap();
@@ -113,7 +111,6 @@ public class Game implements Serializable {
             updateGame();
         }
 
-        ter.renderFrame(WORLD);
         return WORLD;
     }
 
