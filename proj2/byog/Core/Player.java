@@ -1,7 +1,6 @@
 package byog.Core;
 
 import byog.TileEngine.TETile;
-import byog.TileEngine.Tileset;
 
 import java.io.Serializable;
 
@@ -14,10 +13,10 @@ public class Player extends Character implements Serializable {
     Pair last;
 
     Player(int x, int y, Game game) {
-        super(x, y, game, Tileset.PLAYER);
+        super(x, y, game, Screen.Tileset.PLAYER);
         this.capacity = 100;
         this.energy = capacity;
-        this.weapon = new Nothing(game, Tileset.NOTHING);
+        this.weapon = new Nothing(game, Screen.Tileset.NOTHING);
     }
 
     class Pair implements Serializable {
@@ -78,7 +77,7 @@ public class Player extends Character implements Serializable {
     }
 
     void apprehend(Antagonist subject) {
-        subject.tile = Tileset.FLOWER;
+        subject.tile = Screen.Tileset.FLOWER;
         subject.aiMove();
         if (!subject.caught) {
             if (!game.inputString) {
@@ -86,7 +85,7 @@ public class Player extends Character implements Serializable {
             }
         }
         subject.caught = true;
-        game.WORLD[x][y] = Tileset.PLAYER;
+        game.WORLD[x][y] = Screen.Tileset.PLAYER;
         game.crimsleft -= 1;
 
     }

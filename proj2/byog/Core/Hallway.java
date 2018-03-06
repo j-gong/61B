@@ -1,7 +1,6 @@
 package byog.Core;
 
 import byog.TileEngine.TETile;
-import byog.TileEngine.Tileset;
 
 import java.io.Serializable;
 
@@ -200,7 +199,7 @@ public class Hallway implements Serializable {
             result.yPos += (tunnelDirect(direction));
             builder.turnCap(direction, nextdirect, result);
         }
-        layout[result.xPos][result.yPos] = Tileset.FLOOR;
+        layout[result.xPos][result.yPos] = Screen.Tileset.FLOOR;
         return result;
     }
 

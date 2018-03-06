@@ -4,6 +4,7 @@ package byog.Core;
  *  the command line inputs, and lets the byog.Core.Game class take over
  *  in either keyboard or input string mode.
  */
+
 public class Main {
     public static void main(String[] args) {
         if (args.length > 1) {

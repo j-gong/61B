@@ -3,7 +3,6 @@ package byog.Core;
 import java.awt.Color;
 import java.awt.Font;
 import java.io.Serializable;
-import java.security.Key;
 import java.util.ArrayDeque;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -12,9 +11,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import byog.TileEngine.TERenderer;
+
 import byog.TileEngine.TETile;
-import byog.TileEngine.Tileset;
 import edu.princeton.cs.introcs.StdDraw;
 
 public class KeyInput implements Serializable{
@@ -154,8 +152,8 @@ public class KeyInput implements Serializable{
                 FileInputStream fs = new FileInputStream(f);
                 ObjectInputStream os = new ObjectInputStream(fs);
                 Game loadWorld = (Game) os.readObject();
-                os.close();
                 fs.close();
+                os.close();
                 return loadWorld;
             } catch (FileNotFoundException e) {
                 System.out.println("file not found");
@@ -179,8 +177,8 @@ public class KeyInput implements Serializable{
             FileOutputStream fs = new FileOutputStream(f);
             ObjectOutputStream os = new ObjectOutputStream(fs);
             os.writeObject(g);
-            os.close();
             fs.close();
+            os.close();
         }  catch (FileNotFoundException e) {
             System.out.println("file not found");
         } catch (IOException e) {

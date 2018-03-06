@@ -1,6 +1,5 @@
 package byog.Core;
 import byog.TileEngine.TETile;
-import byog.TileEngine.Tileset;
 
 import java.io.Serializable;
 
@@ -31,9 +30,9 @@ public class Build implements Serializable {
         for (int i = -1; i < 2; i += 1) {
 
             if (i == 0) {
-                tile = Tileset.FLOOR;
+                tile = Screen.Tileset.FLOOR;
             } else {
-                tile = Tileset.WALL;
+                tile = Screen.Tileset.WALL;
             }
 
 
@@ -60,7 +59,7 @@ public class Build implements Serializable {
         TETile[][] layout = key.LAYOUT;
         for (int i = 0; i < 4; i += 1) {
             if (holes[i] != null) {
-                layout[holes[i].xPos][holes[i].yPos] = Tileset.FLOOR;
+                layout[holes[i].xPos][holes[i].yPos] = Screen.Tileset.FLOOR;
             }
         }
     }
@@ -68,7 +67,7 @@ public class Build implements Serializable {
     /* sets the tiles for the rooms' floors */
     private void buildFloors(Room rm) {
         Location start = rm.site.copy();
-        TETile flooring = Tileset.FLOOR;
+        TETile flooring = Screen.Tileset.FLOOR;
         for (int i = 0; i < rm.height; i += 1) {
             buildRow(start, rm.width, flooring, true);
             start.yPos += 1;
@@ -78,7 +77,7 @@ public class Build implements Serializable {
     /* sets the tiles for the rooms' walls */
     private void buildWalls(Room rm) {
         Location start = new Location(rm.site.xPos - 1, rm.site.yPos - 1);
-        TETile walling = Tileset.WALL;
+        TETile walling = Screen.Tileset.WALL;
 
         buildRow(start, rm.width + 2, walling, false); //build bottom wall
 
@@ -147,7 +146,7 @@ public class Build implements Serializable {
 
     /* setes the tiles for a turning hallway */
     private void buildTurn(Location[] corner) {
-        TETile walling = Tileset.WALL;
+        TETile walling = Screen.Tileset.WALL;
         TETile[][] layout = key.LAYOUT;
         for (int i = 0; i < 2; i += 1) {
             TETile check = layout[corner[i].xPos][corner[i].yPos];
@@ -164,7 +163,7 @@ public class Build implements Serializable {
             for (int y = -1; y < 2; y += 1) {
                 TETile spot = layout[stop.xPos + x][stop.yPos + y];
                 if (spot == null) {
-                    layout[stop.xPos + x][stop.yPos + y] = Tileset.WALL;
+                    layout[stop.xPos + x][stop.yPos + y] = Screen.Tileset.WALL;
                 }
             }
         }

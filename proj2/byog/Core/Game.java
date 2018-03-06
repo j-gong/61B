@@ -12,15 +12,15 @@ public class Game implements Serializable {
     TERenderer ter = new TERenderer();
 
     /* Feel free to change the width and height. */
-    static final int WIDTH = 84;
-    static final int HEIGHT = 42;
+    static final int WIDTH = 78;
+    static final int HEIGHT = 48;
     TETile[][] WORLD;
     int seed;
 
     private KeyInput key;
     Screen screen;
 
-    int sunlight = 200;
+    int sunlight = 150;
     Player robocop;
     Antagonist[] criminals;
     Tools[] items;
@@ -43,17 +43,19 @@ public class Game implements Serializable {
 
 
         if (key.newgame) {
-            ter.initialize(WIDTH, HEIGHT);
-            screen.intro();
+            ter.initialize(WIDTH + 12, HEIGHT, 12, 0);
             ter.renderFrame(WORLD);
+            screen.intro();
         }
         else {
             //screen = new Screen(90, 50, this);
             //TETile[][] g = key.loadworld();
-            ter.initialize(WIDTH, HEIGHT);
             Game g = key.loadworld();
+            TETile[][] array = new TETile[WIDTH][HEIGHT];
             this.ter = g.ter;
+            this.WORLD = array;
             fillg(g);
+            ter.initialize(WIDTH + 12, HEIGHT, 12, 0);
 
             ter.renderFrame(WORLD);
         }
@@ -201,8 +203,7 @@ public class Game implements Serializable {
 
         screen.drawHUD(); //TODO: fix the offset thing
         screen.fillHUD();
-        //String input = "";
-        //key.keyPressed(input);
+        screen.showMousePoint();
 
         while (!gameover) {
             screen.showMousePoint();

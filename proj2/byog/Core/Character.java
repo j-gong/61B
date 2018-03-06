@@ -1,7 +1,6 @@
 package byog.Core;
 
 import byog.TileEngine.TETile;
-import byog.TileEngine.Tileset;
 
 import java.io.Serializable;
 import java.util.Random;
@@ -50,7 +49,7 @@ public class Character implements Serializable {
 
             if (r.equals(game.robocop) || game.WORLD[check.xPos][check.yPos].description().equals("floor")) {
 
-                world[this.x][this.y] = Tileset.FLOOR;
+                world[this.x][this.y] = Screen.Tileset.FLOOR;
 
                 this.x = check.xPos;
                 this.y = check.yPos;

@@ -1,6 +1,5 @@
 package byog.Core;
 import byog.TileEngine.TETile;
-import byog.TileEngine.Tileset;
 
 import java.io.Serializable;
 import java.util.Random;
@@ -43,7 +42,7 @@ public class Map implements Serializable {
         for (int i = 0; i < WIDTH; i += 1) {
             for (int k = 0; k < HEIGHT; k += 1) {
                 if (LAYOUT[i][k] == null) {
-                    LAYOUT[i][k] = Tileset.NOTHING;
+                    LAYOUT[i][k] = Screen.Tileset.NOTHING;
                 }
             }
         }

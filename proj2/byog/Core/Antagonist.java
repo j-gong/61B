@@ -1,7 +1,7 @@
 package byog.Core;
 
 import byog.TileEngine.TETile;
-import byog.TileEngine.Tileset;
+
 import java.io.Serializable;
 import java.util.LinkedList;
 
@@ -15,7 +15,7 @@ public class Antagonist extends Character implements Serializable {
     LinkedList<Location> previous = new LinkedList<>();
 
     Antagonist(Game game) {
-        super(10, 10, game, Tileset.MOUNTAIN);
+        super(10, 10, game, Screen.Tileset.MOUNTAIN);
 
     }
 

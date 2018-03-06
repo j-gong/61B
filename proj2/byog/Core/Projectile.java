@@ -1,13 +1,11 @@
 package byog.Core;
 
-import byog.TileEngine.Tileset;
-
 import java.io.Serializable;
 
 public class Projectile extends Tools implements Serializable {
 
     Projectile(Game game) {
-        super(game, Tileset.SAND);
+        super(game, Screen.Tileset.SAND);
         this.name = "sock launcher";
         this.uses = 8;
         this.used = false;

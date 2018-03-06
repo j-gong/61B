@@ -1,7 +1,6 @@
 package byog.Core;
 
 import byog.TileEngine.TETile;
-import byog.TileEngine.Tileset;
 
 import java.io.Serializable;
 import java.util.Random;
@@ -52,7 +51,7 @@ public class Tools implements Serializable {
     void use() {
         uses -= 1;
         if (uses < 1) {
-            game.robocop.weapon = new Nothing(game, Tileset.NOTHING);
+            game.robocop.weapon = new Nothing(game, Screen.Tileset.NOTHING);
             //TODO: write discard
         }
     }
