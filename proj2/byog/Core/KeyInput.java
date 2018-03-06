@@ -72,7 +72,9 @@ public class KeyInput implements Serializable{
                 menu.gameover = true;
             }
             saveWorld(this.game);
-            System.exit(0);
+            if (!game.inputString) {
+                System.exit(0);
+            }
         }
     }
 
@@ -148,13 +150,10 @@ public class KeyInput implements Serializable{
                 return loadWorld;
             } catch (FileNotFoundException e) {
                 System.out.println("file not found");
-                System.exit(0);
             } catch (IOException e) {
                 System.out.println(e);
-                System.exit(0);
             } catch (ClassNotFoundException e) {
                 System.out.println("class not found");
-                System.exit(0);
             }
         }
         return new Game();
@@ -175,10 +174,8 @@ public class KeyInput implements Serializable{
             fs.close();
         }  catch (FileNotFoundException e) {
             System.out.println("file not found");
-            System.exit(0);
         } catch (IOException e) {
             System.out.println(e);
-            System.exit(0);
         }
     }
 

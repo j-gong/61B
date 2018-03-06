@@ -74,6 +74,7 @@ public class Game implements Serializable {
      * @return the 2D TETile[][] representing the state of the world
      */
     public TETile[][] playWithInputString(String input) {
+        inputString = true;
         for (int i = 0; i < input.length(); i += 1) {
             char a = input.charAt(i);
             keystring.addLast(Character.toString(a));
@@ -104,7 +105,7 @@ public class Game implements Serializable {
             fillg(g);
         }
 
-        while (!gameover) {
+        while (keystring.peekFirst() != null) {
             key.keystrokeReader();
             updateGame();
         }
@@ -129,7 +130,7 @@ public class Game implements Serializable {
     String deliverNext() {
         if (!keystring.peekFirst().equals(":")) {
             key.saveWorld(this);
-            System.exit(0);
+            return null;
         } else if (keystring.size() > 1) {
             String next = keystring.removeFirst();
             return next;
@@ -264,7 +265,7 @@ public class Game implements Serializable {
       TETile[][] world = g.playWithInputString("n4979154725301381123swwawd");
 
 
-       // Game game = new Game();
-       // game.playWithKeyboard();
+      // Game game = new Game();
+      // game.playWithKeyboard();
     }
 }

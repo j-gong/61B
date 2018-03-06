@@ -41,7 +41,9 @@ public class Player extends Character implements Serializable {
             if (!grab.used) {
                 weapon = grab;
                 grab.used = true;
-                game.screen.prevAction = "picked up" + grab.name;
+                if (!game.inputString) {
+                    game.screen.prevAction = "picked up" + grab.name;
+                }
             }
         }
     }
@@ -50,7 +52,9 @@ public class Player extends Character implements Serializable {
         if (!grab.used) {
             this.energy = capacity;
             grab.used = true;
-            game.screen.prevAction = "refilled energy";
+            if (!game.inputString) {
+                game.screen.prevAction = "refilled energy";
+            }
         }
     }
 
@@ -77,7 +81,9 @@ public class Player extends Character implements Serializable {
         subject.tile = Tileset.FLOWER;
         subject.aiMove();
         if (!subject.caught) {
-            game.screen.prevAction = "vandal apprehended";
+            if (!game.inputString) {
+                game.screen.prevAction = "vandal apprehended";
+            }
         }
         subject.caught = true;
         game.WORLD[x][y] = Tileset.PLAYER;
